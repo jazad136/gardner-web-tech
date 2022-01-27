@@ -1,3 +1,4 @@
+import * as React from "react";
 import { ReactElement } from "react";
 import cn from "classnames";
 

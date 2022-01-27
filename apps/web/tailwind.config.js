@@ -23,15 +23,6 @@ module.exports = {
           "2xl": "10rem",
         },
       },
-      fontSize: {
-        "5xl": "2.5rem",
-        "6xl": "2.75rem",
-        "7xl": "4.5rem",
-        "8xl": "6.25rem",
-      },
-      height: {
-        "9/10": "90%",
-      },
       transitionProperty: {
         spacing: "margin, padding",
       },

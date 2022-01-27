@@ -1,13 +1,15 @@
+import * as React from "react";
 import { motion, Variants } from "framer-motion";
+import cn from "classnames";
 import ThemeToggle from "../ThemeToggle";
 import { NavbarLinkProps } from "./NavbarLink";
 import { NavbarLinks } from "./NavbarLinks";
-import cn from "classnames";
 
 export interface MiniNavProps {
   isOpen: boolean;
-  sticky?: boolean;
   links: NavbarLinkProps[];
+  sticky?: boolean;
+  includeThemeToggle?: boolean;
 }
 
 const subMenuAnimate: Variants = {
@@ -25,28 +27,39 @@ const subMenuAnimate: Variants = {
   },
 };
 
-export const MiniNav = ({ isOpen, links, sticky = false }: MiniNavProps) => (
+export const MiniNav = ({
+  isOpen,
+  links,
+  sticky = false,
+  includeThemeToggle = false,
+}: MiniNavProps) => (
   <motion.div
     initial={false}
     animate={isOpen ? "open" : "closed"}
     variants={subMenuAnimate}
   >
-    <div className="flex py-2 nav">
+    <div className="flex py-2 nav px-6 w-full">
       <div
-        className={cn("inline", {
+        className={cn("inline w-full", {
           "pt-4": sticky,
           "pt-2": !sticky,
+          "pt-0": !includeThemeToggle,
         })}
       >
-        <div className="flex text-center">
-          <div className="mr-2 prose dark:prose-dark text-primary lg:text-sm uppercase ">
-            Theme:
-          </div>{" "}
-          <div className="my-auto">
-            <ThemeToggle isLarge={false} id="miniNavThemeToggle" />
+        {includeThemeToggle && (
+          <div className="flex text-center">
+            <div className="mr-2 prose dark:prose-dark text-primary lg:text-sm uppercase">
+              Theme:
+            </div>{" "}
+            <div className="my-auto">
+              <ThemeToggle isLarge={false} id="miniNavThemeToggle" />
+            </div>
           </div>
+        )}
+        <hr />
+        <div className="justify-center">
+          <NavbarLinks links={links} removeRightMargins />
         </div>
-        <NavbarLinks links={links} />
       </div>
     </div>
   </motion.div>

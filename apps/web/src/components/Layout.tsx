@@ -1,5 +1,5 @@
 import Meta from "@components/meta";
-import { Navbar } from "ui/nav";
+import { NavbarLinkProps, SimpleNavbar } from "ui/nav";
 import { ReactElement } from "react";
 
 interface LayoutProps {
@@ -8,16 +8,26 @@ interface LayoutProps {
 }
 
 const Layout = ({ preview, children }: LayoutProps) => {
+  // const [navbarOpen, setNavbarOpen] = useState(false);
+
+  const links: NavbarLinkProps[] = [
+    {
+      href: "/",
+      text: "Link",
+      display: true,
+    },
+    {
+      href: "/",
+      text: "Link2",
+      display: true,
+    },
+  ];
+
   return (
     <>
       <Meta />
       <div className="flex flex-col min-h-screen">
-        <Navbar
-          brandText="Gardner Web and Tech"
-          alertText="Preview Mode"
-          displayAlert={preview}
-          navLinks={[]}
-        />
+        <SimpleNavbar brandText="Gardner Web and Tech" navLinks={links} />
         <main className="container flex-grow">{children}</main>
         {/* <Footer /> */}
       </div>

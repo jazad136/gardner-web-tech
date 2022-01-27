@@ -1,16 +1,17 @@
+import * as React from "react";
 import { NavbarLink, NavbarLinkProps } from "./NavbarLink";
 import cn from "classnames";
 
 export interface NavbarLinksProps {
   links: NavbarLinkProps[];
   isCol?: boolean;
-  removeLeftMargins?: boolean;
+  removeRightMargins?: boolean;
 }
 
 export const NavbarLinks = ({
   links,
   isCol = false,
-  removeLeftMargins,
+  removeRightMargins: removeLeftMargins = false,
 }: NavbarLinksProps) => {
   return (
     <ul
@@ -19,14 +20,17 @@ export const NavbarLinks = ({
         "lg:flex-row flex-col": !isCol,
       })}
     >
-      {(links ?? []).map((link) => (
-        <NavbarLink
-          key={link.text}
-          href={link.href}
-          text={link.text}
-          removeLeftMargin={removeLeftMargins}
-        />
-      ))}
+      {(links ?? []).map(
+        (link, index) =>
+          link.display && (
+            <NavbarLink
+              key={`nav-link-${index}`}
+              href={link.href}
+              removeRightMargin={removeLeftMargins}
+              text={link.text}
+            />
+          )
+      )}
     </ul>
   );
 };

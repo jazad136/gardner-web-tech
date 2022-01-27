@@ -1,3 +1,4 @@
+import * as React from "react";
 import { ReactElement } from "react";
 import { MenuToggle } from "./MenuToggle";
 import { NavbarLinkProps } from "./NavbarLink";
@@ -42,7 +43,7 @@ export const LeftNav = ({
                 "border-b custom-border-color": children,
               })}
             >
-              <NavbarLinks links={links} isCol removeLeftMargins />
+              <NavbarLinks links={links} isCol removeRightMargins />
             </div>
           )}
           {children && <div className="py-2">{children}</div>}
