@@ -4,6 +4,7 @@ import cn from "classnames";
 
 export interface ButtonProps {
   children: string | ReactElement | ReactElement[];
+  onClick: () => void;
   color: "success" | "primary" | "secondary" | "danger" | "light" | "dark";
   size: "xl" | "lg" | "md" | "sm" | "xs";
   isBold?: boolean;
@@ -14,6 +15,7 @@ export interface ButtonProps {
 
 export const Button = ({
   children,
+  onClick,
   color,
   size,
   isBold = true,
@@ -41,6 +43,7 @@ export const Button = ({
         "opacity-50": isDisabled,
       })}
       disabled={isDisabled}
+      onClick={onClick}
     >
       {children}
     </button>
