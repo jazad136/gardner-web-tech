@@ -1,0 +1,5 @@
+{
+  "extends": "tsconfig/api.json",
+  "include": [".", "../ui/magic.ts"],
+  "exclude": ["dist", "build", "node_modules"]
+}
