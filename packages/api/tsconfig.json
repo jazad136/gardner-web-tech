@@ -1,5 +1,9 @@
 {
   "extends": "tsconfig/api.json",
-  "include": [".", "../ui/magic.ts"],
+  "include": [
+    ".",
+    "../ui/magic.ts",
+    "../../apps/recipes-guest/src/lib/config.js"
+  ],
   "exclude": ["dist", "build", "node_modules"]
 }

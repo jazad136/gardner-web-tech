@@ -14,7 +14,11 @@ export const NavbarWrapper = ({
   sticky = false,
 }: NavbarWrapperProps) => {
   return (
-    <nav className="relative block items-center justify-between 2xl:mb-10">
+    <nav
+      className={cn("relative block items-center justify-between", {
+        "2xl:mb-10": !removeMarginBottom,
+      })}
+    >
       <div
         className={cn("w-full px-2 py-3 z-50 nav", {
           "fixed top-0 left-0 right-0": sticky,

@@ -36,7 +36,7 @@ const Meta = () => {
       <meta name="description" content="Adam Gardner Full-Stack Developer" />
       <meta
         name="keywords"
-        content="denver, software, developer, software developer, software developer denver, C#, csharp, c-sharp, .NET, dotnet, next, nextjs, react"
+        content="recipes, demo, recipes demo, denver, software, developer, software developer, software developer denver, C#, csharp, c-sharp, .NET, dotnet, next, nextjs, react"
       />
     </Head>
   );
