@@ -47,14 +47,14 @@ const Home = ({ allRecipes }: HomeProps) => {
             <h1 className="m-0 mb-0.5 text-6xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               Welcome to our guest recipes website!
             </h1>
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <Button
-                color="light"
-                size="lg"
+                color="white"
+                size="xl"
                 onClick={scrollToBottom}
                 isOutline
               >
-                <BsChevronBarDown />
+                <BsChevronBarDown size="1.5rem" className="text-white" />
               </Button>
             </div>
           </div>

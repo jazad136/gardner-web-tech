@@ -1,13 +1,16 @@
 import * as React from "react";
-import { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Duration } from "luxon";
+
+export interface DisplayTimeProps {
+  minutes: number;
+}
 
 /**
  * @param {number} minutes Number of minutes to display
  * @returns string
  */
-export const DisplayTime = (minutes): ReactElement => {
+export const DisplayTime = ({ minutes }: DisplayTimeProps) => {
   const duration = Duration.fromObject({ minutes });
   const correctedDuration = duration.shiftTo("hours", "minutes");
   let displayDuration = correctedDuration.toFormat("m 'minutes'");

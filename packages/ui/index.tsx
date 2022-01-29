@@ -3,6 +3,7 @@ export * from "./Button";
 export * from "./DisplayTime";
 export * from "./ThemeToggle";
 export * from "./ThemeSettings";
+export * from "./Sleep";
 
 export * from "./accordion";
 export * from "./auth";

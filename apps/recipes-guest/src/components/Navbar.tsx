@@ -18,7 +18,7 @@ const Navbar = () => {
 
   useEffect(() => {
     let filteredRecipes = recipes;
-    if (search.length > 3) {
+    if (search.length > 1) {
       filteredRecipes = (recipes ?? []).filter((r) =>
         r.title.toLowerCase().includes(search.toLowerCase())
       );
@@ -74,20 +74,27 @@ const Navbar = () => {
                 initial="closed"
                 animate="open"
                 exit="exit"
-                className="min-h-full overflow-y-auto absolute z-50 whitespace-nowrap bg-white dark:bg-gray-900"
+                className="min-h-full overflow-y-auto absolute z-20 whitespace-nowrap bg-white dark:bg-gray-900"
               >
                 <div className="w-full p-2 h-screen mr-1">
-                  <div className="sticky top-0 mb-2">
+                  <div className="sticky top-0 mb-2 block z-50 bg-white dark:bg-gray-900 py-2 border-b-2 border-solid">
                     <div className="flex justify-between items-center">
-                      <div className="text-xl">
-                        <Brand href="/">Recipes</Brand>
-                      </div>
+                      <Brand href="/">Recipes</Brand>
                       <div className="px-2">
                         <MenuToggle toggle={() => setExpanded(!expanded)} />
                       </div>
                     </div>
                   </div>
-                  <div className="mr-auto block w-full pb-5">
+                  <form className="flex w-full px-4 py-2">
+                    <input
+                      type="text"
+                      className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="search"
+                      placeholder="Search"
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </form>
+                  <div className="relative mr-auto block w-full pb-5 z-0">
                     {(displayedRecipes ?? []).map((recipe: RecipeListItem) => (
                       <RecipeLink key={recipe.title} recipe={recipe} />
                     ))}

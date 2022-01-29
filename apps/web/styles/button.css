@@ -6,7 +6,7 @@
 .btn-bg-danger,
 .btn-bg-dark,
 .btn-hover {
-  @apply text-white hover:text-white;
+  @apply prose-dark hover:prose-dark;
 }
 
 .btn-outline-success,
@@ -15,7 +15,16 @@
 .btn-outline-danger,
 .btn-outline-dark,
 .btn-outline-light {
-  @apply border-solid border-2 bg-white text-black;
+  @apply border-solid border-2 prose dark:prose-dark transition ease-in-out delay-100 hover:scale-110;
+}
+
+.btn-outline-success.btn-hover,
+.btn-outline-primary.btn-hover,
+.btn-outline-secondary.btn-hover,
+.btn-outline-danger.btn-hover,
+.btn-outline-dark.btn-hover,
+.btn-outline-light.btn-hover {
+  @apply prose hover:prose;
 }
 
 .btn-bg-success {
@@ -62,6 +71,10 @@
   @apply bg-gray-300 text-black;
 }
 
+.btn-bg-white {
+  @apply bg-white text-black;
+}
+
 .btn-bg-light.btn-hover {
   @apply hover:bg-gray-500;
 }
@@ -70,46 +83,25 @@
   @apply border-green-500;
 }
 
-.btn-outline-success.btn-hover {
-  @apply hover:bg-green-500;
-}
-
 .btn-outline-primary {
   @apply border-emerald-500;
-}
-
-.btn-outline-primary.btn-hover {
-  @apply hover:bg-emerald-500;
 }
 
 .btn-outline-secondary {
   @apply border-gray-500;
 }
-
-.btn-outline-secondary.btn-hover {
-  @apply hover:bg-gray-500;
-}
-
 .btn-outline-danger {
   @apply border-red-500;
-}
-
-.btn-outline-danger.btn-hover {
-  @apply hover:bg-red-500;
 }
 
 .btn-outline-dark {
   @apply border-black;
 }
 
-.btn-outline-dark.btn-hover {
-  @apply hover:bg-black;
-}
-
 .btn-outline-light {
   @apply border-gray-300;
 }
 
-.btn-outline-light.btn-hover {
-  @apply hover:bg-gray-300 text-black;
+.btn-outline-white {
+  @apply border-white;
 }

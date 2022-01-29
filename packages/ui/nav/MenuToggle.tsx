@@ -2,7 +2,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 
 export interface MenuToggleProps {
-  toggle(): void;
+  toggle: () => void;
 }
 
 const Path = (props: any) => (

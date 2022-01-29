@@ -6,12 +6,7 @@ export interface PageTitleProps {
 }
 
 export const PageTitle = ({ children, classNames }: PageTitleProps) => (
-  <h1
-    className={cn(
-      "prose dark:prose-dark text-4xl font-bold mb-4 capitalize",
-      classNames
-    )}
-  >
+  <h1 className={cn("prose dark:prose-dark text-4xl mb-4", classNames)}>
     {children}
   </h1>
 );

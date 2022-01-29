@@ -12,6 +12,7 @@ import {
   RecipeListItem,
   recipeQuery,
   recipeSlugsQuery,
+  sleep,
   YouTubeAccordion,
 } from "ui";
 import * as Pino from "pino";
@@ -38,6 +39,8 @@ const RecipePage = ({ data }: RecipePageProps) => {
   const { handleSetRecipes } = useRecipeContext();
   const printableContainerRef = createRef<HTMLDivElement>();
   const [windowWidth, setWindowWidth] = useState(0);
+  const [recipeCookTimeBodyOpen, setRecipeCookTimeBodyOpen] = useState(true);
+  const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
   const router = useRouter();
 
   const { currentRecipe, allRecipes } = data;
@@ -63,24 +66,19 @@ const RecipePage = ({ data }: RecipePageProps) => {
 
   const printPage = async () => {
     if (printableContainerRef && slug) {
-      expandAccordions();
-      const canvas = await toPng(printableContainerRef.current);
+      const ref = printableContainerRef.current;
+      await expandAccordions();
+      const canvas = await toPng(ref);
       const pdf = new jsPDF();
       pdf.addImage(canvas, "JPEG", 20, 20, 170, 160);
       pdf.save(`${slug}.pdf`);
     }
   };
 
-  const expandAccordions = () => {
-    const accordions =
-      printableContainerRef.current.getElementsByClassName("accordion");
-
-    Array.from(accordions).forEach((accordion) => {
-      const collapsed = accordion.getElementsByClassName("collapse");
-      Array.from(collapsed).forEach((c) => {
-        c.classList.remove("collapse");
-      });
-    });
+  const expandAccordions = async () => {
+    setRecipeCookTimeBodyOpen(true);
+    setIngredientsBodyOpen(true);
+    await sleep(1000);
   };
 
   return (
@@ -93,47 +91,54 @@ const RecipePage = ({ data }: RecipePageProps) => {
         </Head>
 
         <main className="py-8">
-          <div
-            ref={printableContainerRef}
-            className="w-full flex justify-center"
-          >
-            <PageTitle>{title}</PageTitle>
-          </div>
-          {windowWidth && image && (
-            <div className="block">
-              <Image
-                className="w-16 md:w-32 lg:w-48 max-w-full"
-                alt={title}
-                width={windowWidth}
-                height="500"
-                layout="responsive"
-                src={urlFor(image)
-                  .width(windowWidth)
-                  .height(500)
-                  .crop("focalpoint")
-                  .fit("crop")
-                  .auto("format")
-                  .url()}
-              />
+          <div ref={printableContainerRef}>
+            <div className="w-full flex justify-center">
+              <PageTitle>{title}</PageTitle>
             </div>
-          )}
-          <RecipeCookTime recipe={currentRecipe} />
-          <IngredientList ingredients={ingredients} />
-          <SectionWithPortableTextBlock
-            title="Instructions"
-            blocks={instructions}
-          />
-          <SectionWithPortableTextBlock title="Notes" blocks={notes} />
+            {windowWidth && image && (
+              <div className="block">
+                <Image
+                  className="w-16 md:w-32 lg:w-48 max-w-full"
+                  alt={title}
+                  width={windowWidth}
+                  height="500"
+                  layout="responsive"
+                  src={urlFor(image)
+                    .width(windowWidth)
+                    .height(500)
+                    .crop("focalpoint")
+                    .fit("crop")
+                    .auto("format")
+                    .url()}
+                />
+              </div>
+            )}
+            <RecipeCookTime
+              recipe={currentRecipe}
+              bodyOpen={recipeCookTimeBodyOpen}
+              toggleBodyOpen={() =>
+                setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
+              }
+            />
+            <IngredientList
+              ingredients={ingredients}
+              toggleBodyOpen={() =>
+                setIngredientsBodyOpen(!ingredientsBodyOpen)
+              }
+              bodyOpen={ingredientsBodyOpen}
+            />
+            <SectionWithPortableTextBlock
+              title="Instructions"
+              blocks={instructions}
+            />
+            <SectionWithPortableTextBlock title="Notes" blocks={notes} />
+          </div>
           <YouTubeAccordion youTubeUrls={youTubeUrls} />
           <div className="flex justify-center">
             <Button onClick={printPage} color="success" isOutline size="md">
               Print
             </Button>
           </div>
-          <Script
-            defer
-            src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"
-          ></Script>
         </main>
       </div>
     </>

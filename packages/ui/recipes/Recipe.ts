@@ -13,7 +13,7 @@ export interface Recipe {
   notes?: Note[];
   cookTime: number;
   prepTime: number;
-  restTime?: number;
+  restTime: string;
   youTubeUrls?: string[];
   ingredients: Ingredient[];
   instructions: Instruction[];

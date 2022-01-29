@@ -6,7 +6,7 @@ export interface AccordionWrapperProps {
 }
 
 export const AccordionWrapper = ({ children, id }: AccordionWrapperProps) => (
-  <div className="accordion my-6" id={id}>
+  <div className="border border-slate-300 rounded-2xl my-6" id={id}>
     {children}
   </div>
 );

@@ -1,37 +1,29 @@
 import { ReactElement } from "react";
+import cn from "classnames";
 
 export interface AccordionSectionHeaderProps {
   children: string | ReactElement | ReactElement[];
   id: string;
-  expanded?: boolean;
+  toggle: () => void;
+  bodyOpen: boolean;
 }
 
 export const AccordionSectionHeader = ({
   children,
   id,
-  expanded = false,
+  toggle,
+  bodyOpen,
 }: AccordionSectionHeaderProps) => (
-  <h2 className="accordion-header mb-0" id={`heading${id}`}>
+  <h2 className="mb-0" id={`heading${id}`}>
     <button
-      className="
-          accordion-button
-          relative
-          flex
-          items-center
-          w-full
-          py-4
-          px-5
-          text-base
-          text-left
-          border-0
-          rounded-none
-          transition
-          focus:outline-none"
+      className={cn(
+        "prose dark:prose-dark max-w-full prose-xl relative flex items-center w-full py-4 px-5 text-left border-0 rounded-none focus:outline-none",
+        {
+          "border-b": bodyOpen,
+        }
+      )}
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target={`#collapse${id}`}
-      aria-expanded={expanded}
-      aria-controls={`collapse${id}`}
+      onClick={toggle}
     >
       {children}
     </button>

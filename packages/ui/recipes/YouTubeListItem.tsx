@@ -1,16 +1,19 @@
 import * as Pino from "pino";
 import YouTube, { Options } from "react-youtube";
+import cn from "classnames";
 
 const logger = Pino.default({ name: "YouTube" });
 
 export interface YouTubeListItemProps {
   youTubeUrl: string;
   videoContainerWidth: number;
+  isHidden: boolean;
 }
 
 export const YouTubeListItem = ({
   youTubeUrl,
   videoContainerWidth,
+  isHidden = true,
 }: YouTubeListItemProps) => {
   const uri = new URL(youTubeUrl);
   const youTubeId = uri.searchParams.get("v")?.toString();
@@ -29,7 +32,12 @@ export const YouTubeListItem = ({
   };
 
   return (
-    <li className="mx-auto">
+    <li
+      className={cn("mx-auto", {
+        hidden: isHidden,
+      })}
+      key={youTubeId}
+    >
       <YouTube
         className="max-w-full"
         videoId={youTubeId}

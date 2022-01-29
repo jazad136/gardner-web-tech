@@ -33,7 +33,8 @@ const RecipeLink = ({ recipe }: RecipeLinkProps): ReactElement => {
                 {recipe.title}
               </div>
               <div className="text-sm prose text-slate-400">
-                Time to make: {DisplayTime(recipe.cookTime + recipe.prepTime)}
+                Time to make:{" "}
+                <DisplayTime minutes={recipe.cookTime + recipe.prepTime} />
                 {recipe.restTime && <> (Rest: {recipe.restTime})</>}
               </div>
             </div>

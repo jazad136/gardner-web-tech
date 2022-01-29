@@ -5,7 +5,14 @@ import cn from "classnames";
 export interface ButtonProps {
   children: string | ReactElement | ReactElement[];
   onClick: () => void;
-  color: "success" | "primary" | "secondary" | "danger" | "light" | "dark";
+  color:
+    | "success"
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "light"
+    | "white"
+    | "dark";
   size: "xl" | "lg" | "md" | "sm" | "xs";
   isBold?: boolean;
   isPill?: boolean;
@@ -33,7 +40,7 @@ export const Button = ({
 
   return (
     <button
-      className={cn("my-1 mx-1 prose dark:prose-dark", sizeClasses, {
+      className={cn("my-1 mx-1 hover:cursor-pointer", sizeClasses, {
         "font-bold": isBold,
         "rounded-full": isPill,
         rounded: !isPill,
