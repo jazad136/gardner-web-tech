@@ -7,5 +7,12 @@ export interface SectionHeaderProps {
 }
 
 export const SectionHeader = ({ children, classNames }: SectionHeaderProps) => (
-  <h3 className={cn("mb-4 text-2xl font-semibold", classNames)}>{children}</h3>
+  <h3
+    className={cn(
+      "prose dark:prose-dark mb-4 text-2xl font-semibold",
+      classNames
+    )}
+  >
+    {children}
+  </h3>
 );

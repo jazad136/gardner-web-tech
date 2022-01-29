@@ -2,7 +2,7 @@ import { Magic } from "@magic-sdk/admin";
 import { MagicUserMetadata } from "magic-sdk";
 import * as Pino from "pino";
 
-const logger = Pino.pino();
+const logger = Pino.default({ name: "MagicServer" });
 let magic: Magic = null;
 
 // Create server-side Magic Instance

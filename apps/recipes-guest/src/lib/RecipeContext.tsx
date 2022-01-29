@@ -1,13 +1,13 @@
 import { createContext, ReactElement, useContext, useState } from "react";
-import { Recipe } from "ui";
+import { RecipeListItem } from "ui";
 
 export interface RecipeProviderProps {
   children: string | ReactElement | ReactElement[];
 }
 
 export interface RecipeProviderInterface {
-  recipes: Recipe[];
-  handleSetRecipes: (recipes: Recipe[]) => void;
+  recipes: RecipeListItem[];
+  handleSetRecipes: (recipes: RecipeListItem[]) => void;
 }
 
 const RecipeContext = createContext<RecipeProviderInterface | null>(null);
@@ -15,7 +15,7 @@ const RecipeContext = createContext<RecipeProviderInterface | null>(null);
 export const RecipeProvider = ({ children }: RecipeProviderProps) => {
   const [recipes, setRecipes] = useState([]);
 
-  const handleSetRecipes = (recipes: Recipe[]): void => {
+  const handleSetRecipes = (recipes: RecipeListItem[]): void => {
     setRecipes(recipes);
   };
 

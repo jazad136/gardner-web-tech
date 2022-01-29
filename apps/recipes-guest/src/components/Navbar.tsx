@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import RecipeLink from "./RecipeLink";
-import { NavbarWrapper, MenuToggle, Brand, Recipe } from "ui";
+import { NavbarWrapper, MenuToggle, Brand, RecipeListItem } from "ui";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "ui/ThemeToggle";
 import { useRecipeContext } from "src/lib/RecipeContext";
@@ -74,7 +74,7 @@ const Navbar = () => {
                 initial="closed"
                 animate="open"
                 exit="exit"
-                className="min-h-full overflow-y-auto absolute z-50 whitespace-nowrap bg-white"
+                className="min-h-full overflow-y-auto absolute z-50 whitespace-nowrap bg-white dark:bg-gray-900"
               >
                 <div className="w-full p-2 h-screen mr-1">
                   <div className="sticky top-0 mb-2">
@@ -88,7 +88,7 @@ const Navbar = () => {
                     </div>
                   </div>
                   <div className="mr-auto block w-full pb-5">
-                    {(displayedRecipes ?? []).map((recipe: Recipe) => (
+                    {(displayedRecipes ?? []).map((recipe: RecipeListItem) => (
                       <RecipeLink key={recipe.title} recipe={recipe} />
                     ))}
                   </div>

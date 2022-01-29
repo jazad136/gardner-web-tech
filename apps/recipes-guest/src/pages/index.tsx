@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { BsChevronBarDown } from "react-icons/bs";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import { sanityClient } from "src/lib/SanityServer";
-import { Button, Recipe } from "ui";
+import { Button, RecipeListItem } from "ui";
 import { allRecipesQuery } from "ui/recipes";
 
 export interface HomeProps {
-  allRecipes: Recipe[];
+  allRecipes: RecipeListItem[];
 }
 
 const Home = ({ allRecipes }: HomeProps) => {
@@ -69,7 +69,9 @@ const Home = ({ allRecipes }: HomeProps) => {
 };
 
 export async function getStaticProps() {
-  const allRecipes = (await sanityClient.fetch(allRecipesQuery)) as Recipe[];
+  const allRecipes = (await sanityClient.fetch(
+    allRecipesQuery
+  )) as RecipeListItem[];
 
   return {
     props: {

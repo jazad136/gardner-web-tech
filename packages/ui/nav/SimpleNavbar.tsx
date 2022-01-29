@@ -1,6 +1,5 @@
 import * as React from "react";
 import { ReactElement, useEffect, useState } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { MenuToggle } from "./MenuToggle";
 import { MiniNav } from "./MiniNav";
@@ -10,6 +9,9 @@ import { NavbarLinks } from "./NavbarLinks";
 import ThemeToggle from "../ThemeToggle";
 import { NavbarWrapper } from "./NavbarWrapper";
 import { Brand } from "./Brand";
+import * as Pino from "pino";
+
+const logger = Pino.default({ name: "SimpleNavbar" });
 
 export interface SimpleNavbarProps {
   brandText: string;
@@ -36,7 +38,7 @@ export const SimpleNavbar = ({
 
   useEffect(() => {
     if (displayAlert && !alertText) {
-      console.error("Alert requires custom text");
+      logger.error("Alert requires custom text");
     }
   }, [displayAlert, alertText]);
 

@@ -10,7 +10,7 @@ export interface BrandProps {
 export const Brand = ({ children, href }: BrandProps) => {
   return (
     <Link href={href}>
-      <a className="leading-relaxed inline-block lg:ml-4 py-2 whitespace-nowrap uppercase">
+      <a className="prose dark:prose-dark leading-relaxed inline-block lg:ml-4 py-2 whitespace-nowrap uppercase">
         {children}
       </a>
     </Link>

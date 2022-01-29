@@ -14,7 +14,7 @@ export const NavAlert = ({
   return (
     <div
       className={cn(
-        "w-full h-full p-2 text-center text-white",
+        "w-full h-full p-2 text-center prose prose-dark",
         backgroundColor
       )}
     >

@@ -33,7 +33,7 @@ export const Button = ({
 
   return (
     <button
-      className={cn("my-1 mx-1", sizeClasses, {
+      className={cn("my-1 mx-1 prose dark:prose-dark", sizeClasses, {
         "font-bold": isBold,
         "rounded-full": isPill,
         rounded: !isPill,

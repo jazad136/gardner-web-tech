@@ -1,5 +1,9 @@
 {
   "extends": "tsconfig/nextjs.json",
-  "include": [".", "../../apps/web/src/pages/Layout.tsx"],
+  "include": [
+    ".",
+    "../../apps/web/src/pages/Layout.tsx",
+    "../../apps/recipes-guest/src/components/SectionWithPortableTextBlock.tsx"
+  ],
   "exclude": ["dist", "build", "node_modules"]
 }

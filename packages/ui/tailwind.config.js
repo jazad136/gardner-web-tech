@@ -4,7 +4,10 @@ const colors = require("tailwindcss/colors");
 module.exports = {
   mode: "jit",
   darkMode: "class",
-  content: ["./**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./**/*.{js,ts,jsx,tsx}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
+  ],
   theme: {
     extend: {
       colors: {
@@ -28,5 +31,8 @@ module.exports = {
   variants: {
     typography: ["dark"],
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("tw-elements/dist/plugin"),
+  ],
 };

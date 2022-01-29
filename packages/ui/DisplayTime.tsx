@@ -16,7 +16,7 @@ export const DisplayTime = (minutes): ReactElement => {
     displayDuration = correctedDuration.toFormat("h 'hours' m 'minutes'");
   }
 
-  return <span>{displayDuration}</span>;
+  return <span className="prose dark:prose-dark">{displayDuration}</span>;
 };
 
 DisplayTime.propTypes = {

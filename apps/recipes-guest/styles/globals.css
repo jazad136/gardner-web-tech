@@ -47,3 +47,11 @@ body {
   .react-toggle-track {
   background-color: theme("colors.gray.500");
 }
+
+.accordion-button {
+  font-weight: 700;
+}
+
+.accordion-button:not(.collapsed) {
+  @apply bg-inherit text-slate-700 dark:text-slate-50;
+}

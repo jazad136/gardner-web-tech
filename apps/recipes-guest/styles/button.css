@@ -15,7 +15,7 @@
 .btn-outline-danger,
 .btn-outline-dark,
 .btn-outline-light {
-  @apply border-solid border-2 bg-white text-black;
+  @apply border-solid border-2 prose dark:prose-dark;
 }
 
 .btn-bg-success {

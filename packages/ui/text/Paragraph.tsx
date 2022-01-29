@@ -7,5 +7,5 @@ export interface ParagraphProps {
 }
 
 export const Paragraph = ({ children, classNames }: ParagraphProps) => (
-  <p className={cn("mb-4", classNames)}>{children}</p>
+  <p className={cn("prose dark:prose-dark mb-4", classNames)}>{children}</p>
 );

@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { urlFor } from "src/lib/SanityUi";
-import { DisplayTime, Recipe } from "ui";
+import { DisplayTime, RecipeListItem } from "ui";
 
 export interface RecipeLinkProps {
-  recipe: Recipe;
+  recipe: RecipeListItem;
 }
 
 const RecipeLink = ({ recipe }: RecipeLinkProps): ReactElement => {
@@ -29,10 +29,10 @@ const RecipeLink = ({ recipe }: RecipeLinkProps): ReactElement => {
           </div>
           <div className="inline-block">
             <div className="block">
-              <div className="text-xl font-normal text-black flex-1 overflow-ellipsis">
+              <div className="text-xl font-normal text-black flex-1 overflow-ellipsis prose dark:prose-dark">
                 {recipe.title}
               </div>
-              <div className="text-sm text-slate-400">
+              <div className="text-sm prose text-slate-400">
                 Time to make: {DisplayTime(recipe.cookTime + recipe.prepTime)}
                 {recipe.restTime && <> (Rest: {recipe.restTime})</>}
               </div>

@@ -7,7 +7,12 @@ export interface SubtitleProps {
 }
 
 const Subtitle = ({ children, classNames }: SubtitleProps) => (
-  <p className={cn("text-lg opacity-40 font-semibold mb-4", classNames)}>
+  <p
+    className={cn(
+      "prose dark:prose-dark text-lg opacity-40 font-semibold mb-4",
+      classNames
+    )}
+  >
     {children}
   </p>
 );
