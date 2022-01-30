@@ -1,13 +1,8 @@
 import { signIn } from "next-auth/react";
 import Script from "next/script";
 import { PageSpinner } from "ui";
-import * as Pino from "pino";
-
-const logger = Pino.default({ name: "Callback" });
 
 const Callback = () => {
-  logger.debug(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY);
-
   return (
     <>
       <PageSpinner />

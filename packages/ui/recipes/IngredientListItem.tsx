@@ -1,9 +1,5 @@
 import { Ingredient } from ".";
 
-import * as Pino from "pino";
-
-const logger = Pino.default({ name: "IngredientListItem" });
-
 export interface IngredientListItemProps {
   ingredient: Ingredient;
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ReactElement, useMemo } from "react";
+import { ReactElement } from "react";
 import cn from "classnames";
 
 export interface ButtonProps {

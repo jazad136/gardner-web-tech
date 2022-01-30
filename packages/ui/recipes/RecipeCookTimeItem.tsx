@@ -1,9 +1,6 @@
 import { ReactElement } from "react";
 import { DisplayTime } from "..";
 import cn from "classnames";
-import * as Pino from "pino";
-
-const logger = Pino.default({ name: "cook time item" });
 
 export interface RecipeCookTimeItemProps {
   children: ReactElement | ReactElement[];

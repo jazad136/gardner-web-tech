@@ -1,12 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import RecipeLink from "./RecipeLink";
-import {
-  NavbarWrapper,
-  MenuToggle,
-  Brand,
-  RecipeListItem,
-  NavbarLink,
-} from "ui";
+import { NavbarWrapper, MenuToggle, Brand, RecipeListItem } from "ui";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "ui/ThemeToggle";
 import { useRecipeContext } from "src/lib/RecipeContext";

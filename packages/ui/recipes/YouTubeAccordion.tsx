@@ -6,9 +6,6 @@ import {
   AccordionSectionHeader,
   AccordionWrapper,
 } from "..";
-import * as Pino from "pino";
-
-const logger = Pino.default({ name: "YouTubeAccordion" });
 
 export interface YouTubeAccordionProps {
   youTubeUrls: string[];
