@@ -6,13 +6,17 @@ import { DisplayTime, RecipeListItem } from "ui";
 
 export interface RecipeLinkProps {
   recipe: RecipeListItem;
+  closeSidebar: () => void;
 }
 
-const RecipeLink = ({ recipe }: RecipeLinkProps): ReactElement => {
+const RecipeLink = ({
+  recipe,
+  closeSidebar,
+}: RecipeLinkProps): ReactElement => {
   return (
     <div className="my-4">
-      <Link href={`/${recipe.slug}`}>
-        <a className="flex">
+      <Link href={{ pathname: "/[slug]", query: { slug: recipe.slug } }}>
+        <a className="flex" onClick={closeSidebar}>
           <div className="inline-block mr-3">
             {recipe.image && (
               <Image

@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "ui/ThemeToggle";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
+import { useLoadingContext } from "src/lib/LoadingContext";
 
 const Navbar = () => {
   const { recipes } = useRecipeContext();
+  const { handleSetLoading } = useLoadingContext();
   const [expanded, setExpanded] = useState(false);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
   const [search, setSearch] = useState("");
@@ -74,7 +76,7 @@ const Navbar = () => {
                 initial="closed"
                 animate="open"
                 exit="exit"
-                className="min-h-full overflow-y-auto absolute z-20 whitespace-nowrap bg-white dark:bg-gray-900"
+                className="min-h-full overflow-y-auto absolute z-20 whitespace-nowrap bg-white dark:bg-gray-900 scrollbar"
               >
                 <div className="w-full p-2 h-screen mr-1">
                   <div className="sticky top-0 mb-2 block z-50 bg-white dark:bg-gray-900 py-2 border-b-2 border-solid">
@@ -95,9 +97,17 @@ const Navbar = () => {
                     />
                   </form>
                   <div className="relative mr-auto block w-full pb-5 z-0">
-                    {(displayedRecipes ?? []).map((recipe: RecipeListItem) => (
-                      <RecipeLink key={recipe.title} recipe={recipe} />
-                    ))}
+                    {(displayedRecipes ?? []).map(
+                      (recipe: RecipeListItem, index) => (
+                        <RecipeLink
+                          key={`recipe-${index}`}
+                          recipe={recipe}
+                          closeSidebar={() => (
+                            setExpanded(false), handleSetLoading(true)
+                          )}
+                        />
+                      )
+                    )}
                   </div>
                 </div>
               </motion.div>

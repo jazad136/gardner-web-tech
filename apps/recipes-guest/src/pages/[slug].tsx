@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from "react";
+import { createRef, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
@@ -20,9 +20,9 @@ import { useRecipeContext } from "src/lib/RecipeContext";
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import { urlFor } from "../lib/SanityUi";
-import Script from "next/script";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Head from "next/head";
+import { useLoadingContext } from "src/lib/LoadingContext";
 
 const logger = Pino.default({ name: "RecipePage" });
 
@@ -37,8 +37,8 @@ export interface RecipePageProps {
 
 const RecipePage = ({ data }: RecipePageProps) => {
   const { handleSetRecipes } = useRecipeContext();
+  const { handleSetLoading } = useLoadingContext();
   const printableContainerRef = createRef<HTMLDivElement>();
-  const [windowWidth, setWindowWidth] = useState(0);
   const [recipeCookTimeBodyOpen, setRecipeCookTimeBodyOpen] = useState(true);
   const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
   const router = useRouter();
@@ -52,15 +52,17 @@ const RecipePage = ({ data }: RecipePageProps) => {
     handleSetRecipes(allRecipes);
   }, [allRecipes, handleSetRecipes]);
 
-  // git width of window for downloading image width
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setWindowWidth(window.innerWidth);
-    }
-  }, []);
+  const removeLoader = useCallback(() => {
+    handleSetLoading(false);
+  }, [handleSetLoading]);
+
+  useEffect(
+    () => router.events.on("routeChangeComplete", removeLoader),
+    [router, removeLoader]
+  );
 
   if (!data?.currentRecipe?.slug) {
-    logger.error(data, "Current Recipe slug not found. Url: %s", router.route);
+    logger.error(data, "Current Recipe slug not found. Url: %s", router.asPath);
     return <ErrorPage statusCode={404} />;
   }
 
@@ -95,17 +97,17 @@ const RecipePage = ({ data }: RecipePageProps) => {
             <div className="w-full flex justify-center">
               <PageTitle>{title}</PageTitle>
             </div>
-            {windowWidth && image && (
+            {image && (
               <div className="block">
                 <Image
-                  className="w-16 md:w-32 lg:w-48 max-w-full"
+                  className="w-16 md:w-32 lg:w-48 max-w-full rounded-xl"
                   alt={title}
-                  width={windowWidth}
-                  height="500"
+                  width={2500}
+                  height={1000}
                   layout="responsive"
                   src={urlFor(image)
-                    .width(windowWidth)
-                    .height(500)
+                    .width(2500)
+                    .height(1000)
                     .crop("focalpoint")
                     .fit("crop")
                     .auto("format")

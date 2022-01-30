@@ -44,11 +44,12 @@ export const YouTubeAccordion = ({ youTubeUrls }: YouTubeAccordionProps) => {
         <AccordionSectionBody id={id} isOpen={bodyOpen}>
           <div ref={videoContainerRef} className="w-full">
             <ul className="list-none flex flex-wrap -mx-4">
-              {(youTubeUrls ?? []).map((url) => (
+              {(youTubeUrls ?? []).map((url, index) => (
                 <YouTubeListItem
                   youTubeUrl={url}
                   videoContainerWidth={videoContainerWidth}
                   isHidden={!bodyOpen}
+                  key={`youtube-${index}`}
                 />
               ))}
             </ul>

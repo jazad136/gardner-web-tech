@@ -36,7 +36,6 @@ export const YouTubeListItem = ({
       className={cn("mx-auto", {
         hidden: isHidden,
       })}
-      key={youTubeId}
     >
       <YouTube
         className="max-w-full"

@@ -31,10 +31,10 @@ export const IngredientList = ({
         </AccordionSectionHeader>
         <AccordionSectionBody id={id} isOpen={bodyOpen}>
           <ul className="list-none flex flex-wrap -mx-4">
-            {(ingredients ?? []).map((ingredient) => (
+            {(ingredients ?? []).map((ingredient, index) => (
               <IngredientListItem
                 ingredient={ingredient}
-                key={ingredient.title}
+                key={`ingredient-${index}`}
               />
             ))}
           </ul>

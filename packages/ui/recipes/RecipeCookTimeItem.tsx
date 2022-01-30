@@ -20,14 +20,12 @@ export const RecipeCookTimeItem = ({
   rest = "",
   totalItems,
 }: RecipeCookTimeItemProps) => {
-  logger.info(rest, "rest");
   return (
     <li
       className={cn("block w-full ", {
         "md:w-1/2 lg:w-1/4": totalItems % 2 === 0,
         "md:w-1/3": totalItems % 2 !== 0,
       })}
-      key={title}
     >
       {children}
       <div className="prose dark:prose-dark flex justify-center capitalize">

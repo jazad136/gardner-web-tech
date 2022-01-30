@@ -5,5 +5,4 @@ export const config: ClientConfig = {
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   apiVersion: "2022-01-27",
   useCdn: process.env.NODE_ENV === "production",
-  token: process.env.SANITY_API_TOKEN,
 };

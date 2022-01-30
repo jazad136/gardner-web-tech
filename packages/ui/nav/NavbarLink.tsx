@@ -20,7 +20,7 @@ export const NavbarLink = ({
   }
 
   return (
-    <li className="nav-item" key={text}>
+    <li className="nav-item">
       <Link href={href}>
         <a
           className={cn(
