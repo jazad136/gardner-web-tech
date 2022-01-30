@@ -7,6 +7,29 @@ import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
 import { useLoadingContext } from "src/lib/LoadingContext";
 
+const slideOut = {
+  closed: {
+    x: "-100vw",
+    opacity: 0,
+  },
+  open: {
+    x: "0",
+    opacity: 1,
+    animate: "push",
+    transition: {
+      duration: 0.2,
+    },
+  },
+  exit: {
+    x: "-100vw",
+    opacity: 0,
+    animate: "push",
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
+
 const Navbar = () => {
   const { recipes } = useRecipeContext();
   const { handleSetLoading } = useLoadingContext();
@@ -27,29 +50,6 @@ const Navbar = () => {
     }
     setDisplayedRecipes(filteredRecipes);
   }, [search, recipes, setDisplayedRecipes]);
-
-  const slideOut = {
-    closed: {
-      x: "-100vw",
-      opacity: 0,
-    },
-    open: {
-      x: "0",
-      opacity: 1,
-      animate: "push",
-      transition: {
-        duration: 0.2,
-      },
-    },
-    exit: {
-      x: "-100vw",
-      opacity: 0,
-      animate: "push",
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
 
   return (
     <>

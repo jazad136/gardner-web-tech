@@ -171,4 +171,6 @@ export async function getStaticPaths() {
   };
 }
 
+RecipePage.auth = true;
+
 export default RecipePage;

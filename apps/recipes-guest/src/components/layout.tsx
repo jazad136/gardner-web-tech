@@ -18,8 +18,8 @@ const Layout = ({ children, useContainer = true }: LayoutProps) => {
       <Meta />
       <div className="flex flex-col min-h-screen">
         <Navbar />
+        {loading && <PageSpinner />}
         <main className={cn({ "container flex-grow": useContainer })}>
-          {loading && <PageSpinner />}
           {children}
         </main>
         {/* <Footer /> */}

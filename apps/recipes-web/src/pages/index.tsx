@@ -84,4 +84,7 @@ export async function getStaticProps() {
 Home.layoutProps = {
   useContainer: false,
 };
+
+Home.auth = true;
+
 export default Home;

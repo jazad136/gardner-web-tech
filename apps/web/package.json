@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev | pino-pretty -c -f -a",
+    "dev": "next dev --port 3002 | pino-pretty -c -f -a",
     "build": "next build",
     "start": "next start | pino-pretty -c -f -a",
     "test": "echo \"Web-app test\"",
