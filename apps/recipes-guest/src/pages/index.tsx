@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import { BsChevronBarDown } from "react-icons/bs";
 import { useRecipeContext } from "src/lib/RecipeContext";
@@ -60,7 +61,16 @@ const Home = ({ allRecipes }: HomeProps) => {
           </div>
           <div id="footer" className="my-3 text-2xl w-1/2">
             To view our recipes, please open the side nav by clicking on the
-            menu button in the top left corner.
+            menu button in the top left corner. Please note that none of the
+            recipes in this application with the some exceptions are actual
+            recipes! This is the demo page only. Most of this uses generated
+            Bacon Ipsum. The one exception is the{" "}
+            <Link href="/buffalo-chicken-quesadilla">
+              <a className="text-sky-500 underline">
+                Buffalo Chicken Quesadilla
+              </a>
+            </Link>
+            .
           </div>
         </main>
       </div>

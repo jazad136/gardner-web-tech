@@ -1,5 +1,8 @@
 @import "tailwind-imports.css";
 @import "button.css";
+@import "theme-toggle.css";
+@import "scrollbar.css";
+@import "nav.css";
 
 :root {
   --background-primary: theme("colors.white");
@@ -14,62 +17,4 @@
 
 body {
   background-color: var(--background-primary);
-}
-
-.nav {
-  background-color: var(--background-accent);
-}
-
-.nav .custom-border-color {
-  border-color: var(--background-secondary);
-}
-
-.theme-toggle.react-toggle--focus .react-toggle-thumb,
-.theme-toggle.react-toggle:active:not(.react-toggle--disabled)
-  .react-toggle-thumb {
-  box-shadow: none;
-}
-
-.theme-toggle.react-toggle--checked .react-toggle-track {
-  background-color: theme("colors.blue.700");
-}
-
-.theme-toggle.react-toggle--checked:hover:not(.react-toggle--disabled)
-  .react-toggle-track {
-  background-color: theme("colors.blue.600");
-}
-
-.theme-toggle.react-toggle:not(.react-toggle--checked) .react-toggle-track {
-  background-color: theme("colors.gray.600");
-}
-
-.theme-toggle.react-toggle:hover:not(.react-toggle--checked)
-  .react-toggle-track {
-  background-color: theme("colors.gray.500");
-}
-
-@layer utilities {
-  .scrollbar::-webkit-scrollbar {
-    width: 0.45rem;
-  }
-  .scrollbar::-webkit-scrollbar-thumb {
-    background: theme("colors.gray.500");
-    border-radius: 1rem;
-  }
-  .scrollbar::-webkit-scrollbar-thumb:active {
-    background-color: theme("colors.gray.500");
-  }
-  .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: theme("colors.gray.400");
-    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
-  }
-
-  .scrollbar::-webkit-scrollbar-track {
-    background: theme("colors.gray.300");
-    border-radius: 4px;
-  }
-  .scrollbar::-webkit-scrollbar-track:hover,
-  .scrollbar::-webkit-scrollbar-track:active {
-    background: theme("colors.gray.300");
-  }
 }

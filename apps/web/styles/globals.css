@@ -1,5 +1,7 @@
 @import "tailwind-imports.css";
 @import "button.css";
+@import "theme-toggle.css";
+@import "nav.css";
 
 :root {
   --background-primary: theme("colors.white");
@@ -14,36 +16,4 @@
 
 body {
   background-color: var(--background-primary);
-}
-
-.nav {
-  background-color: var(--background-accent);
-}
-
-.nav .custom-border-color {
-  border-color: var(--background-secondary);
-}
-
-.theme-toggle.react-toggle--focus .react-toggle-thumb,
-.theme-toggle.react-toggle:active:not(.react-toggle--disabled)
-  .react-toggle-thumb {
-  box-shadow: none;
-}
-
-.theme-toggle.react-toggle--checked .react-toggle-track {
-  background-color: theme("colors.blue.700");
-}
-
-.theme-toggle.react-toggle--checked:hover:not(.react-toggle--disabled)
-  .react-toggle-track {
-  background-color: theme("colors.blue.600");
-}
-
-.theme-toggle.react-toggle:not(.react-toggle--checked) .react-toggle-track {
-  background-color: theme("colors.gray.600");
-}
-
-.theme-toggle.react-toggle:hover:not(.react-toggle--checked)
-  .react-toggle-track {
-  background-color: theme("colors.gray.500");
 }

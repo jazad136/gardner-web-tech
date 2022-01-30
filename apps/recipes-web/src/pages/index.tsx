@@ -45,7 +45,7 @@ const Home = ({ allRecipes }: HomeProps) => {
               alt="recipes landing page image"
             />
             <h1 className="m-0 mb-0.5 text-6xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              Welcome to our guest recipes website!
+              Welcome to our recipes website!
             </h1>
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <Button

@@ -4,9 +4,8 @@
 .btn-bg-primary,
 .btn-bg-secondary,
 .btn-bg-danger,
-.btn-bg-dark,
-.btn-hover {
-  @apply prose-dark hover:prose-dark;
+.btn-bg-dark {
+  @apply prose prose-dark hover:prose-dark;
 }
 
 .btn-outline-success,
@@ -17,16 +16,6 @@
 .btn-outline-light,
 .btn-outline-white {
   @apply border-solid border-2 prose dark:prose-dark transition ease-in-out delay-100 hover:scale-110;
-}
-
-.btn-outline-success.btn-hover,
-.btn-outline-primary.btn-hover,
-.btn-outline-secondary.btn-hover,
-.btn-outline-danger.btn-hover,
-.btn-outline-dark.btn-hover,
-.btn-outline-light.btn-hover,
-.btn-outline-white.btn-hover {
-  @apply prose hover:prose;
 }
 
 .btn-bg-success {
@@ -70,11 +59,11 @@
 }
 
 .btn-bg-light {
-  @apply bg-gray-300 text-black;
+  @apply bg-gray-300  prose dark:prose-dark;
 }
 
 .btn-bg-white {
-  @apply bg-white text-black;
+  @apply bg-white prose dark:prose-dark;
 }
 
 .btn-bg-light.btn-hover {
