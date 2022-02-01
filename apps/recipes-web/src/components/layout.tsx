@@ -1,10 +1,11 @@
-import { ReactElement, useMemo } from "react";
+import { ReactElement, useCallback, useEffect, useMemo } from "react";
 import Meta from "@components/meta";
 import Navbar from "./Navbar";
 import cn from "classnames";
 import { PageSpinner } from "ui";
 import { useLoadingContext } from "src/lib/LoadingContext";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface LayoutProps {
   useContainer?: boolean;
@@ -12,10 +13,21 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, useContainer = true }: LayoutProps) => {
-  const { loading } = useLoadingContext();
   const { data: session } = useSession();
+  const { loading } = useLoadingContext();
+  const { handleSetLoading } = useLoadingContext();
+  const { events } = useRouter();
 
   const isUser: boolean = useMemo(() => !!session?.user, [session]);
+
+  const removeLoader = useCallback(() => {
+    handleSetLoading(false);
+  }, [handleSetLoading]);
+
+  useEffect(
+    () => events.on("routeChangeComplete", removeLoader),
+    [events, removeLoader]
+  );
 
   return (
     <>

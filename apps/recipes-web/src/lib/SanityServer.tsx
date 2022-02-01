@@ -12,3 +12,15 @@ export const previewClient = createClient({
 // Helper function for easily switching between normal client and preview client
 export const getClient = (usePreview) =>
   usePreview ? previewClient : sanityClient;
+
+export const toPlainText = (blocks): string => {
+  return (blocks ?? [])
+    .map((block) => {
+      if (block._type !== "block" || !block.children) {
+        return "";
+      }
+
+      return block.children.map((child) => child.text).join("");
+    })
+    .join("\n\n");
+};

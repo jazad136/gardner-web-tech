@@ -20,6 +20,7 @@ import { urlFor } from "../lib/SanityUi";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Head from "next/head";
 import Link from "next/link";
+import { useLoadingContext } from "src/lib/LoadingContext";
 
 const logger = Pino.default({ name: "RecipePage" });
 
@@ -34,6 +35,7 @@ export interface RecipePageProps {
 
 const RecipePage = ({ data }: RecipePageProps) => {
   const { handleSetRecipes } = useRecipeContext();
+  const { handleSetLoading } = useLoadingContext();
   const printableContainerRef = createRef<HTMLDivElement>();
   const [recipeCookTimeBodyOpen, setRecipeCookTimeBodyOpen] = useState(true);
   const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
@@ -45,19 +47,13 @@ const RecipePage = ({ data }: RecipePageProps) => {
     }
   }, [data?.allRecipes, handleSetRecipes]);
 
-  if (!data) {
-    return <></>;
-  }
-
-  const { currentRecipe } = data;
-
-  const { title, image, notes, youTubeUrls, ingredients, instructions, slug } =
-    currentRecipe;
-
   if (!data?.currentRecipe?.slug) {
     logger.error(data, "Current Recipe slug not found. Url: %s", asPath);
     return <ErrorPage statusCode={404} />;
   }
+
+  const { title, image, notes, youTubeUrls, ingredients, instructions, slug } =
+    data.currentRecipe;
 
   return (
     <>
@@ -91,15 +87,13 @@ const RecipePage = ({ data }: RecipePageProps) => {
                 />
               </div>
             )}
-            {currentRecipe && (
-              <RecipeCookTime
-                recipe={currentRecipe}
-                bodyOpen={recipeCookTimeBodyOpen}
-                toggleBodyOpen={() =>
-                  setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
-                }
-              />
-            )}
+            <RecipeCookTime
+              recipe={data.currentRecipe}
+              bodyOpen={recipeCookTimeBodyOpen}
+              toggleBodyOpen={() =>
+                setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
+              }
+            />
             <IngredientList
               ingredients={ingredients}
               toggleBodyOpen={() =>
@@ -118,7 +112,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
             <Link href={{ pathname: "/print/[slug]", query: { slug } }}>
               <a>
                 <Button
-                  onClick={() => null}
+                  onClick={() => handleSetLoading(true)}
                   color="success"
                   isOutline
                   size="md"

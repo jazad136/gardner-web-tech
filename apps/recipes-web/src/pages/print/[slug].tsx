@@ -91,4 +91,10 @@ export async function getStaticPaths() {
   };
 }
 
+RecipePDF.layoutProps = {
+  useContainer: true,
+};
+
+RecipePDF.auth = true;
+
 export default RecipePDF;

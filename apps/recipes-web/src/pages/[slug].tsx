@@ -1,4 +1,4 @@
-import { createRef, useCallback, useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import Image from "next/image";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
@@ -17,11 +17,10 @@ import {
 } from "ui";
 import * as Pino from "pino";
 import { useRecipeContext } from "src/lib/RecipeContext";
-import { toPng } from "html-to-image";
-import jsPDF from "jspdf";
 import { urlFor } from "../lib/SanityUi";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Head from "next/head";
+import Link from "next/link";
 import { useLoadingContext } from "src/lib/LoadingContext";
 
 const logger = Pino.default({ name: "RecipePage" });
@@ -43,45 +42,19 @@ const RecipePage = ({ data }: RecipePageProps) => {
   const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
   const router = useRouter();
 
-  const { currentRecipe, allRecipes } = data;
-
-  const { title, image, notes, youTubeUrls, ingredients, instructions, slug } =
-    currentRecipe;
-
   useEffect(() => {
-    handleSetRecipes(allRecipes);
-  }, [allRecipes, handleSetRecipes]);
-
-  const removeLoader = useCallback(() => {
-    handleSetLoading(false);
-  }, [handleSetLoading]);
-
-  useEffect(
-    () => router.events.on("routeChangeComplete", removeLoader),
-    [router, removeLoader]
-  );
+    if (data?.allRecipes) {
+      handleSetRecipes(data.allRecipes);
+    }
+  }, [data?.allRecipes, handleSetRecipes]);
 
   if (!data?.currentRecipe?.slug) {
     logger.error(data, "Current Recipe slug not found. Url: %s", router.asPath);
     return <ErrorPage statusCode={404} />;
   }
 
-  const printPage = async () => {
-    if (printableContainerRef && slug) {
-      const ref = printableContainerRef.current;
-      await expandAccordions();
-      const canvas = await toPng(ref);
-      const pdf = new jsPDF();
-      pdf.addImage(canvas, "JPEG", 20, 20, 170, 160);
-      pdf.save(`${slug}.pdf`);
-    }
-  };
-
-  const expandAccordions = async () => {
-    setRecipeCookTimeBodyOpen(true);
-    setIngredientsBodyOpen(true);
-    await sleep(1000);
-  };
+  const { title, image, notes, youTubeUrls, ingredients, instructions, slug } =
+    data.currentRecipe;
 
   return (
     <>
@@ -116,7 +89,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
               </div>
             )}
             <RecipeCookTime
-              recipe={currentRecipe}
+              recipe={data.currentRecipe}
               bodyOpen={recipeCookTimeBodyOpen}
               toggleBodyOpen={() =>
                 setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
@@ -137,9 +110,18 @@ const RecipePage = ({ data }: RecipePageProps) => {
           </div>
           <YouTubeAccordion youTubeUrls={youTubeUrls} />
           <div className="flex justify-center">
-            <Button onClick={printPage} color="success" isOutline size="md">
-              Print
-            </Button>
+            <Link href={{ pathname: "/print/[slug]", query: { slug } }}>
+              <a>
+                <Button
+                  onClick={() => handleSetLoading(true)}
+                  color="success"
+                  isOutline
+                  size="md"
+                >
+                  Print
+                </Button>
+              </a>
+            </Link>
           </div>
         </main>
       </div>
