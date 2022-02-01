@@ -1,9 +1,10 @@
-import { ReactElement } from "react";
+import { ReactElement, useCallback, useEffect } from "react";
 import Meta from "@components/meta";
 import Navbar from "./Navbar";
 import cn from "classnames";
 import { PageSpinner } from "ui";
 import { useLoadingContext } from "src/lib/LoadingContext";
+import { useRouter } from "next/router";
 
 interface LayoutProps {
   useContainer?: boolean;
@@ -12,6 +13,17 @@ interface LayoutProps {
 
 const Layout = ({ children, useContainer = true }: LayoutProps) => {
   const { loading } = useLoadingContext();
+  const { handleSetLoading } = useLoadingContext();
+  const { events } = useRouter();
+
+  const removeLoader = useCallback(() => {
+    handleSetLoading(false);
+  }, [handleSetLoading]);
+
+  useEffect(
+    () => events.on("routeChangeComplete", removeLoader),
+    [events, removeLoader]
+  );
 
   return (
     <>

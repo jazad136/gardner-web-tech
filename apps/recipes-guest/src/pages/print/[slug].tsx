@@ -29,8 +29,14 @@ const RecipePDF = ({ data }: RecipePdfProps) => {
   const { handleSetRecipes } = useRecipeContext();
 
   useEffect(() => {
-    handleSetRecipes(data.allRecipes);
-  }, [data.allRecipes, handleSetRecipes]);
+    if (data?.allRecipes) {
+      handleSetRecipes(data.allRecipes);
+    }
+  }, [data?.allRecipes, handleSetRecipes]);
+
+  if (!data) {
+    return <></>;
+  }
 
   const image = urlFor(data.currentRecipe.image)
     .width(2500)

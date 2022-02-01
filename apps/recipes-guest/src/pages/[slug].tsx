@@ -19,7 +19,6 @@ import { useRecipeContext } from "src/lib/RecipeContext";
 import { urlFor } from "../lib/SanityUi";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Head from "next/head";
-import { useLoadingContext } from "src/lib/LoadingContext";
 import Link from "next/link";
 
 const logger = Pino.default({ name: "RecipePage" });
@@ -35,35 +34,28 @@ export interface RecipePageProps {
 
 const RecipePage = ({ data }: RecipePageProps) => {
   const { handleSetRecipes } = useRecipeContext();
-  const { handleSetLoading } = useLoadingContext();
   const printableContainerRef = createRef<HTMLDivElement>();
   const [recipeCookTimeBodyOpen, setRecipeCookTimeBodyOpen] = useState(true);
   const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
-  const [recipe, setRecipe] = useState({});
-  const router = useRouter();
+  const { asPath } = useRouter();
 
-  const { currentRecipe, allRecipes } = data;
+  useEffect(() => {
+    if (data?.allRecipes) {
+      handleSetRecipes(data.allRecipes);
+    }
+  }, [data?.allRecipes, handleSetRecipes]);
+
+  if (!data) {
+    return <></>;
+  }
+
+  const { currentRecipe } = data;
 
   const { title, image, notes, youTubeUrls, ingredients, instructions, slug } =
     currentRecipe;
 
-  useEffect(() => {
-    handleSetRecipes(allRecipes);
-  }, [allRecipes, handleSetRecipes]);
-
-  useEffect(() => setRecipe(currentRecipe), [currentRecipe, setRecipe]);
-
-  const removeLoader = useCallback(() => {
-    handleSetLoading(false);
-  }, [handleSetLoading]);
-
-  useEffect(
-    () => router.events.on("routeChangeComplete", removeLoader),
-    [router, removeLoader]
-  );
-
   if (!data?.currentRecipe?.slug) {
-    logger.error(data, "Current Recipe slug not found. Url: %s", router.asPath);
+    logger.error(data, "Current Recipe slug not found. Url: %s", asPath);
     return <ErrorPage statusCode={404} />;
   }
 
@@ -99,13 +91,15 @@ const RecipePage = ({ data }: RecipePageProps) => {
                 />
               </div>
             )}
-            <RecipeCookTime
-              recipe={currentRecipe}
-              bodyOpen={recipeCookTimeBodyOpen}
-              toggleBodyOpen={() =>
-                setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
-              }
-            />
+            {currentRecipe && (
+              <RecipeCookTime
+                recipe={currentRecipe}
+                bodyOpen={recipeCookTimeBodyOpen}
+                toggleBodyOpen={() =>
+                  setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
+                }
+              />
+            )}
             <IngredientList
               ingredients={ingredients}
               toggleBodyOpen={() =>
