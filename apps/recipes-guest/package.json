@@ -10,11 +10,10 @@
     "lint": "eslint src --fix"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^2.1.1",
     "@tailwindcss/typography": "^0.5.0",
     "api": "*",
     "framer-motion": "^6.2.3",
-    "html-to-image": "^1.9.0",
-    "jspdf": "^2.5.1",
     "next": "latest",
     "next-sanity": "^0.4.0",
     "next-themes": "^0.0.15",

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { BsChevronBarDown } from "react-icons/bs";
+import { useLoadingContext } from "src/lib/LoadingContext";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import { sanityClient } from "src/lib/SanityServer";
 import { Button, RecipeListItem } from "ui";
@@ -14,6 +15,7 @@ export interface HomeProps {
 
 const Home = ({ allRecipes }: HomeProps) => {
   const { handleSetRecipes } = useRecipeContext();
+  const { handleSetLoading } = useLoadingContext();
 
   useEffect(() => {
     handleSetRecipes(allRecipes);
@@ -38,7 +40,7 @@ const Home = ({ allRecipes }: HomeProps) => {
         </Head>
 
         <main className="p-0 flex-1 flex flex-col justify-center items-center w-full overflow-hidden text-center z-10">
-          <div className="relative text-center text-white z-0 h-screen w-full md:overflow-hidden overflow-auto">
+          <div className="relative text-center text-white z-0 h-[95vh] w-full md:overflow-hidden overflow-auto">
             <Image
               layout="fill"
               className="object-cover"
@@ -48,7 +50,7 @@ const Home = ({ allRecipes }: HomeProps) => {
             <h1 className="m-0 mb-0.5 text-6xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               Welcome to our guest recipes website!
             </h1>
-            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <Button
                 color="white"
                 size="xl"
@@ -66,7 +68,10 @@ const Home = ({ allRecipes }: HomeProps) => {
             recipes! This is the demo page only. Most of this uses generated
             Bacon Ipsum. The one exception is the{" "}
             <Link href="/buffalo-chicken-quesadilla">
-              <a className="text-sky-500 underline">
+              <a
+                className="text-sky-500 underline"
+                onClick={() => handleSetLoading(true)}
+              >
                 Buffalo Chicken Quesadilla
               </a>
             </Link>

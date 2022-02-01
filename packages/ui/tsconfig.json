@@ -3,7 +3,8 @@
   "include": [
     ".",
     "../../apps/web/src/pages/Layout.tsx",
-    "../../apps/recipes-guest/src/components/SectionWithPortableTextBlock.tsx"
+    "../../apps/recipes-guest/src/components/SectionWithPortableTextBlock.tsx",
+    "recipes/RecipeDocument.tsx"
   ],
   "exclude": ["dist", "build", "node_modules"]
 }

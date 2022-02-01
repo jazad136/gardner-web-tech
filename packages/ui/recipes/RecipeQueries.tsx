@@ -9,9 +9,8 @@ export const allRecipesQuery = `
   }
 `;
 
-export const recipeQuery = `
-{
-  "currentRecipe": *[_type == "recipe" && slug.current == $slug][0] {
+export const currentRecipeQuery = `
+  *[_type == "recipe" && slug.current == $slug][0] {
     notes,
     youTubeUrls,
     ingredients,
@@ -22,7 +21,12 @@ export const recipeQuery = `
     prepTime,
     restTime,
     'slug': slug.current,
-  },
+  }
+`;
+
+export const recipeQuery = `
+{
+  "currentRecipe": ${currentRecipeQuery},
   "allRecipes": ${allRecipesQuery}
 }`;
 

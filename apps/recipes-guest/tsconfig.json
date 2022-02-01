@@ -13,7 +13,8 @@
     "next-env.d.ts",
     "styles/global.scss",
     "../../packages/ui/recipes/RecipeLink.tsx",
-    "../../packages/ui/recipes/RecipeState.tsx"
+    "../../packages/ui/recipes/RecipeState.tsx",
+    "../../packages/ui/recipes/RecipeDocument.tsx"
   ],
   "exclude": ["node_modules", "postcss.config.js", ".next", ".turbo"]
 }

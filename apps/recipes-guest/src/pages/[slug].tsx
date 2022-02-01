@@ -12,17 +12,15 @@ import {
   RecipeListItem,
   recipeQuery,
   recipeSlugsQuery,
-  sleep,
   YouTubeAccordion,
 } from "ui";
 import * as Pino from "pino";
 import { useRecipeContext } from "src/lib/RecipeContext";
-import { toPng } from "html-to-image";
-import jsPDF from "jspdf";
 import { urlFor } from "../lib/SanityUi";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Head from "next/head";
 import { useLoadingContext } from "src/lib/LoadingContext";
+import Link from "next/link";
 
 const logger = Pino.default({ name: "RecipePage" });
 
@@ -41,6 +39,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
   const printableContainerRef = createRef<HTMLDivElement>();
   const [recipeCookTimeBodyOpen, setRecipeCookTimeBodyOpen] = useState(true);
   const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
+  const [recipe, setRecipe] = useState({});
   const router = useRouter();
 
   const { currentRecipe, allRecipes } = data;
@@ -51,6 +50,8 @@ const RecipePage = ({ data }: RecipePageProps) => {
   useEffect(() => {
     handleSetRecipes(allRecipes);
   }, [allRecipes, handleSetRecipes]);
+
+  useEffect(() => setRecipe(currentRecipe), [currentRecipe, setRecipe]);
 
   const removeLoader = useCallback(() => {
     handleSetLoading(false);
@@ -65,23 +66,6 @@ const RecipePage = ({ data }: RecipePageProps) => {
     logger.error(data, "Current Recipe slug not found. Url: %s", router.asPath);
     return <ErrorPage statusCode={404} />;
   }
-
-  const printPage = async () => {
-    if (printableContainerRef && slug) {
-      const ref = printableContainerRef.current;
-      await expandAccordions();
-      const canvas = await toPng(ref);
-      const pdf = new jsPDF();
-      pdf.addImage(canvas, "JPEG", 20, 20, 170, 160);
-      pdf.save(`${slug}.pdf`);
-    }
-  };
-
-  const expandAccordions = async () => {
-    setRecipeCookTimeBodyOpen(true);
-    setIngredientsBodyOpen(true);
-    await sleep(1000);
-  };
 
   return (
     <>
@@ -137,9 +121,18 @@ const RecipePage = ({ data }: RecipePageProps) => {
           </div>
           <YouTubeAccordion youTubeUrls={youTubeUrls} />
           <div className="flex justify-center">
-            <Button onClick={printPage} color="success" isOutline size="md">
-              Print
-            </Button>
+            <Link href={{ pathname: "/print/[slug]", query: { slug } }}>
+              <a>
+                <Button
+                  onClick={() => null}
+                  color="success"
+                  isOutline
+                  size="md"
+                >
+                  Print
+                </Button>
+              </a>
+            </Link>
           </div>
         </main>
       </div>

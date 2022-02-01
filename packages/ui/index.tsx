@@ -2,6 +2,7 @@ import * as React from "react";
 export * from "./Button";
 export * from "./DisplayTime";
 export * from "./PageSpinner";
+export * from "./PDFViewer";
 export * from "./Sleep";
 export * from "./Spinner";
 export * from "./ThemeToggle";
