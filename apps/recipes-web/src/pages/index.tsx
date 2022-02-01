@@ -60,7 +60,7 @@ const Home = ({ allRecipes }: HomeProps) => {
           </div>
           <div id="footer" className="my-3 text-2xl w-1/2">
             To view our recipes, please open the side nav by clicking on the
-            menu button in the top left corner.
+            menu in the top left corner.
           </div>
         </main>
       </div>
