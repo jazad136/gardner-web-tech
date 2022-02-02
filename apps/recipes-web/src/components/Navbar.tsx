@@ -102,7 +102,7 @@ const Navbar = () => {
                   initial="closed"
                   animate="open"
                   exit="exit"
-                  className="min-h-full overflow-y-auto absolute z-20 whitespace-nowrap bg-white dark:bg-gray-900 scrollbar"
+                  className="min-h-full overflow-y-auto absolute z-20 bg-white dark:bg-gray-900 scrollbar"
                 >
                   <div className="w-full p-2 h-screen mr-1">
                     <div className="sticky top-0 mb-2 block z-50 bg-white dark:bg-gray-900 py-2 border-b-2 border-solid">

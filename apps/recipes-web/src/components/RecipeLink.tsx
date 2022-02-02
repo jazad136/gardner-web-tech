@@ -14,10 +14,10 @@ const RecipeLink = ({
   closeSidebar,
 }: RecipeLinkProps): ReactElement => {
   return (
-    <div className="my-4">
+    <div className="my-4 max-w-full">
       <Link href={{ pathname: "/[slug]", query: { slug: recipe.slug } }}>
         <a className="flex" onClick={closeSidebar}>
-          <div className="inline-block mr-3">
+          <div className="flex mr-3 min-w-fit max-h-16">
             {recipe.image && (
               <Image
                 alt={recipe.title}
@@ -31,9 +31,9 @@ const RecipeLink = ({
               />
             )}
           </div>
-          <div className="inline-block">
+          <div className="flex">
             <div className="block">
-              <div className="text-xl font-normal text-black flex-1 overflow-ellipsis prose dark:prose-dark">
+              <div className="flex flex-wrap text-xl font-normal text-black prose dark:prose-dark break-normal">
                 {recipe.title}
               </div>
               <div className="text-sm prose text-slate-400">
