@@ -15,9 +15,9 @@ export const SectionWithPortableTextBlock = ({
 
   return (
     <div className="py-6">
-      <h3 className="prose dark:prose-dark max-w-full flex justify-center mb-4 prose-2xl">
+      <h2 className="prose dark:prose-dark max-w-full flex justify-center mb-4 prose-xl">
         {title}
-      </h3>
+      </h2>
       <div className="prose dark:prose-dark max-w-full">
         <PortableText blocks={blocks} />
       </div>
