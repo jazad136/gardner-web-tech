@@ -1,4 +1,8 @@
-# Turborepo starter
+# Gardner Web and Tech
+
+This is a project to keep and maintain all of the projects to be at [gardnerwebtech.com](#) in the future. Currently, I have 2 versions of the Recipes-Web app (one with auth, one without) as well as the recipes-cms project and the beginnings of my personal website. The guest app is being hosted at [recipes-guest.vercel.app](https://recipes-guest.vercel.app) with fake recipes. The full app is a white-listed application that is not for public use.
+
+## Turborepo Notes
 
 This is an official Yarn v1 starter turborepo.
 
