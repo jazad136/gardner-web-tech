@@ -96,7 +96,7 @@ const Navbar = () => {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </form>
-                  <div className="relative mr-auto block w-full pb-5 z-0">
+                  <div className="relative mr-auto block w-full pb-5 z-0 pr-6 pl-2">
                     {(displayedRecipes ?? []).map(
                       (recipe: RecipeListItem, index) => (
                         <RecipeLink
