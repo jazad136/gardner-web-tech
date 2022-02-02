@@ -2,6 +2,15 @@
 
 This is a project to keep and maintain all of the projects to be at [gardnerwebtech.com](#) in the future. Currently, I have 2 versions of the Recipes-Web app (one with auth, one without) as well as the recipes-cms project and the beginnings of my personal website. The guest app is being hosted at [recipes-guest.vercel.app](https://recipes-guest.vercel.app) with fake recipes. The full app is a white-listed application that is not for public use.
 
+## Projects
+
+The projects are:
+
+- [recipes-cms](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/recipes-cms)
+- [recipes-guest](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/recipes-guest) (port 3002)
+- [recipes-web](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/recipes-web) (port 3000)
+- [web](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/web) (port 3001)
+
 ## Turborepo Notes
 
 This is an official Yarn v1 starter turborepo.
