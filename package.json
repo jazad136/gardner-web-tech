@@ -38,7 +38,9 @@
       "start": {
         "cache": false
       },
-      "sanity:deploy": {}
+      "sanity:deploy": {
+        "cache": false
+      }
     }
   },
   "engines": {
