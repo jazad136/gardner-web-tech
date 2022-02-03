@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Ingredient } from ".";
 import { getFractionFromString } from "..";
 import { IngredientList } from "./IngredientList";
+import { Fraction } from "fractional";
 
 export interface IngredientListProps {
   ingredients: Ingredient[];
@@ -32,39 +33,40 @@ export const IngredientListWrapper = ({
     };
   };
 
-  const getIntOrDefault = (itemToCheck: string): number => {
-    return parseInt(itemToCheck) || -1;
+  const getFloatOrDefault = (itemToCheck: string): number => {
+    return parseFloat(itemToCheck) || -1;
   };
 
-  const getQuantityFromString = (
-    quantity: string,
-    servings: number
-  ): string => {
+  const getQuantityFromString = (quantity: string): string => {
     const { quantity: numberQuantity, unit } =
       separateIngredientQuantityAndUnit(quantity);
 
     const isFraction = numberQuantity.includes("/");
-    let newQuantity = 0;
+    let newQuantity: Fraction = null;
 
     if (!isFraction) {
-      const oldQuantity = getIntOrDefault(numberQuantity);
+      const oldQuantity = getFloatOrDefault(numberQuantity);
 
       if (oldQuantity < 0) {
         return quantity;
       }
 
-      newQuantity = oldQuantity * servings;
+      newQuantity = getFractionFromString(oldQuantity.toString()).multiply(
+        new Fraction(batches)
+      );
     } else {
-      newQuantity = getFractionFromString(numberQuantity).multiply(servings);
+      newQuantity = getFractionFromString(numberQuantity).multiply(
+        new Fraction(batches)
+      );
     }
 
-    return `${newQuantity} ${unit}`;
+    return `${newQuantity.toString()} ${unit}`;
   };
 
   const mappedIngredients: Ingredient[] = useMemo(() => {
     return (ingredients ?? []).map((ingredient) => ({
       ...ingredient,
-      quantity: getQuantityFromString(ingredient.quantity, batches),
+      quantity: getQuantityFromString(ingredient.quantity),
     }));
   }, [ingredients, batches]);
 

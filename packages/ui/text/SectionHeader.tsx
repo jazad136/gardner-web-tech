@@ -13,9 +13,13 @@ export const SectionHeader = ({
   removeMarginBottom = false,
 }: SectionHeaderProps) => (
   <h2
-    className={cn("prose dark:prose-dark text-2xl font-semibold", classNames, {
-      "mb-4": !removeMarginBottom,
-    })}
+    className={cn(
+      "prose dark:prose-dark text-2xl max-w-full font-semibold",
+      classNames,
+      {
+        "mb-4": !removeMarginBottom,
+      }
+    )}
   >
     {children}
   </h2>
