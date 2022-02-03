@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export interface IngredientServingsDropdownProps {
   servings: number;
-  setServings: (servings: number) => void;
+  setServings: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const IngredientServingsDropdown = ({

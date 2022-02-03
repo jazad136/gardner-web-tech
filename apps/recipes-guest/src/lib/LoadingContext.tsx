@@ -6,7 +6,7 @@ export interface LoadingProviderProps {
 
 export interface LoadingProviderInterface {
   loading: boolean;
-  handleSetLoading: (isLoading: boolean) => void;
+  handleSetLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LoadingContext = createContext<LoadingProviderInterface | null>(null);

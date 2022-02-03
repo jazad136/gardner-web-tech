@@ -7,7 +7,7 @@ export interface RecipeProviderProps {
 
 export interface RecipeProviderInterface {
   recipes: RecipeListItem[];
-  handleSetRecipes: (recipes: RecipeListItem[]) => void;
+  handleSetRecipes: React.Dispatch<React.SetStateAction<RecipeListItem[]>>;
 }
 
 const RecipeContext = createContext<RecipeProviderInterface | null>(null);
