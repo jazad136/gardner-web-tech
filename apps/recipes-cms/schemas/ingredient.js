@@ -44,7 +44,12 @@ export default {
     prepare({ title, quantity, unit }) {
       return {
         title,
-        subtitle: !!unit ? `${quantity} ${unit}` : quantity,
+        subtitle:
+          !!unit && !!quantity
+            ? `${quantity} ${unit}`
+            : !!unit && !quantity
+            ? unit
+            : quantity,
       };
     },
   },
