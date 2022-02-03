@@ -11,7 +11,8 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "sanity:start": "turbo run start --scope=*recipes-cms*"
+    "sanity:start": "turbo run start --scope=*recipes-cms*",
+    "sanity:deploy": "turbo run sanity:deploy --scope=*recipes-cms*"
   },
   "devDependencies": {
     "prettier": "^2.5.1",
@@ -36,7 +37,8 @@
       },
       "start": {
         "cache": false
-      }
+      },
+      "sanity:deploy": {}
     }
   },
   "engines": {
