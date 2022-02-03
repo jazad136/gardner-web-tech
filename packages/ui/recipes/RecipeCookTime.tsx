@@ -3,6 +3,7 @@ import {
   AccordionSectionBody,
   AccordionSectionHeader,
   AccordionWrapper,
+  SectionHeader,
 } from "..";
 import { CgBowl } from "react-icons/cg";
 import { IoMdStopwatch } from "react-icons/io";
@@ -33,7 +34,7 @@ export const RecipeCookTime = ({
           toggle={toggleBodyOpen}
           bodyOpen={bodyOpen}
         >
-          Total Cook Time
+          <SectionHeader removeMarginBottom>Total Cook Time</SectionHeader>
         </AccordionSectionHeader>
         <AccordionSectionBody id={id} isOpen={bodyOpen}>
           <ul className="flex flex-wrap list-none -mx-4">

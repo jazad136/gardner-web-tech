@@ -7,14 +7,16 @@ export interface IngredientListProps {
   ingredients: Ingredient[];
   bodyOpen: boolean;
   toggleBodyOpen: () => void;
+  serves: number;
 }
 
 export const IngredientListWrapper = ({
   ingredients,
   bodyOpen,
   toggleBodyOpen,
+  serves,
 }: IngredientListProps) => {
-  const [servings, setServings] = useState(1);
+  const [batches, setBatches] = useState(1);
   const id = "IngredientList";
 
   const separateIngredientQuantityAndUnit = (
@@ -62,9 +64,9 @@ export const IngredientListWrapper = ({
   const mappedIngredients: Ingredient[] = useMemo(() => {
     return (ingredients ?? []).map((ingredient) => ({
       ...ingredient,
-      quantity: getQuantityFromString(ingredient.quantity, servings),
+      quantity: getQuantityFromString(ingredient.quantity, batches),
     }));
-  }, [ingredients, servings]);
+  }, [ingredients, batches]);
 
   return (
     <IngredientList
@@ -72,8 +74,9 @@ export const IngredientListWrapper = ({
       bodyOpen={bodyOpen}
       toggleBodyOpen={toggleBodyOpen}
       ingredients={mappedIngredients}
-      servings={servings}
-      setServings={setServings}
+      batches={batches}
+      setBatches={setBatches}
+      serves={serves}
     />
   );
 };

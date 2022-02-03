@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
@@ -12,6 +12,7 @@ import {
   RecipeListItem,
   recipeQuery,
   recipeSlugsQuery,
+  SectionHeader,
   YouTubeAccordion,
 } from "ui";
 import * as Pino from "pino";
@@ -36,7 +37,6 @@ export interface RecipePageProps {
 const RecipePage = ({ data }: RecipePageProps) => {
   const { handleSetRecipes } = useRecipeContext();
   const { handleSetLoading } = useLoadingContext();
-  const printableContainerRef = createRef<HTMLDivElement>();
   const [recipeCookTimeBodyOpen, setRecipeCookTimeBodyOpen] = useState(true);
   const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
   const router = useRouter();
@@ -65,48 +65,51 @@ const RecipePage = ({ data }: RecipePageProps) => {
         </Head>
 
         <main className="py-8">
-          <div ref={printableContainerRef}>
-            <div className="w-full flex justify-center">
-              <PageTitle>{title}</PageTitle>
-            </div>
-            {image && (
-              <div className="block">
-                <Image
-                  className="w-16 md:w-32 lg:w-48 max-w-full rounded-xl"
-                  alt={title}
-                  width={2500}
-                  height={1000}
-                  layout="responsive"
-                  src={urlFor(image)
-                    .width(2500)
-                    .height(1000)
-                    .crop("focalpoint")
-                    .fit("crop")
-                    .auto("format")
-                    .url()}
-                />
-              </div>
-            )}
-            <RecipeCookTime
-              recipe={data.currentRecipe}
-              bodyOpen={recipeCookTimeBodyOpen}
-              toggleBodyOpen={() =>
-                setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
-              }
-            />
-            <IngredientListWrapper
-              ingredients={ingredients}
-              toggleBodyOpen={() =>
-                setIngredientsBodyOpen(!ingredientsBodyOpen)
-              }
-              bodyOpen={ingredientsBodyOpen}
-            />
-            <SectionWithPortableTextBlock
-              title="Instructions"
-              blocks={instructions}
-            />
-            <SectionWithPortableTextBlock title="Notes" blocks={notes} />
+          <div className="w-full flex justify-center">
+            <PageTitle>{title}</PageTitle>
           </div>
+          {image && (
+            <div className="block">
+              <Image
+                className="w-16 md:w-32 lg:w-48 max-w-full rounded-xl"
+                alt={title}
+                width={2500}
+                height={1000}
+                layout="responsive"
+                src={urlFor(image)
+                  .width(2500)
+                  .height(1000)
+                  .crop("focalpoint")
+                  .fit("crop")
+                  .auto("format")
+                  .url()}
+              />
+            </div>
+          )}
+          <RecipeCookTime
+            recipe={data.currentRecipe}
+            bodyOpen={recipeCookTimeBodyOpen}
+            toggleBodyOpen={() =>
+              setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
+            }
+          />
+          <IngredientListWrapper
+            ingredients={ingredients}
+            toggleBodyOpen={() => setIngredientsBodyOpen(!ingredientsBodyOpen)}
+            bodyOpen={ingredientsBodyOpen}
+            serves={data.currentRecipe.serves}
+          />
+          <SectionWithPortableTextBlock
+            title="Instructions"
+            blocks={instructions}
+          />
+          <SectionHeader classNames="text-center">
+            <span>
+              Serves: {data.currentRecipe.serves}{" "}
+              {data.currentRecipe.serves === 1 ? "Person" : "People"}
+            </span>
+          </SectionHeader>
+          <SectionWithPortableTextBlock title="Notes" blocks={notes} />
           <YouTubeAccordion youTubeUrls={youTubeUrls} />
           <div className="flex justify-center">
             <Link href={{ pathname: "/print/[slug]", query: { slug } }}>

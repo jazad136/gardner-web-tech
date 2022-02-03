@@ -1,4 +1,5 @@
 import { PortableText } from "src/lib/SanityUi";
+import { SectionHeader } from "ui";
 
 export interface SectionWithPortableTextBlockProps {
   title: string;
@@ -15,9 +16,7 @@ export const SectionWithPortableTextBlock = ({
 
   return (
     <div className="py-6">
-      <h2 className="prose dark:prose-dark max-w-full flex justify-center mb-4 prose-xl">
-        {title}
-      </h2>
+      <SectionHeader>{title}</SectionHeader>
       <div className="prose dark:prose-dark max-w-full">
         <PortableText blocks={blocks} />
       </div>

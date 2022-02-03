@@ -5,16 +5,18 @@ import {
   AccordionSectionBody,
   AccordionSectionHeader,
   AccordionWrapper,
+  SectionHeader,
 } from "..";
-import { IngredientServingsDropdown } from "./IngredientServingsDropdown";
+import { IngredientBatchesDropdown } from "./IngredientBatchesDropdown";
 
 export interface IngredientListProps {
   id: string;
   bodyOpen: boolean;
   toggleBodyOpen: () => void;
   ingredients: Ingredient[];
-  servings: number;
-  setServings: React.Dispatch<React.SetStateAction<number>>;
+  batches: number;
+  setBatches: React.Dispatch<React.SetStateAction<number>>;
+  serves: number;
 }
 
 export const IngredientList = ({
@@ -22,8 +24,9 @@ export const IngredientList = ({
   bodyOpen,
   toggleBodyOpen,
   ingredients,
-  servings,
-  setServings,
+  batches,
+  setBatches,
+  serves,
 }: IngredientListProps) => (
   <AccordionWrapper id={id}>
     <AccordionSection bodyOpen={bodyOpen}>
@@ -32,12 +35,13 @@ export const IngredientList = ({
         toggle={toggleBodyOpen}
         bodyOpen={bodyOpen}
       >
-        Ingredients
+        <SectionHeader removeMarginBottom>Ingredients</SectionHeader>
       </AccordionSectionHeader>
       <AccordionSectionBody id={id} isOpen={bodyOpen}>
-        <IngredientServingsDropdown
-          servings={servings}
-          setServings={setServings}
+        <IngredientBatchesDropdown
+          batches={batches}
+          setBatches={setBatches}
+          serves={serves}
         />
         <ul className="list-none flex flex-wrap">
           {(ingredients ?? []).map((ingredient, index) => (

@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import cn from "classnames";
 
 export interface AccordionSectionHeaderProps {
-  children: string | ReactElement | ReactElement[];
+  children: ReactElement | ReactElement[];
   id: string;
   toggle: () => void;
   bodyOpen: boolean;
@@ -17,7 +17,7 @@ export const AccordionSectionHeader = ({
   <h2 className="mb-0" id={`heading${id}`}>
     <button
       className={cn(
-        "prose dark:prose-dark max-w-full prose-xl relative flex items-center w-full py-4 px-5 text-left border-0 rounded-none focus:outline-none",
+        "relative flex items-center w-full py-4 px-5 text-left border-0 rounded-none focus:outline-none",
         {
           "border-b": bodyOpen,
         }

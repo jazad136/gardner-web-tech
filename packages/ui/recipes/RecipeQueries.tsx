@@ -20,6 +20,7 @@ export const currentRecipeQuery = `
     cookTime,
     prepTime,
     restTime,
+    serves,
     'slug': slug.current,
   }
 `;

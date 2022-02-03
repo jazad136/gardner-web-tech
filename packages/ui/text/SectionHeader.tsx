@@ -4,15 +4,19 @@ import { ReactElement } from "react";
 export interface SectionHeaderProps {
   children: ReactElement | ReactElement[] | string;
   classNames?: string;
+  removeMarginBottom?: boolean;
 }
 
-export const SectionHeader = ({ children, classNames }: SectionHeaderProps) => (
-  <h3
-    className={cn(
-      "prose dark:prose-dark mb-4 text-2xl font-semibold",
-      classNames
-    )}
+export const SectionHeader = ({
+  children,
+  classNames,
+  removeMarginBottom = false,
+}: SectionHeaderProps) => (
+  <h2
+    className={cn("prose dark:prose-dark text-2xl font-semibold", classNames, {
+      "mb-4": !removeMarginBottom,
+    })}
   >
     {children}
-  </h3>
+  </h2>
 );

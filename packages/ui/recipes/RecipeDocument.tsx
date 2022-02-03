@@ -80,6 +80,11 @@ const RecipeDocument = ({ recipe }: RecipeDocumentProps) => (
         <Text style={styles.sectionHeader}>Instructions</Text>
         <Text style={styles.text}>{recipe.instructions}</Text>
       </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionHeader}>
+          Serves: {recipe.serves} {recipe.serves === 1 ? "Person" : "People"}
+        </Text>
+      </View>
       {recipe.notes?.length > 0 && (
         <View style={styles.section}>
           <Text style={styles.sectionHeader}>Notes</Text>

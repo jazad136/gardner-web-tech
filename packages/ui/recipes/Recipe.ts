@@ -18,6 +18,7 @@ export interface Recipe {
   ingredients: Ingredient[];
   instructions: object[];
   slug: string;
+  serves: number;
 }
 
 export interface RecipeDocumentInterface {
@@ -30,6 +31,7 @@ export interface RecipeDocumentInterface {
   ingredients: Ingredient[];
   instructions: string;
   slug: string;
+  serves: number;
 }
 
 export interface Ingredient {
