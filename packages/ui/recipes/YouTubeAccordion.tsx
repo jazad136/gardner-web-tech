@@ -37,7 +37,7 @@ export const YouTubeAccordion = ({ youTubeUrls }: YouTubeAccordionProps) => {
           toggle={() => setBodyOpen(!bodyOpen)}
           bodyOpen={bodyOpen}
         >
-          <SectionHeader>Videos</SectionHeader>
+          <SectionHeader removeMarginBottom>Videos</SectionHeader>
         </AccordionSectionHeader>
         <AccordionSectionBody id={id} isOpen={bodyOpen}>
           <div ref={videoContainerRef} className="w-full">
