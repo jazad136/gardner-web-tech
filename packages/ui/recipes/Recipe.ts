@@ -4,7 +4,7 @@ export interface RecipeListItem {
   restTime: number;
   slug: string;
   title: string;
-  image?: any;
+  image?: string;
 }
 
 export interface Recipe {

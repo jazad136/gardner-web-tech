@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
-import RecipeLink from "./RecipeLink";
-import { NavbarWrapper, MenuToggle, Brand, RecipeListItem } from "ui";
+import {
+  NavbarWrapper,
+  MenuToggle,
+  Brand,
+  RecipeListItem,
+  RecipeLink,
+} from "ui";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "ui/ThemeToggle";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
 import { useLoadingContext } from "src/lib/LoadingContext";
+import { urlFor } from "src/lib/SanityUi";
 
 const slideOut = {
   closed: {
@@ -38,18 +44,25 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    setDisplayedRecipes(recipes);
+    const mappedRecipes = recipes.map((recipe) => {
+      return {
+        ...recipe,
+        image: urlFor(recipe.image).width(60).height(60).auto("format").url(),
+      };
+    });
+    setDisplayedRecipes(mappedRecipes);
   }, [recipes]);
 
   useEffect(() => {
-    let filteredRecipes = recipes;
     if (search.length > 1) {
-      filteredRecipes = (recipes ?? []).filter((r) =>
+      const filteredRecipes = (displayedRecipes ?? []).filter((r) =>
         r.title.toLowerCase().includes(search.toLowerCase())
       );
+      setDisplayedRecipes(filteredRecipes);
+    } else {
+      setDisplayedRecipes(displayedRecipes);
     }
-    setDisplayedRecipes(filteredRecipes);
-  }, [search, recipes, setDisplayedRecipes]);
+  }, [search, displayedRecipes, setDisplayedRecipes]);
 
   return (
     <>
@@ -76,10 +89,10 @@ const Navbar = () => {
                 initial="closed"
                 animate="open"
                 exit="exit"
-                className="min-h-full overflow-y-auto absolute z-20 bg-white dark:bg-gray-900 scrollbar"
+                className="min-h-full overflow-y-auto fixed z-20 bg-gray-100 dark:bg-gray-900 scrollbar border-b-4"
               >
                 <div className="w-full p-2 h-screen mr-1">
-                  <div className="sticky top-0 mb-2 block z-50 bg-white dark:bg-gray-900 py-2 border-b-2 border-solid">
+                  <div className="sticky top-0 mb-2 block z-50 bg-gray-100 dark:bg-gray-900 py-2 border-b-2 border-solid">
                     <div className="flex justify-between items-center">
                       <Brand href="/">Recipes</Brand>
                       <div className="px-2">
@@ -89,7 +102,7 @@ const Navbar = () => {
                   </div>
                   <form className="flex w-full px-4 py-2">
                     <input
-                      type="text"
+                      type="search"
                       className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="search"
                       placeholder="Search"
