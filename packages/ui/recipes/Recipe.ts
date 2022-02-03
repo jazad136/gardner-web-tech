@@ -37,5 +37,6 @@ export interface RecipeDocumentInterface {
 export interface Ingredient {
   title: string;
   quantity: string;
+  unit: string;
   notes: string;
 }
