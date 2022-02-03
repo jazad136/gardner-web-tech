@@ -1,4 +1,4 @@
-export * from "./IngredientList";
+export * from "./IngredientListWrapper";
 export * from "./IngredientListItem";
 export * from "./Recipe";
 export * from "./RecipeCookTime";

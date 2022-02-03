@@ -1,6 +1,7 @@
 import * as React from "react";
 export * from "./Button";
 export * from "./DisplayTime";
+export * from "./getFraction";
 export * from "./PageSpinner";
 export * from "./PDFViewer";
 export * from "./Sleep";

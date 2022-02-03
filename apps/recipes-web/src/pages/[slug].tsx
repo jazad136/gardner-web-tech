@@ -5,14 +5,13 @@ import { useRouter } from "next/router";
 import { getClient, sanityClient } from "../lib/SanityServer";
 import {
   Button,
-  IngredientList,
+  IngredientListWrapper,
   PageTitle,
   Recipe,
   RecipeCookTime,
   RecipeListItem,
   recipeQuery,
   recipeSlugsQuery,
-  sleep,
   YouTubeAccordion,
 } from "ui";
 import * as Pino from "pino";
@@ -95,7 +94,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
                 setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
               }
             />
-            <IngredientList
+            <IngredientListWrapper
               ingredients={ingredients}
               toggleBodyOpen={() =>
                 setIngredientsBodyOpen(!ingredientsBodyOpen)

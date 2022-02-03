@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { getClient, sanityClient } from "../lib/SanityServer";
 import {
   Button,
-  IngredientList,
+  IngredientListWrapper,
   PageTitle,
   Recipe,
   RecipeCookTime,
@@ -94,7 +94,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
                 setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
               }
             />
-            <IngredientList
+            <IngredientListWrapper
               ingredients={ingredients}
               toggleBodyOpen={() =>
                 setIngredientsBodyOpen(!ingredientsBodyOpen)

@@ -18,6 +18,10 @@
   @apply border-solid border-2 prose dark:prose-dark transition ease-in-out delay-100 hover:scale-110;
 }
 
+.dropdown:hover .dropdown-menu:hover {
+  display: block;
+}
+
 .btn-bg-success {
   @apply bg-green-500;
 }
