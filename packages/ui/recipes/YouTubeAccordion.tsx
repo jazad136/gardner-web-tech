@@ -5,6 +5,7 @@ import {
   AccordionSectionBody,
   AccordionSectionHeader,
   AccordionWrapper,
+  SectionHeader,
 } from "..";
 
 export interface YouTubeAccordionProps {
@@ -36,7 +37,7 @@ export const YouTubeAccordion = ({ youTubeUrls }: YouTubeAccordionProps) => {
           toggle={() => setBodyOpen(!bodyOpen)}
           bodyOpen={bodyOpen}
         >
-          Videos
+          <SectionHeader>Videos</SectionHeader>
         </AccordionSectionHeader>
         <AccordionSectionBody id={id} isOpen={bodyOpen}>
           <div ref={videoContainerRef} className="w-full">
