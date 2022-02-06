@@ -44,15 +44,14 @@ export const IngredientBatchesDropdown = ({
   }
 
   return (
-    <div className="relative inline-block ml-8 text-gray-700">
+    <div className="prose dark:prose-dark relative inline-block ml-8">
       <div className="flex items-center">
         <label htmlFor="servings" className="mr-4">
           <Paragraph>Batches: </Paragraph>
         </label>
         <select
-          className="w-full h-10 pl-4 pr-10 text-base placeholder-gray-600 border border-slate-300 rounded-lg appearance-none focus:shadow-outline"
+          className="prose dark:prose-dark w-full h-10 pl-4 pr-10 border border-slate-400 dark:border-slate-300 rounded-lg appearance-none focus:shadow-outline"
           id="servings"
-          placeholder="Servings"
           value={batches}
           onChange={(e) => setBatches(parseFloat(e.target.value))}
         >
