@@ -1,10 +1,10 @@
-import * as React from "react";
+import React from "react";
 import { ReactElement } from "react";
 import cn from "classnames";
 
 export interface ButtonProps {
   children: string | ReactElement | ReactElement[];
-  onClick: () => void;
+  onClick: (value: any) => void;
   color:
     | "success"
     | "primary"
