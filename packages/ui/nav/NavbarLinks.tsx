@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { NavbarLink, NavbarLinkProps } from "./NavbarLink";
 import cn from "classnames";
 

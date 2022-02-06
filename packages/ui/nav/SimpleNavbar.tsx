@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { ReactElement, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MenuToggle } from "./MenuToggle";
