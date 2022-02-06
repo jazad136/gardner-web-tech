@@ -4,12 +4,12 @@ import ErrorPage from "next/error";
 import { useRouter } from "next/router";
 import { getClient, sanityClient } from "../lib/SanityServer";
 import {
-  Button,
   IngredientListWrapper,
   PageTitle,
   Recipe,
   RecipeCookTime,
   RecipeListItem,
+  RecipePrintButton,
   recipeQuery,
   recipeSlugsQuery,
   SectionHeader,
@@ -20,7 +20,6 @@ import { useRecipeContext } from "src/lib/RecipeContext";
 import { urlFor } from "../lib/SanityUi";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Head from "next/head";
-import Link from "next/link";
 import { useLoadingContext } from "src/lib/LoadingContext";
 
 const logger = Pino.default({ name: "RecipePage" });
@@ -111,20 +110,10 @@ const RecipePage = ({ data }: RecipePageProps) => {
           </SectionHeader>
           <SectionWithPortableTextBlock title="Notes" blocks={notes} />
           <YouTubeAccordion youTubeUrls={youTubeUrls} />
-          <div className="flex justify-center">
-            <Link href={{ pathname: "/print/[slug]", query: { slug } }}>
-              <a>
-                <Button
-                  onClick={() => handleSetLoading(true)}
-                  color="success"
-                  isOutline
-                  size="md"
-                >
-                  Print
-                </Button>
-              </a>
-            </Link>
-          </div>
+          <RecipePrintButton
+            slug={slug}
+            handleSetLoading={() => handleSetLoading(true)}
+          />
         </main>
       </div>
     </>
