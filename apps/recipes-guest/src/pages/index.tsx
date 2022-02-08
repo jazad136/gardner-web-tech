@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { BsChevronBarDown } from "react-icons/bs";
-import { useLoadingContext } from "src/lib/LoadingContext";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import { sanityClient } from "src/lib/SanityServer";
 import { Button, RecipeListItem } from "ui";
@@ -15,7 +14,6 @@ export interface HomeProps {
 
 const Home = ({ allRecipes }: HomeProps) => {
   const { handleSetRecipes } = useRecipeContext();
-  const { handleSetLoading } = useLoadingContext();
 
   useEffect(() => {
     handleSetRecipes(allRecipes);
@@ -69,10 +67,7 @@ const Home = ({ allRecipes }: HomeProps) => {
             recipes! This is the demo page only. Most of this uses generated
             Bacon Ipsum. The one exception is the{" "}
             <Link href="/buffalo-chicken-quesadilla">
-              <a
-                className="text-sky-500 underline"
-                onClick={() => handleSetLoading(true)}
-              >
+              <a className="text-sky-500 underline">
                 Buffalo Chicken Quesadilla
               </a>
             </Link>

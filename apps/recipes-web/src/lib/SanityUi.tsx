@@ -5,6 +5,11 @@ import {
   createCurrentUserHook,
 } from "next-sanity";
 import { config } from "./SanityConfig";
+import sanityClient from "@sanity/client";
+
+export const configuredSanityClient = sanityClient({
+  ...config,
+});
 
 export const urlFor = (source: string) =>
   createImageUrlBuilder(config).image(source);

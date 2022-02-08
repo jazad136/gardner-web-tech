@@ -4,12 +4,10 @@ import { motion } from "framer-motion";
 import ThemeToggle from "ui/ThemeToggle";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
-import { useLoadingContext } from "src/lib/LoadingContext";
 import { urlFor } from "src/lib/SanityUi";
 
 const Navbar = () => {
   const { recipes } = useRecipeContext();
-  const { handleSetLoading } = useLoadingContext();
   const [expanded, setExpanded] = useState(false);
 
   const mappedRecipes = useMemo(() => {
@@ -35,7 +33,6 @@ const Navbar = () => {
       <RecipeSideNav
         expanded={expanded}
         setExpanded={setExpanded}
-        setLoading={handleSetLoading}
         recipes={mappedRecipes}
       />
     </motion.div>

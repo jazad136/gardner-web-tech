@@ -2,14 +2,12 @@ import React, { useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { RecipeLink, RecipeListItem } from ".";
-import { Brand, MenuToggle } from "..";
 import { RecipeSearchForm } from "./RecipeSearchForm";
 import { RecipeSideNavHeader } from "./RecipeSideNavHeader";
 
 export interface RecipeSideNavProps {
   expanded: boolean;
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   recipes: RecipeListItem[];
 }
 
@@ -39,7 +37,6 @@ const slideOut = {
 export const RecipeSideNav = ({
   expanded,
   setExpanded,
-  setLoading,
   recipes,
 }: RecipeSideNavProps) => {
   const [search, setSearch] = useState("");
@@ -80,9 +77,7 @@ export const RecipeSideNav = ({
                       key={`recipe-${index}`}
                       recipe={recipe}
                       setSearch={setSearch}
-                      closeSidebar={() => (
-                        setExpanded(false), setLoading(true)
-                      )}
+                      closeSidebar={() => setExpanded(false)}
                     />
                   )
                 )}

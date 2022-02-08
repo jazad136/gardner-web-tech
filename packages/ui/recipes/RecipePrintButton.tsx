@@ -4,17 +4,13 @@ import { Button } from "..";
 
 export interface RecipePrintButtonProps {
   slug: string;
-  handleSetLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const RecipePrintButton = ({
-  slug,
-  handleSetLoading,
-}: RecipePrintButtonProps) => (
+export const RecipePrintButton = ({ slug }: RecipePrintButtonProps) => (
   <div className="hidden lg:flex justify-center">
     <Link href={{ pathname: "/print/[slug]", query: { slug } }}>
       <a>
-        <Button onClick={handleSetLoading} color="success" isOutline size="md">
+        <Button color="success" isOutline size="md">
           Print
         </Button>
       </a>

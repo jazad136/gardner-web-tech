@@ -17,12 +17,16 @@ import {
 } from "ui";
 import * as Pino from "pino";
 import { useRecipeContext } from "src/lib/RecipeContext";
-import { urlFor } from "../lib/SanityUi";
+import { useNextSanityImage, ImageUrlBuilder } from "next-sanity-image";
+import { configuredSanityClient } from "src/lib/SanityUi";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Head from "next/head";
-import { useLoadingContext } from "src/lib/LoadingContext";
 
 const logger = Pino.default({ name: "RecipePage" });
+
+const customImageBuilder = (imageUrlBuilder: ImageUrlBuilder) => {
+  return imageUrlBuilder.width(1250).height(500).crop("focalpoint").fit("crop");
+};
 
 export interface RecipePageDataProps {
   currentRecipe: Recipe;
@@ -35,7 +39,13 @@ export interface RecipePageProps {
 
 const RecipePage = ({ data }: RecipePageProps) => {
   const { handleSetRecipes } = useRecipeContext();
-  const { handleSetLoading } = useLoadingContext();
+  const imageProps = useNextSanityImage(
+    configuredSanityClient,
+    data.currentRecipe.image,
+    {
+      imageBuilder: customImageBuilder,
+    }
+  );
   const [recipeCookTimeBodyOpen, setRecipeCookTimeBodyOpen] = useState(true);
   const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
   const router = useRouter();
@@ -68,20 +78,13 @@ const RecipePage = ({ data }: RecipePageProps) => {
             <PageTitle>{title}</PageTitle>
           </div>
           {image && (
-            <div className="block">
+            <div className="block w-full">
               <Image
                 className="w-16 md:w-32 lg:w-48 max-w-full rounded-xl"
+                {...imageProps}
                 alt={title}
-                width={2500}
-                height={1000}
                 layout="responsive"
-                src={urlFor(image)
-                  .width(2500)
-                  .height(1000)
-                  .crop("focalpoint")
-                  .fit("crop")
-                  .auto("format")
-                  .url()}
+                objectFit="cover"
                 priority
               />
             </div>
@@ -111,10 +114,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
           </SectionHeader>
           <SectionWithPortableTextBlock title="Notes" blocks={notes} />
           <YouTubeAccordion youTubeUrls={youTubeUrls} />
-          <RecipePrintButton
-            slug={slug}
-            handleSetLoading={() => handleSetLoading(true)}
-          />
+          <RecipePrintButton slug={slug} />
         </main>
       </div>
     </>

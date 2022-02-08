@@ -1,8 +1,5 @@
 import { createClient } from "next-sanity";
 import { config } from "./SanityConfig";
-import * as Pino from "pino";
-
-const logger = Pino.default({ name: "sanity server" });
 
 export const sanityClient = createClient(config);
 

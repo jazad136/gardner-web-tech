@@ -3,10 +3,10 @@ import { NextComponentType, NextPageContext } from "next";
 import { ThemeProvider } from "next-themes";
 import { RecipeProvider } from "src/lib/RecipeContext";
 import Layout from "@components/layout";
-import { LoadingProvider } from "src/lib/LoadingContext";
 import { ReactElement, useEffect } from "react";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import { PageSpinner } from "ui";
+import NextNProgress from "nextjs-progressbar";
 
 export type LayoutProps = {
   useContainer?: boolean;
@@ -22,7 +22,8 @@ type AppProps = {
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <LoadingProvider>
+    <>
+      <NextNProgress />
       <ThemeProvider attribute="class">
         <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
           {Component.auth ? (
@@ -40,7 +41,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           )}
         </SessionProvider>
       </ThemeProvider>
-    </LoadingProvider>
+    </>
   );
 };
 

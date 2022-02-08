@@ -4,7 +4,6 @@ import cn from "classnames";
 
 export interface ButtonProps {
   children: string | ReactElement | ReactElement[];
-  onClick: (value: any) => void;
   color:
     | "success"
     | "primary"
@@ -14,6 +13,7 @@ export interface ButtonProps {
     | "white"
     | "dark";
   size: "xl" | "lg" | "md" | "sm" | "xs";
+  onClick?: (value: any) => void;
   isBold?: boolean;
   isPill?: boolean;
   isOutline?: boolean;
@@ -22,9 +22,9 @@ export interface ButtonProps {
 
 export const Button = ({
   children,
-  onClick,
   color,
   size,
+  onClick = () => {},
   isBold = true,
   isPill = false,
   isOutline = false,
