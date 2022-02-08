@@ -79,6 +79,7 @@ export const RecipeSideNav = ({
                     <RecipeLink
                       key={`recipe-${index}`}
                       recipe={recipe}
+                      setSearch={setSearch}
                       closeSidebar={() => (
                         setExpanded(false), setLoading(true)
                       )}

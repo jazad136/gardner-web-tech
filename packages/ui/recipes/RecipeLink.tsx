@@ -1,3 +1,4 @@
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { DisplayTime, RecipeListItem } from "ui";
@@ -5,13 +6,23 @@ import { DisplayTime, RecipeListItem } from "ui";
 export interface RecipeLinkProps {
   recipe: RecipeListItem;
   closeSidebar: () => void;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const RecipeLink = ({ recipe, closeSidebar }: RecipeLinkProps) => {
+export const RecipeLink = ({
+  recipe,
+  closeSidebar,
+  setSearch,
+}: RecipeLinkProps) => {
+  const handleClick = () => {
+    setSearch("");
+    closeSidebar();
+  };
+
   return (
     <div className="my-4">
       <Link href={{ pathname: "/[slug]", query: { slug: recipe.slug } }}>
-        <a className="flex" onClick={closeSidebar}>
+        <a className="flex" onClick={() => handleClick()}>
           <div className="inline-block mr-3">
             {recipe.image && (
               <Image
