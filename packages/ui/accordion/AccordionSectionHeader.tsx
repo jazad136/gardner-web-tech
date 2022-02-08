@@ -6,6 +6,7 @@ export interface AccordionSectionHeaderProps {
   id: string;
   toggle: () => void;
   bodyOpen: boolean;
+  ariaLabel: string;
 }
 
 export const AccordionSectionHeader = ({
@@ -13,6 +14,7 @@ export const AccordionSectionHeader = ({
   id,
   toggle,
   bodyOpen,
+  ariaLabel,
 }: AccordionSectionHeaderProps) => (
   <h2 className="mb-0" id={`heading${id}`}>
     <button
@@ -24,6 +26,7 @@ export const AccordionSectionHeader = ({
       )}
       type="button"
       onClick={toggle}
+      aria-label={ariaLabel}
     >
       {children}
     </button>

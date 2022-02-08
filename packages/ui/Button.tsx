@@ -13,6 +13,7 @@ export interface ButtonProps {
     | "white"
     | "dark";
   size: "xl" | "lg" | "md" | "sm" | "xs";
+  ariaLabel: string;
   onClick?: (value: any) => void;
   isBold?: boolean;
   isPill?: boolean;
@@ -24,6 +25,7 @@ export const Button = ({
   children,
   color,
   size,
+  ariaLabel,
   onClick = () => {},
   isBold = true,
   isPill = false,
@@ -51,6 +53,7 @@ export const Button = ({
       })}
       disabled={isDisabled}
       onClick={onClick}
+      aria-label={ariaLabel}
     >
       {children}
     </button>

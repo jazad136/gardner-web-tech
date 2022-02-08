@@ -34,6 +34,7 @@ export const IngredientList = ({
         id={id}
         toggle={toggleBodyOpen}
         bodyOpen={bodyOpen}
+        ariaLabel="Toggle Ingredient Section Expanded"
       >
         <SectionHeader removeMarginBottom>Ingredients</SectionHeader>
       </AccordionSectionHeader>

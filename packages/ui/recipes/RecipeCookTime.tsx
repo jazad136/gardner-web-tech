@@ -33,6 +33,7 @@ export const RecipeCookTime = ({
           id={id}
           toggle={toggleBodyOpen}
           bodyOpen={bodyOpen}
+          ariaLabel="Toggle Recipe Cook Time Section Expanded"
         >
           <SectionHeader removeMarginBottom>Total Cook Time</SectionHeader>
         </AccordionSectionHeader>

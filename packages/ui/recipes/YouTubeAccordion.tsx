@@ -36,6 +36,7 @@ export const YouTubeAccordion = ({ youTubeUrls }: YouTubeAccordionProps) => {
           id={id}
           toggle={() => setBodyOpen(!bodyOpen)}
           bodyOpen={bodyOpen}
+          ariaLabel="Toggle YouTube Video Section Expanded"
         >
           <SectionHeader removeMarginBottom>Videos</SectionHeader>
         </AccordionSectionHeader>

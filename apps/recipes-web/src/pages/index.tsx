@@ -54,6 +54,7 @@ const Home = ({ allRecipes }: HomeProps) => {
                 size="xl"
                 onClick={scrollToBottom}
                 isOutline
+                aria-label="Scroll to Bottom"
               >
                 <BsChevronBarDown size="1.5rem" className="text-white" />
               </Button>
