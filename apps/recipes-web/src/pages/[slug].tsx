@@ -41,7 +41,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
   const { handleSetRecipes } = useRecipeContext();
   const imageProps = useNextSanityImage(
     configuredSanityClient,
-    data.currentRecipe.image,
+    data?.currentRecipe?.image,
     {
       imageBuilder: customImageBuilder,
     }

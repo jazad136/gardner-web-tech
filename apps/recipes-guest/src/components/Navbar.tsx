@@ -7,17 +7,18 @@ import cn from "classnames";
 import { urlFor } from "src/lib/SanityUi";
 
 const Navbar = () => {
-  const { recipes } = useRecipeContext();
+  const recipesContext = useRecipeContext();
+
   const [expanded, setExpanded] = useState(false);
 
   const mappedRecipes = useMemo(() => {
-    return recipes.map((recipe) => {
+    return (recipesContext?.recipes ?? []).map((recipe) => {
       return {
         ...recipe,
         image: urlFor(recipe.image).width(60).height(60).auto("format").url(),
       };
     });
-  }, [recipes]);
+  }, [recipesContext]);
 
   return (
     <motion.div initial={false} animate={expanded ? "open" : "closed"}>
@@ -30,11 +31,13 @@ const Navbar = () => {
         </div>
         <ThemeToggle isLarge id="themeToggle" />
       </NavbarWrapper>
-      <RecipeSideNav
-        expanded={expanded}
-        setExpanded={setExpanded}
-        recipes={mappedRecipes}
-      />
+      {!!mappedRecipes && (
+        <RecipeSideNav
+          expanded={expanded}
+          setExpanded={setExpanded}
+          recipes={mappedRecipes}
+        />
+      )}
     </motion.div>
   );
 };
