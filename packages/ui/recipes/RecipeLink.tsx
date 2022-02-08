@@ -30,6 +30,7 @@ export const RecipeLink = ({
                 width="60"
                 height="60"
                 src={recipe.image}
+                loading="lazy"
               />
             )}
           </div>
