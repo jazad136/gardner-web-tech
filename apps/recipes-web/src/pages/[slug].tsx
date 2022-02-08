@@ -82,6 +82,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
                   .fit("crop")
                   .auto("format")
                   .url()}
+                priority
               />
             </div>
           )}
