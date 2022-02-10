@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import ThemeToggle from "ui/ThemeToggle";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { urlFor } from "src/lib/SanityUi";
 
 const Navbar = () => {
