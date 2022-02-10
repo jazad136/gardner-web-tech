@@ -7,7 +7,7 @@ const Login = () => {
   const { query } = useRouter();
 
   useEffect(() => {
-    if (query) {
+    if (query?.callbackUrl) {
       fetch("/api/auth/callback", {
         method: "POST",
         headers: {

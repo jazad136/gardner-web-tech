@@ -14,7 +14,7 @@ const callback = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = new Cookies(req, res);
 
   if (req.method === "POST") {
-    const { callbackUrl } = JSON.parse(req.body);
+    const { callbackUrl } = req.body;
     cookies.set(cookieName, callbackUrl);
     res.end();
   }
