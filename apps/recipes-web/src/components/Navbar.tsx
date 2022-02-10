@@ -23,15 +23,17 @@ const Navbar = () => {
     });
   }, [recipesContext]);
 
+  if (!isUser) {
+    return <></>;
+  }
+
   return (
     <>
       <motion.div initial={false} animate={expanded ? "open" : "closed"}>
         <NavbarWrapper removeMarginBottom={true}>
-          {isUser && (
-            <div className={cn({ "opacity-0": expanded })}>
-              <MenuToggle toggle={() => setExpanded(!expanded)} />
-            </div>
-          )}
+          <div className={cn({ "opacity-0": expanded })}>
+            <MenuToggle toggle={() => setExpanded(!expanded)} />
+          </div>
           <div className="text-xl">
             <Brand href="/">Recipes</Brand>
           </div>
@@ -39,24 +41,15 @@ const Navbar = () => {
             <div className="flex items-center">
               <ThemeToggle isLarge id="themeToggle" />
             </div>
-            {isUser ? (
-              <div
-                onClick={() => signOut()}
-                className="flex prose dark:prose-dark text-primary lg:text-sm lg:leading-loose uppercase hover:opacity-75 my-2 ml-4 hover:cursor-pointer"
-              >
-                Logout
-              </div>
-            ) : (
-              <div
-                onClick={() => signIn()}
-                className="flex prose dark:prose-dark text-primary lg:text-sm lg:leading-loose uppercase hover:opacity-75 my-2 ml-4 hover:cursor-pointer"
-              >
-                Login
-              </div>
-            )}
+            <div
+              onClick={() => signOut()}
+              className="flex prose dark:prose-dark text-primary lg:text-sm lg:leading-loose uppercase hover:opacity-75 my-2 ml-4 hover:cursor-pointer"
+            >
+              Logout
+            </div>
           </div>
         </NavbarWrapper>
-        {isUser && !!mappedRecipes && (
+        {!!mappedRecipes && (
           <RecipeSideNav
             expanded={expanded}
             setExpanded={setExpanded}
