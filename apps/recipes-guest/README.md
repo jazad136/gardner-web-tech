@@ -15,14 +15,14 @@ Please note that this project is not necessary if you don't require an easier vi
 
 First, set up your dependencies for the [recipes-studio](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/recipes-cms). Make sure the dataset is public.
 
-Once your dependencies have been taken care of, create and edit your .env file with the following:
+Once your dependencies have been taken care of, change the `.env.sample.txt` file to `.env.{environment}` or `.env.local` and update the values below if needed:
 
 ```env
 NEXT_PUBLIC_SANITY_DATASET='production'
 NEXT_PUBLIC_SANITY_PROJECT_ID='...'
 ```
 
-Run the development server:
+Run the development server from `gardner-web-tech` directory:
 
 ```bash
 yarn dev
