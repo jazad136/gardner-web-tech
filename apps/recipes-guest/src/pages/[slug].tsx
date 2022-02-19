@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
@@ -46,8 +46,6 @@ const RecipePage = ({ data }: RecipePageProps) => {
       imageBuilder: customImageBuilder,
     }
   );
-  const [recipeCookTimeBodyOpen, setRecipeCookTimeBodyOpen] = useState(true);
-  const [ingredientsBodyOpen, setIngredientsBodyOpen] = useState(true);
   const { asPath } = useRouter();
 
   useEffect(() => {
@@ -89,17 +87,9 @@ const RecipePage = ({ data }: RecipePageProps) => {
               />
             </div>
           )}
-          <RecipeCookTime
-            recipe={data.currentRecipe}
-            bodyOpen={recipeCookTimeBodyOpen}
-            toggleBodyOpen={() =>
-              setRecipeCookTimeBodyOpen(!recipeCookTimeBodyOpen)
-            }
-          />
+          <RecipeCookTime recipe={data.currentRecipe} />
           <IngredientListWrapper
             ingredients={ingredients}
-            toggleBodyOpen={() => setIngredientsBodyOpen(!ingredientsBodyOpen)}
-            bodyOpen={ingredientsBodyOpen}
             serves={data.currentRecipe.serves}
           />
           <SectionWithPortableTextBlock
