@@ -1,5 +1,6 @@
 import React from "react";
 import { DropdownOptionsInterface, Paragraph } from "..";
+import * as Label from "@radix-ui/react-label";
 
 export interface IngredientBatchesDropdownProps {
   batches: number;
@@ -46,9 +47,9 @@ export const IngredientBatchesDropdown = ({
   return (
     <div className="prose dark:prose-dark relative inline-block ml-8">
       <div className="flex items-center">
-        <label htmlFor="servings" className="mr-4">
+        <Label.Root htmlFor="servings" className="mr-4">
           <Paragraph>Batches: </Paragraph>
-        </label>
+        </Label.Root>
         <select
           className="prose dark:prose-dark w-full h-10 pl-4 pr-10 border border-slate-400 dark:border-slate-300 rounded-lg appearance-none focus:shadow-outline"
           id="servings"
