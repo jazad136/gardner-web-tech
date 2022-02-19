@@ -1,3 +1,4 @@
+import { AccordionImplSingleProps } from "@radix-ui/react-accordion";
 import React from "react";
 import { Ingredient, IngredientListItem } from ".";
 import {
@@ -10,9 +11,6 @@ import {
 import { IngredientBatchesDropdown } from "./IngredientBatchesDropdown";
 
 export interface IngredientListProps {
-  id: string;
-  bodyOpen: boolean;
-  toggleBodyOpen: () => void;
   ingredients: Ingredient[];
   batches: number;
   setBatches: React.Dispatch<React.SetStateAction<number>>;
@@ -20,25 +18,17 @@ export interface IngredientListProps {
 }
 
 export const IngredientList = ({
-  id,
-  bodyOpen,
-  toggleBodyOpen,
   ingredients,
   batches,
   setBatches,
   serves,
 }: IngredientListProps) => (
-  <AccordionWrapper id={id}>
-    <AccordionSection bodyOpen={bodyOpen}>
-      <AccordionSectionHeader
-        id={id}
-        toggle={toggleBodyOpen}
-        bodyOpen={bodyOpen}
-        ariaLabel="Toggle Ingredient Section Expanded"
-      >
+  <AccordionWrapper defaultValue="ingredients">
+    <AccordionSection value="ingredients">
+      <AccordionSectionHeader>
         <SectionHeader removeMarginBottom>Ingredients</SectionHeader>
       </AccordionSectionHeader>
-      <AccordionSectionBody id={id} isOpen={bodyOpen}>
+      <AccordionSectionBody>
         <IngredientBatchesDropdown
           batches={batches}
           setBatches={setBatches}

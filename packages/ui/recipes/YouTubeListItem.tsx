@@ -1,47 +1,38 @@
 import * as Pino from "pino";
+import { useEffect, useMemo, useRef, useState } from "react";
 import YouTube, { Options } from "react-youtube";
-import cn from "classnames";
 
 const logger = Pino.default({ name: "YouTube" });
 
 export interface YouTubeListItemProps {
   youTubeUrl: string;
-  videoContainerWidth: number;
-  isHidden: boolean;
 }
 
-export const YouTubeListItem = ({
-  youTubeUrl,
-  videoContainerWidth,
-  isHidden = true,
-}: YouTubeListItemProps) => {
+export const YouTubeListItem = ({ youTubeUrl }: YouTubeListItemProps) => {
   const uri = new URL(youTubeUrl);
   const youTubeId = uri.searchParams.get("v")?.toString();
 
   if (!youTubeId) {
     logger.warn("could not find YouTube Video Id from url");
-    return;
+    return <></>;
   }
 
   const opts: Options = {
-    height: ((videoContainerWidth / 16) * 9).toString(),
-    width: (videoContainerWidth - 80).toString(),
+    width: "853",
+    height: "480",
     playerVars: {
       autoplay: 0,
     },
   };
 
   return (
-    <li
-      className={cn("mx-auto", {
-        hidden: isHidden,
-      })}
-    >
+    <li className="overflow-hidden">
       <YouTube
-        className="max-w-full"
         videoId={youTubeId}
         id={youTubeId}
         opts={opts}
+        className="absolute left-0 top-0 h-full w-full"
+        containerClassName="overflow-hidden relative h-0 pb-[56.25%]"
       />
     </li>
   );

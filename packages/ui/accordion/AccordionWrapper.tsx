@@ -1,12 +1,29 @@
-import { ReactElement } from "react";
+import React from "react";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
-export interface AccordionWrapperProps {
-  children: ReactElement | ReactElement[];
-  id: string;
+interface AccordionWrapperProps {
+  children: React.ReactNode;
+  defaultValue?: string;
+  value?: string;
+  onValueChange?(value: string): void;
 }
 
-export const AccordionWrapper = ({ children, id }: AccordionWrapperProps) => (
-  <div className="border border-slate-300 rounded-2xl my-6" id={id}>
+const AccordionWrapper = ({
+  children,
+  defaultValue,
+  value,
+  onValueChange,
+}: AccordionWrapperProps) => (
+  <AccordionPrimitive.Root
+    type="single"
+    className="border border-slate-300 rounded-2xl my-6 focus-within:outline-none"
+    value={value}
+    defaultValue={defaultValue}
+    collapsible
+    onValueChange={onValueChange}
+  >
     {children}
-  </div>
+  </AccordionPrimitive.Root>
 );
+
+export default AccordionWrapper;

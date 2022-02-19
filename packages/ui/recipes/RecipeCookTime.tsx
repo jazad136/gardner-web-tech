@@ -12,32 +12,20 @@ import { Recipe, RecipeCookTimeItem } from ".";
 
 export interface RecipeCookTimeProps {
   recipe: Recipe;
-  toggleBodyOpen: () => void;
-  bodyOpen: boolean;
 }
 
-export const RecipeCookTime = ({
-  recipe,
-  toggleBodyOpen,
-  bodyOpen,
-}: RecipeCookTimeProps) => {
+export const RecipeCookTime = ({ recipe }: RecipeCookTimeProps) => {
   const { prepTime, cookTime, restTime } = recipe;
   const totalItems = !restTime ? 3 : 4;
   const iconStyle = { fontSize: "3em", marginBottom: "0.2em" };
-  const id = "TotalCookTime";
 
   return (
-    <AccordionWrapper id={id}>
-      <AccordionSection bodyOpen={bodyOpen}>
-        <AccordionSectionHeader
-          id={id}
-          toggle={toggleBodyOpen}
-          bodyOpen={bodyOpen}
-          ariaLabel="Toggle Recipe Cook Time Section Expanded"
-        >
+    <AccordionWrapper defaultValue="time">
+      <AccordionSection value="time">
+        <AccordionSectionHeader>
           <SectionHeader removeMarginBottom>Total Cook Time</SectionHeader>
         </AccordionSectionHeader>
-        <AccordionSectionBody id={id} isOpen={bodyOpen}>
+        <AccordionSectionBody>
           <ul className="flex flex-wrap list-none -mx-4">
             <RecipeCookTimeItem
               title="prep"

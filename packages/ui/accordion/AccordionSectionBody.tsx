@@ -1,42 +1,45 @@
-import { ReactElement } from "react";
-import { motion, Variants } from "framer-motion";
+import React from "react";
+import { keyframes, styled } from "@stitches/react";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
-export interface AccordionSectionBodyProps {
-  children: string | ReactElement | ReactElement[];
-  id: string;
-  isOpen: boolean;
+const StyledContentText = styled("div", {
+  padding: "py-4 px-5",
+});
+
+const open = keyframes({
+  from: { height: 0 },
+  to: { height: "var(--radix-accordion-content-height)" },
+});
+
+const close = keyframes({
+  from: { height: "var(--radix-accordion-content-height)" },
+  to: { height: 0 },
+});
+
+const StyledContent = styled(AccordionPrimitive.Content, {
+  '&[data-state="open"]': {
+    animation: `${open} 300ms ease-out`,
+  },
+  '&[data-state="closed"]': {
+    animation: `${close} 300ms ease-out`,
+  },
+});
+
+interface AccordionSectionBodyProps {
+  children: React.ReactNode;
+  props?: AccordionPrimitive.AccordionContentProps;
 }
 
-const bodyAnimate: Variants = {
-  open: {
-    opacity: 1,
-    height: "auto",
-    transition: {
-      ease: "easeIn",
-      duration: 0.2,
-    },
-  },
-  closed: {
-    height: 0,
-    opacity: 0,
-  },
-};
-
-export const AccordionSectionBody = ({
+const AccordionSectionBody = ({
   children,
-  id,
-  isOpen,
-}: AccordionSectionBodyProps) => {
-  return (
-    <motion.div
-      id={`collapse${id}`}
-      initial={isOpen}
-      animate={isOpen ? "open" : "closed"}
-      variants={bodyAnimate}
-    >
-      <div className="prose dark:prose-dark max-w-full py-4 px-5">
-        {children}
-      </div>
-    </motion.div>
-  );
-};
+  ...props
+}: AccordionSectionBodyProps) => (
+  <StyledContent
+    {...props}
+    className="prose dark:prose-dark max-w-full overflow-hidden py-4"
+  >
+    <StyledContentText>{children}</StyledContentText>
+  </StyledContent>
+);
+
+export default AccordionSectionBody;

@@ -1,0 +1,7 @@
+@import "tailwind-imports.css";
+
+.c-sZufP:focus-visible,
+.c-sZufP:focus-within {
+  box-shadow: none;
+  outline: none;
+}

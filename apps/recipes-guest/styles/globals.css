@@ -3,6 +3,7 @@
 @import "theme-toggle.css";
 @import "scrollbar.css";
 @import "nav.css";
+@import "accordion.css";
 
 :root {
   --background-primary: theme("colors.white");
