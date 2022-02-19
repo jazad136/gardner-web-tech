@@ -1,5 +1,3 @@
-import { AccordionImplSingleProps } from "@radix-ui/react-accordion";
-import { useEffect, useRef, useState } from "react";
 import { YouTubeListItem } from ".";
 import {
   AccordionSection,
@@ -14,6 +12,10 @@ export interface YouTubeAccordionProps {
 }
 
 export const YouTubeAccordion = ({ youTubeUrls }: YouTubeAccordionProps) => {
+  if (!youTubeUrls) {
+    return <></>;
+  }
+
   return (
     <AccordionWrapper defaultValue="videos">
       <AccordionSection value="videos">
