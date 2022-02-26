@@ -1,0 +1,57 @@
+@import "tailwind-imports.css";
+
+.modal-overlay {
+  @apply fixed inset-0 bg-white bg-opacity-80;
+}
+
+.modal-action-wrapper {
+  @apply flex relative w-full justify-end;
+}
+
+.modal-content {
+  @apply bg-slate-50 border border-slate-200 drop-shadow rounded-xl fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] max-w-3xl max-h-[85vh] px-10 py-6 dark:bg-slate-800 dark:border-slate-600 focus:outline-none;
+}
+
+.modal-title {
+  @apply prose dark:prose-dark text-2xl max-w-full font-semibold mb-4;
+}
+
+.modal-description {
+  @apply prose dark:prose-dark max-w-full mb-4;
+}
+
+.modal-btn {
+  @apply my-1 mx-1 py-1.5 px-4 rounded btn-hover;
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .modal-overlay {
+    animation-name: overlayShow;
+    animation-duration: 150ms;
+  }
+
+  .modal-content {
+    animation-name: contentShow;
+    animation-duration: 150ms;
+  }
+}

@@ -5,6 +5,8 @@ export * from "./DropdownOptions";
 export * from "./getFraction";
 export * from "./PageSpinner";
 export * from "./PDFViewer";
+export { default as SpeechAlert } from "./SpeechAlert";
+export { default as SpeechTipsModal } from "./SpeechTipsModal";
 export * from "./Sleep";
 export * from "./Spinner";
 export * from "./ThemeToggle";

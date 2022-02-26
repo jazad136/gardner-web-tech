@@ -1,3 +1,4 @@
+import React from "react";
 import { YouTubeListItem } from ".";
 import {
   AccordionSection,
@@ -9,17 +10,23 @@ import {
 
 export interface YouTubeAccordionProps {
   youTubeUrls: string[];
+  isOpen?: boolean;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const YouTubeAccordion = ({ youTubeUrls }: YouTubeAccordionProps) => {
+export const YouTubeAccordion = ({
+  youTubeUrls,
+  isOpen,
+  setIsOpen,
+}: YouTubeAccordionProps) => {
   if (!youTubeUrls) {
     return <></>;
   }
 
   return (
-    <AccordionWrapper defaultValue="videos">
+    <AccordionWrapper value={isOpen ? "videos" : ""}>
       <AccordionSection value="videos">
-        <AccordionSectionHeader>
+        <AccordionSectionHeader handleOnClick={() => setIsOpen(!isOpen)}>
           <SectionHeader removeMarginBottom>Videos</SectionHeader>
         </AccordionSectionHeader>
         <AccordionSectionBody>

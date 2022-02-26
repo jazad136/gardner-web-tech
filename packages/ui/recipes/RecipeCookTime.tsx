@@ -12,17 +12,23 @@ import { Recipe, RecipeCookTimeItem } from ".";
 
 export interface RecipeCookTimeProps {
   recipe: Recipe;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const RecipeCookTime = ({ recipe }: RecipeCookTimeProps) => {
+export const RecipeCookTime = ({
+  recipe,
+  isOpen,
+  setIsOpen,
+}: RecipeCookTimeProps) => {
   const { prepTime, cookTime, restTime } = recipe;
   const totalItems = !restTime ? 3 : 4;
   const iconStyle = { fontSize: "3em", marginBottom: "0.2em" };
 
   return (
-    <AccordionWrapper defaultValue="time">
+    <AccordionWrapper value={isOpen ? "time" : ""}>
       <AccordionSection value="time">
-        <AccordionSectionHeader>
+        <AccordionSectionHeader handleOnClick={() => setIsOpen(!isOpen)}>
           <SectionHeader removeMarginBottom>Total Cook Time</SectionHeader>
         </AccordionSectionHeader>
         <AccordionSectionBody>

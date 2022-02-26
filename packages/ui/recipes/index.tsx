@@ -5,6 +5,7 @@ export * from "./RecipeCookTime";
 export * from "./RecipeCookTimeItem";
 export * from "./RecipeDocument";
 export * from "./RecipeLink";
+export * from "./RecipeMakeButton";
 export * from "./RecipePrintButton";
 export * from "./RecipeSearchForm";
 export * from "./RecipeSideNav";

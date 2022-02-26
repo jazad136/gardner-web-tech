@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { RecipeProvider } from "src/lib/RecipeContext";
 import Layout from "@components/layout";
 import NextNProgress from "nextjs-progressbar";
+import "regenerator-runtime/runtime";
 
 export type LayoutProps = {
   useContainer?: boolean;

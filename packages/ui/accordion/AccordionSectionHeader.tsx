@@ -17,11 +17,13 @@ const StyledChevron = styled(FiChevronDown, {
 
 interface AccordionSectionHeaderProps {
   children: React.ReactNode;
+  handleOnClick: (input: any) => void;
   props?: React.HTMLProps<HTMLButtonElement>;
 }
 
 const AccordionSectionHeader = ({
   children,
+  handleOnClick,
   ...props
 }: AccordionSectionHeaderProps) => (
   <StyledHeader className="flex overflow-hidden py-4 px-5 text-left rounded-none border-b-slate-200 focus:outline-none">
@@ -29,6 +31,7 @@ const AccordionSectionHeader = ({
       {...props}
       className="flex relative items-center justify-between w-full "
       aria-hidden
+      onClick={handleOnClick}
     >
       {children}
       <StyledChevron

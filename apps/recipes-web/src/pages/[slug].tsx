@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import {
   Recipe,
   RecipeCookTime,
   RecipeListItem,
+  RecipeMakeButton,
   RecipePrintButton,
   recipeQuery,
   recipeSlugsQuery,
@@ -47,6 +48,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
     }
   );
   const router = useRouter();
+  const [batches, setBatches] = useState(1);
 
   useEffect(() => {
     if (data?.allRecipes) {
@@ -91,6 +93,8 @@ const RecipePage = ({ data }: RecipePageProps) => {
           <IngredientListWrapper
             ingredients={ingredients}
             serves={data.currentRecipe.serves}
+            batches={batches}
+            setBatches={setBatches}
           />
           <SectionWithPortableTextBlock
             title="Instructions"
@@ -104,7 +108,10 @@ const RecipePage = ({ data }: RecipePageProps) => {
           </SectionHeader>
           <SectionWithPortableTextBlock title="Notes" blocks={notes} />
           <YouTubeAccordion youTubeUrls={youTubeUrls} />
-          <RecipePrintButton slug={slug} />
+          <div className="flex justify-center">
+            <RecipePrintButton slug={slug} />
+            <RecipeMakeButton slug={slug} batches={batches} />
+          </div>
         </main>
       </div>
     </>

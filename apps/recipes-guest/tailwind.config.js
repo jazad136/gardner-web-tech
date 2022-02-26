@@ -26,6 +26,12 @@ module.exports = {
       transitionProperty: {
         spacing: "margin, padding",
       },
+      keyframes: {
+        appear: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {

@@ -7,7 +7,7 @@ export interface RecipePrintButtonProps {
 }
 
 export const RecipePrintButton = ({ slug }: RecipePrintButtonProps) => (
-  <div className="hidden lg:flex justify-center">
+  <div className="hidden lg:flex">
     <Link href={{ pathname: "/print/[slug]", query: { slug } }}>
       <a>
         <Button color="success" isOutline size="md" ariaLabel="Print Recipe">

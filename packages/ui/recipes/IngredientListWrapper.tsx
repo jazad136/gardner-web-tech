@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Ingredient } from ".";
 import { getFractionFromString } from "..";
 import { IngredientList } from "./IngredientList";
@@ -7,14 +7,20 @@ import { Fraction } from "fractional";
 export interface IngredientListProps {
   ingredients: Ingredient[];
   serves: number;
+  batches: number;
+  setBatches?: React.Dispatch<React.SetStateAction<number>>;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const IngredientListWrapper = ({
   ingredients,
   serves,
+  batches,
+  setBatches,
+  isOpen,
+  setIsOpen,
 }: IngredientListProps) => {
-  const [batches, setBatches] = useState(1);
-
   const getQuantityFromString = (quantity: string): string => {
     if (!quantity) {
       return "";
@@ -40,6 +46,8 @@ export const IngredientListWrapper = ({
       batches={batches}
       setBatches={setBatches}
       serves={serves}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
     />
   );
 };

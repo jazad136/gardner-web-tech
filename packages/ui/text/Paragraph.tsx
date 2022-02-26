@@ -13,7 +13,7 @@ export const Paragraph = ({
   classNames,
 }: ParagraphProps) => (
   <p
-    className={cn("prose dark:prose-dark", classNames, {
+    className={cn("prose dark:prose-dark max-w-full", classNames, {
       "mb-4": !removeMarginBottom,
     })}
   >

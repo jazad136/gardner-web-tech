@@ -7,6 +7,7 @@
   "dependencies": {
     "@magic-ext/oauth": "^2.0.1",
     "@radix-ui/react-accordion": "^0.1.5",
+    "@radix-ui/react-alert-dialog": "^0.1.5",
     "@radix-ui/react-label": "^0.1.4",
     "@stitches/react": "^1.2.6",
     "@tailwindcss/typography": "^0.5.1",
@@ -23,8 +24,10 @@
     "react": "^17.0",
     "react-dom": "^17.0",
     "react-icons": "^4.3.1",
+    "react-speech-recognition": "^3.9.0",
     "react-switch": "^6.0.0",
-    "react-youtube": "^7.14.0"
+    "react-youtube": "^7.14.0",
+    "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.16.7",
@@ -32,6 +35,8 @@
     "@types/luxon": "^2.0.9",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "@types/react-speech-recognition": "^3.9.0",
+    "@types/regenerator-runtime": "^0.13.1",
     "autoprefixer": "^10.4.2",
     "config": "*",
     "postcss": "^8.4.5",

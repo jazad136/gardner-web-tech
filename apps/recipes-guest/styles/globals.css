@@ -1,9 +1,11 @@
 @import "tailwind-imports.css";
-@import "button.css";
-@import "theme-toggle.css";
-@import "scrollbar.css";
-@import "nav.css";
+
 @import "accordion.css";
+@import "button.css";
+@import "modal.css";
+@import "nav.css";
+@import "scrollbar.css";
+@import "theme-toggle.css";
 
 :root {
   --background-primary: theme("colors.white");

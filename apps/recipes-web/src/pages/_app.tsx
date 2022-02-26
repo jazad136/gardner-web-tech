@@ -7,6 +7,7 @@ import { ReactElement, useEffect } from "react";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import { PageSpinner } from "ui";
 import NextNProgress from "nextjs-progressbar";
+import "regenerator-runtime/runtime";
 
 export type LayoutProps = {
   useContainer?: boolean;

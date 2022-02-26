@@ -1,4 +1,4 @@
-@import "tailwind-imports";
+@import "tailwind-imports.css";
 
 .theme-toggle.react-toggle--focus .react-toggle-thumb,
 .theme-toggle.react-toggle:active:not(.react-toggle--disabled)

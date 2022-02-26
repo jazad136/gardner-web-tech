@@ -29,13 +29,17 @@
     "pino-pretty": "^7.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-speech-recognition": "^3.9.0",
     "react-youtube": "^7.14.0",
+    "regenerator-runtime": "^0.13.9",
     "ui": "*"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@types/node": "17.0.4",
     "@types/react": "17.0.38",
+    "@types/react-speech-recognition": "^3.9.0",
+    "@types/regenerator-runtime": "^0.13.1",
     "autoprefixer": "^10.4.0",
     "config": "*",
     "eslint": "^8.7.0",

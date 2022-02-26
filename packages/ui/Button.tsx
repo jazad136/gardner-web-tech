@@ -35,7 +35,6 @@ export const Button = ({
   const sizeClasses = cn("py-1.5 px-4", {
     "text-xl": size === "xl",
     "text-lg": size === "lg",
-    "text-md": size === "md",
     "text-sm": size === "sm",
     "text-xs": size === "xs",
   });
