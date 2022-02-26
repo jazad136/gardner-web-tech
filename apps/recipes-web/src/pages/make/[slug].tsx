@@ -8,11 +8,11 @@ import {
   PageTitle,
   Recipe,
   RecipeListItem,
-  RecipePrintButton,
   recipeQuery,
   recipeSlugsQuery,
   SpeechAlert,
   SpeechTipsModal,
+  useWakeLock,
   YouTubeAccordion,
 } from "ui";
 import { useRecipeContext } from "src/lib/RecipeContext";
@@ -41,40 +41,19 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
   const [dictaphoneEnabled, setDictaphoneEnabled] = useState(false);
   const [speechRecognitionSupported, setSpeechRecognitionSupported] =
     useState(false);
+  const { enableWakeLock, isEnabled, isSupported } = useWakeLock();
+
+  useEffect(() => {
+    if (isSupported && !isEnabled) {
+      enableWakeLock();
+    }
+  }, [enableWakeLock, isEnabled, isSupported]);
 
   useEffect(() => {
     if (data?.allRecipes) {
       handleSetRecipes(data.allRecipes);
     }
   }, [data?.allRecipes, handleSetRecipes]);
-
-  function isScreenLockSupported() {
-    return "wakeLock" in navigator;
-  }
-
-  useEffect(() => {
-    let customNavigator: any;
-    let screenLock: any;
-    customNavigator = navigator;
-
-    if (isScreenLockSupported()) {
-      try {
-        customNavigator.wakeLock
-          .request("screen")
-          .then((lock) => (screenLock = lock));
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    return () => {
-      if (!!screenLock) {
-        screenLock.release().then(() => {
-          screenLock = null;
-        });
-      }
-    };
-  });
 
   const batches: number = useMemo(() => {
     if (!query?.batches) {

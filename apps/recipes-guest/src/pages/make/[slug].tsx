@@ -12,6 +12,7 @@ import {
   recipeSlugsQuery,
   SpeechAlert,
   SpeechTipsModal,
+  useWakeLock,
   YouTubeAccordion,
 } from "ui";
 import { useRecipeContext } from "src/lib/RecipeContext";
@@ -40,6 +41,13 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
   const [dictaphoneEnabled, setDictaphoneEnabled] = useState(false);
   const [speechRecognitionSupported, setSpeechRecognitionSupported] =
     useState(false);
+  const { enableWakeLock, isEnabled, isSupported } = useWakeLock();
+
+  useEffect(() => {
+    if (isSupported && !isEnabled) {
+      enableWakeLock();
+    }
+  }, [enableWakeLock, isEnabled, isSupported]);
 
   useEffect(() => {
     if (data?.allRecipes) {

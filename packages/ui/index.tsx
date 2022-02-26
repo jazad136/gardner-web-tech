@@ -1,4 +1,3 @@
-import React from "react";
 export * from "./Button";
 export * from "./DisplayTime";
 export * from "./DropdownOptions";
@@ -11,6 +10,7 @@ export * from "./Sleep";
 export * from "./Spinner";
 export * from "./ThemeToggle";
 export * from "./ThemeSettings";
+export { default as useWakeLock } from "./useWakeLock";
 
 export * from "./accordion";
 export * from "./nav";
