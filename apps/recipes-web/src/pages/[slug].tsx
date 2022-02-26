@@ -49,6 +49,9 @@ const RecipePage = ({ data }: RecipePageProps) => {
   );
   const router = useRouter();
   const [batches, setBatches] = useState(1);
+  const [ingredientsOpen, setIngredientsOpen] = useState(true);
+  const [youTubeOpen, setYouTubeOpen] = useState(true);
+  const [timeOpen, setTimeOpen] = useState(true);
 
   useEffect(() => {
     if (data?.allRecipes) {
@@ -89,12 +92,18 @@ const RecipePage = ({ data }: RecipePageProps) => {
               />
             </div>
           )}
-          <RecipeCookTime recipe={data.currentRecipe} />
+          <RecipeCookTime
+            recipe={data.currentRecipe}
+            setIsOpen={setTimeOpen}
+            isOpen={timeOpen}
+          />
           <IngredientListWrapper
             ingredients={ingredients}
             serves={data.currentRecipe.serves}
             batches={batches}
             setBatches={setBatches}
+            isOpen={ingredientsOpen}
+            setIsOpen={setIngredientsOpen}
           />
           <SectionWithPortableTextBlock
             title="Instructions"
