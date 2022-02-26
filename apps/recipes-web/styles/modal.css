@@ -9,7 +9,7 @@
 }
 
 .modal-content {
-  @apply bg-slate-50 border border-slate-200 drop-shadow rounded-xl fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] max-w-3xl max-h-[85vh] px-10 py-6 dark:bg-slate-800 dark:border-slate-600 focus:outline-none;
+  @apply bg-slate-50 border border-slate-200 drop-shadow rounded-xl fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-[50vw] max-w-3xl max-h-[95] md:max-h-[85vh] px-10 py-6 dark:bg-slate-800 dark:border-slate-600 focus:outline-none;
 }
 
 .modal-title {

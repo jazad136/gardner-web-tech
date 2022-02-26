@@ -18,6 +18,7 @@ import {
 import { useRecipeContext } from "src/lib/RecipeContext";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Dictaphone from "../../components/Dictaphone";
+import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
 
 import * as Pino from "pino";
 
@@ -46,6 +47,34 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
       handleSetRecipes(data.allRecipes);
     }
   }, [data?.allRecipes, handleSetRecipes]);
+
+  function isScreenLockSupported() {
+    return "wakeLock" in navigator;
+  }
+
+  useEffect(() => {
+    let customNavigator: any;
+    let screenLock: any;
+    customNavigator = navigator;
+
+    if (isScreenLockSupported()) {
+      try {
+        customNavigator.wakeLock
+          .request("screen")
+          .then((lock) => (screenLock = lock));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    return () => {
+      if (!!screenLock) {
+        screenLock.release().then(() => {
+          screenLock = null;
+        });
+      }
+    };
+  });
 
   const batches: number = useMemo(() => {
     if (!query?.batches) {
@@ -78,10 +107,25 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
         </Head>
 
         <main className="py-8 block">
-          <div className="w-full flex justify-center">
-            <PageTitle>{title}</PageTitle>
+          <div className="w-full flex justify-between">
+            <PageTitle classNames="inline-block align-middle">
+              {title}
+            </PageTitle>
+            <button
+              type="button"
+              className="-mt-2"
+              aria-label="Toggle Voice Commands"
+              onClick={() => {
+                setDictaphoneEnabled(!dictaphoneEnabled);
+              }}
+            >
+              {dictaphoneEnabled ? (
+                <BiMicrophone size="2em" />
+              ) : (
+                <BiMicrophoneOff size="2em" />
+              )}
+            </button>
           </div>
-          <div>Microphone: {dictaphoneEnabled ? "on" : "off"}</div>
           <IngredientListWrapper
             ingredients={ingredients}
             serves={data.currentRecipe.serves}

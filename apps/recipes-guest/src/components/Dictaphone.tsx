@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -61,6 +61,8 @@ const Dictaphone = ({
     isMicrophoneAvailable,
   } = useSpeechRecognition({ commands });
 
+  const isMicAvailable = useRef(isMicrophoneAvailable);
+
   useEffect(() => {
     if (isEnabled) {
       SpeechRecognition.startListening({ continuous: true });
@@ -72,12 +74,12 @@ const Dictaphone = ({
 
   useEffect(() => {
     const isSupported =
-      browserSupportsSpeechRecognition && isMicrophoneAvailable;
+      browserSupportsSpeechRecognition && isMicAvailable.current;
 
     setSpeechRecognitionSupported(isSupported);
   }, [
     browserSupportsSpeechRecognition,
-    isMicrophoneAvailable,
+    isMicAvailable,
     setSpeechRecognitionSupported,
   ]);
 

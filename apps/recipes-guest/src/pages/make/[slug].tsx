@@ -8,7 +8,6 @@ import {
   PageTitle,
   Recipe,
   RecipeListItem,
-  RecipePrintButton,
   recipeQuery,
   recipeSlugsQuery,
   SpeechAlert,
@@ -18,6 +17,7 @@ import {
 import { useRecipeContext } from "src/lib/RecipeContext";
 import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
 import Dictaphone from "../../components/Dictaphone";
+import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
 
 import * as Pino from "pino";
 
@@ -108,8 +108,21 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
         <main className="py-8 block">
           <div className="w-full flex justify-center">
             <PageTitle>{title}</PageTitle>
+            <button
+              type="button"
+              className="mt-2"
+              aria-label="Toggle Voice Commands"
+              onClick={() => {
+                setDictaphoneEnabled(!dictaphoneEnabled);
+              }}
+            >
+              {dictaphoneEnabled ? (
+                <BiMicrophone size="2em" />
+              ) : (
+                <BiMicrophoneOff size="2em" />
+              )}
+            </button>
           </div>
-          <div>Microphone: {dictaphoneEnabled ? "on" : "off"}</div>
           <IngredientListWrapper
             ingredients={ingredients}
             serves={data.currentRecipe.serves}
