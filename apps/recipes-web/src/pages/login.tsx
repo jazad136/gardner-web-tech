@@ -1,4 +1,3 @@
-import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { useEffect } from "react";
@@ -29,22 +28,5 @@ const Login = () => {
     ></Script>
   );
 };
-
-export async function getServerSideProps(ctx) {
-  const session = await getSession(ctx);
-
-  if (session?.user) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-}
 
 export default Login;

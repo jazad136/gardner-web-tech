@@ -1,4 +1,3 @@
-import { signIn } from "next-auth/react";
 import Script from "next/script";
 import { PageSpinner } from "ui";
 
@@ -21,11 +20,6 @@ const Callback = () => {
 
               const response = await fetch("/api/auth/callback");
               const urlData = await response.json();
-
-              await signIn("credentials", {
-                didToken: idToken,
-                callbackUrl: urlData?.callbackUrl ?? null,
-              });
             }
           );
         }}

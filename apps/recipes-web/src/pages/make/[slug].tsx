@@ -16,7 +16,7 @@ import {
   YouTubeAccordion,
 } from "ui";
 import { useRecipeContext } from "src/lib/RecipeContext";
-import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
+import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
 import Dictaphone from "../../components/Dictaphone";
 import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
 

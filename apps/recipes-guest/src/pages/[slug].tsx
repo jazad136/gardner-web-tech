@@ -20,7 +20,7 @@ import * as Pino from "pino";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import { useNextSanityImage, ImageUrlBuilder } from "next-sanity-image";
 import { configuredSanityClient } from "src/lib/SanityUi";
-import { SectionWithPortableTextBlock } from "@components/SectionWithPortableTextBlock";
+import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
 import Head from "next/head";
 
 const logger = Pino.default({ name: "RecipePage" });

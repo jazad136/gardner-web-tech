@@ -2,10 +2,7 @@ import "../../styles/globals.css";
 import { NextComponentType, NextPageContext } from "next";
 import { ThemeProvider } from "next-themes";
 import { RecipeProvider } from "src/lib/RecipeContext";
-import Layout from "@components/layout";
-import { ReactElement, useEffect } from "react";
-import { SessionProvider, signIn, useSession } from "next-auth/react";
-import { PageSpinner } from "ui";
+import Layout from "src/components/layout";
 import NextNProgress from "nextjs-progressbar";
 import "regenerator-runtime/runtime";
 
@@ -26,48 +23,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       <NextNProgress />
       <ThemeProvider attribute="class">
-        <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
-          {Component.auth ? (
-            <Auth>
-              <RecipeProvider>
-                <Layout useContainer={Component.layoutProps?.useContainer}>
-                  <Component {...pageProps} />
-                </Layout>
-              </RecipeProvider>
-            </Auth>
-          ) : (
-            <Layout useContainer={Component.layoutProps?.useContainer}>
-              <Component {...pageProps} />
-            </Layout>
-          )}
-        </SessionProvider>
+        <RecipeProvider>
+          <Layout useContainer={Component.layoutProps?.useContainer}>
+            <Component {...pageProps} />
+          </Layout>
+        </RecipeProvider>
       </ThemeProvider>
     </>
   );
-};
-
-interface AuthProps {
-  children: ReactElement | ReactElement[];
-}
-
-const Auth = ({ children }: AuthProps) => {
-  const { data: session, status } = useSession();
-  const isUser = !!session?.user;
-
-  useEffect(() => {
-    if (status === "loading") {
-      return;
-    }
-    if (!isUser) {
-      signIn();
-    }
-  }, [isUser, status]);
-
-  if (isUser) {
-    return <>{children}</>;
-  }
-
-  return <PageSpinner />;
 };
 
 export default MyApp;

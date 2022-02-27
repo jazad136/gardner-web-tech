@@ -1,5 +1,5 @@
 import { ReactElement, useCallback, useEffect } from "react";
-import Meta from "@components/meta";
+import Meta from "src/components/meta";
 import Navbar from "./Navbar";
 import cn from "classnames";
 

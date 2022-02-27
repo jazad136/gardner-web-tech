@@ -2,7 +2,7 @@ import "../../styles/globals.css";
 import { NextComponentType, NextPageContext } from "next";
 import { ThemeProvider } from "next-themes";
 import { RecipeProvider } from "src/lib/RecipeContext";
-import Layout from "@components/layout";
+import Layout from "src/components/layout";
 import NextNProgress from "nextjs-progressbar";
 import "regenerator-runtime/runtime";
 
