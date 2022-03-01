@@ -42,8 +42,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           setSession({ user: null, isLoading: false });
         }
       });
-    } catch (err) {
-      console.log("issues encountered checking login status", err);
+    } catch {
       setSession({ isLoading: false });
     }
   }, []);

@@ -40,7 +40,6 @@ const Login = () => {
       }
     } catch (error) {
       setDisabled(false);
-      console.log(error);
     }
   }
 
