@@ -4,7 +4,9 @@
 .btn-bg-primary,
 .btn-bg-secondary,
 .btn-bg-danger,
-.btn-bg-dark {
+.btn-bg-dark,
+.btn-google,
+.btn-facebook {
   @apply prose prose-dark hover:prose-dark;
 }
 
@@ -63,7 +65,7 @@
 }
 
 .btn-bg-light {
-  @apply bg-gray-300  prose dark:prose-dark;
+  @apply bg-gray-300 prose dark:prose-dark;
 }
 
 .btn-bg-white {
@@ -99,4 +101,13 @@
 
 .btn-outline-white {
   @apply border-white;
+}
+
+/* special buttons */
+.btn-bg-google {
+  @apply bg-[#DE5246] hover:bg-red-700 prose prose-dark;
+}
+
+.btn-bg-facebook {
+  @apply bg-[#3B5998] hover:bg-blue-800 prose prose-dark;
 }

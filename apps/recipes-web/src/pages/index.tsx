@@ -31,7 +31,7 @@ const Home = ({ allRecipes }: HomeProps) => {
     <>
       <div>
         <Head>
-          <title>Recipes</title>
+          <title>Recipes Home</title>
           <meta name="description" content="View our recipes" />
           <link rel="icon" href="/favicon.ico" />
         </Head>

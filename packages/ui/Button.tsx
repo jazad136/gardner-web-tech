@@ -11,7 +11,9 @@ export interface ButtonProps {
     | "danger"
     | "light"
     | "white"
-    | "dark";
+    | "dark"
+    | "google"
+    | "facebook";
   size: "xl" | "lg" | "md" | "sm" | "xs";
   ariaLabel: string;
   onClick?: (value: any) => void;
@@ -19,6 +21,7 @@ export interface ButtonProps {
   isPill?: boolean;
   isOutline?: boolean;
   isDisabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 export const Button = ({
@@ -31,6 +34,7 @@ export const Button = ({
   isPill = false,
   isOutline = false,
   isDisabled = false,
+  type = "button",
 }: ButtonProps) => {
   const sizeClasses = cn("py-1.5 px-4", {
     "text-xl": size === "xl",
@@ -43,6 +47,7 @@ export const Button = ({
     <button
       className={cn("my-1 mx-1 hover:cursor-pointer", sizeClasses, {
         "font-bold": isBold,
+        "font-semibold": !isBold,
         "rounded-full": isPill,
         rounded: !isPill,
         [`btn-outline-${color}`]: isOutline,
@@ -53,6 +58,7 @@ export const Button = ({
       disabled={isDisabled}
       onClick={onClick}
       aria-label={ariaLabel}
+      type={type}
     >
       {children}
     </button>

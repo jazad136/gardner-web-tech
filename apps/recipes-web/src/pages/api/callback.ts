@@ -22,7 +22,7 @@ const callback = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const callbackUrl = cookies.get(cookieName);
     cookies.set(cookieName);
-    res.json(JSON.stringify({ callbackUrl }));
+    res.status(200).json(JSON.stringify({ callbackUrl }));
   }
 };
 
