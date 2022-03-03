@@ -9,9 +9,13 @@ export default async function logout(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const cookies = new Cookies(req, res);
-  const didToken = cookies.get(cookieName);
-  await magic.users.logoutByToken(didToken);
-  cookies.set(cookieName);
-  res.status(200).json({ authenticated: false });
+  try {
+    const cookies = new Cookies(req, res);
+    const didToken = cookies.get(cookieName);
+    await magic.users.logoutByToken(didToken);
+    cookies.set(cookieName);
+    res.status(200).json({ authenticated: false });
+  } catch {
+    res.status(500);
+  }
 }
