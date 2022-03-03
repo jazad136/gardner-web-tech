@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { magic } from "src/lib/magic";
 import EmailForm from "src/components/EmailForm";
