@@ -8,13 +8,13 @@ import "regenerator-runtime/runtime";
 
 export type LayoutProps = {
   useContainer?: boolean;
+  includeNavbar?: boolean;
 };
 
 type AppProps = {
   pageProps: any;
   Component: NextComponentType<NextPageContext, any, {}> & {
     layoutProps?: LayoutProps;
-    auth: boolean;
   };
 };
 
@@ -26,7 +26,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <RecipeProvider>
           <Layout
             useContainer={Component.layoutProps?.useContainer}
-            includeNavbar={true}
+            includeNavbar={Component.layoutProps?.includeNavbar}
           >
             <Component {...pageProps} />
           </Layout>

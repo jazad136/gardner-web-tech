@@ -1,4 +1,4 @@
-import { ReactElement, useContext } from "react";
+import { ReactElement, useContext, useMemo } from "react";
 import Meta from "src/components/meta";
 import Navbar from "./Navbar";
 import cn from "classnames";
@@ -11,7 +11,7 @@ interface LayoutProps {
 
 const Layout = ({
   children,
-  includeNavbar,
+  includeNavbar = true,
   useContainer = true,
 }: LayoutProps) => {
   return (

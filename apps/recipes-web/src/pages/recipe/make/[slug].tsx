@@ -166,6 +166,9 @@ export async function getStaticPaths() {
   };
 }
 
-MakeRecipePage.auth = true;
+MakeRecipePage.layoutProps = {
+  useContainer: true,
+  includeNavbar: true,
+};
 
 export default MakeRecipePage;

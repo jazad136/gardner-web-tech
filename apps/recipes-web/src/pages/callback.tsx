@@ -66,4 +66,9 @@ const Callback = () => {
   );
 };
 
+Callback.layoutProps = {
+  useContainer: true,
+  includeNavbar: false,
+};
+
 export default Callback;

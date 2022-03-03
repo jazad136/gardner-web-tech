@@ -71,4 +71,9 @@ const Login = () => {
   );
 };
 
+Login.layoutProps = {
+  useContainer: true,
+  includeNavbar: false,
+};
+
 export default Login;
