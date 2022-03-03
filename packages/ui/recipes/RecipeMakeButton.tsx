@@ -9,7 +9,7 @@ export interface RecipeMakeButtonProps {
 
 export const RecipeMakeButton = ({ slug, batches }: RecipeMakeButtonProps) => (
   <div className="flex">
-    <Link href={{ pathname: "/make/[slug]", query: { slug, batches } }}>
+    <Link href={{ pathname: "/recipe/make/[slug]", query: { slug, batches } }}>
       <a>
         <Button color="secondary" isOutline size="md" ariaLabel="Make Recipe">
           Make

@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { magic } from "src/lib/magic";
-import { UserContext } from "src/lib/UserContext";
 import EmailForm from "src/components/EmailForm";
 import SocialLogins from "src/components/SocialLogins";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -9,12 +8,7 @@ import Head from "next/head";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(false);
-  const { session, setSession } = useContext(UserContext);
   const router = useRouter();
-
-  useEffect(() => {
-    session?.user?.issuer && router.push("/");
-  }, [session, router]);
 
   async function handleLoginWithEmail(email) {
     try {
@@ -34,8 +28,6 @@ const Login = () => {
       });
 
       if (res.status === 200) {
-        let userMetadata = await magic.user.getMetadata();
-        setSession({ user: userMetadata, isLoading: false });
         router.push("/");
       }
     } catch (error) {

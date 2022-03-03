@@ -1,7 +1,6 @@
 import { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { magic } from "src/lib/magic";
-import { UserContext } from "src/lib/UserContext";
 import { PageSpinner } from "ui";
 import Head from "next/head";
 
@@ -9,7 +8,6 @@ const notAcceptedCallbackUrls = ["/login", "/callback"];
 
 const Callback = () => {
   const router = useRouter();
-  const { setSession } = useContext(UserContext);
 
   // The redirect contains a `provider` query param if the user is logging in with a social provider
   useEffect(() => {
@@ -41,10 +39,6 @@ const Callback = () => {
     });
 
     if (res.status === 200) {
-      // Set the UserContext to the now logged in user
-      let userMetadata = await magic.user.getMetadata();
-      setSession({ user: userMetadata, isLoading: false });
-
       const callbackResult = await fetch("/api/callback");
       const callbackData = await callbackResult.json();
       if (

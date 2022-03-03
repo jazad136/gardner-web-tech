@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import Head from "next/head";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
 import { getClient, sanityClient } from "../../lib/SanityServer";
@@ -7,22 +7,27 @@ import {
   IngredientListWrapper,
   PageTitle,
   Recipe,
+  RecipeCookTime,
   RecipeListItem,
+  RecipeMakeButton,
+  RecipePrintButton,
   recipeQuery,
   recipeSlugsQuery,
-  SpeechAlert,
-  SpeechTipsModal,
-  useWakeLock,
+  SectionHeader,
   YouTubeAccordion,
 } from "ui";
-import { useRecipeContext } from "src/lib/RecipeContext";
-import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
-import Dictaphone from "../../components/Dictaphone";
-import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
-
 import * as Pino from "pino";
+import { useRecipeContext } from "src/lib/RecipeContext";
+import { useNextSanityImage, ImageUrlBuilder } from "next-sanity-image";
+import { configuredSanityClient } from "src/lib/SanityUi";
+import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
+import Head from "next/head";
 
-const logger = Pino.default({ name: "MakeRecipePage" });
+const logger = Pino.default({ name: "RecipePage" });
+
+const customImageBuilder = (imageUrlBuilder: ImageUrlBuilder) => {
+  return imageUrlBuilder.width(1250).height(500).crop("focalpoint").fit("crop");
+};
 
 export interface RecipePageDataProps {
   currentRecipe: Recipe;
@@ -33,21 +38,20 @@ export interface RecipePageProps {
   data: RecipePageDataProps;
 }
 
-const MakeRecipePage = ({ data }: RecipePageProps) => {
+const RecipePage = ({ data }: RecipePageProps) => {
   const { handleSetRecipes } = useRecipeContext();
-  const { asPath, query } = useRouter();
+  const imageProps = useNextSanityImage(
+    configuredSanityClient,
+    data?.currentRecipe?.image,
+    {
+      imageBuilder: customImageBuilder,
+    }
+  );
+  const { asPath } = useRouter();
+  const [batches, setBatches] = useState(1);
   const [ingredientsOpen, setIngredientsOpen] = useState(true);
   const [youTubeOpen, setYouTubeOpen] = useState(true);
-  const [dictaphoneEnabled, setDictaphoneEnabled] = useState(false);
-  const [speechRecognitionSupported, setSpeechRecognitionSupported] =
-    useState(false);
-  const { enableWakeLock, isEnabled, isSupported } = useWakeLock();
-
-  useEffect(() => {
-    if (isSupported && !isEnabled) {
-      enableWakeLock();
-    }
-  }, [enableWakeLock, isEnabled, isSupported]);
+  const [timeOpen, setTimeOpen] = useState(true);
 
   useEffect(() => {
     if (data?.allRecipes) {
@@ -55,25 +59,12 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
     }
   }, [data?.allRecipes, handleSetRecipes]);
 
-  const batches: number = useMemo(() => {
-    if (!query?.batches) {
-      return 0;
-    }
-
-    const batches = parseFloat(query.batches as string);
-    if (batches < 0) {
-      return 0;
-    }
-
-    return batches;
-  }, [query]);
-
   if (!data?.currentRecipe?.slug) {
     logger.error(data, "Current Recipe slug not found. Url: %s", asPath);
     return <ErrorPage statusCode={404} />;
   }
 
-  const { title, notes, youTubeUrls, ingredients, instructions, slug } =
+  const { title, image, notes, youTubeUrls, ingredients, instructions, slug } =
     data.currentRecipe;
 
   return (
@@ -86,29 +77,31 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
         </Head>
 
         <main className="py-8 block">
-          <div className="w-full flex justify-between">
-            <PageTitle classNames="inline-block align-middle">
-              {title}
-            </PageTitle>
-            <button
-              type="button"
-              className="-mt-2"
-              aria-label="Toggle Voice Commands"
-              onClick={() => {
-                setDictaphoneEnabled(!dictaphoneEnabled);
-              }}
-            >
-              {dictaphoneEnabled ? (
-                <BiMicrophone size="2em" />
-              ) : (
-                <BiMicrophoneOff size="2em" />
-              )}
-            </button>
+          <div className="w-full flex justify-center">
+            <PageTitle>{title}</PageTitle>
           </div>
+          {image && (
+            <div className="block w-full">
+              <Image
+                className="w-16 md:w-32 lg:w-48 max-w-full rounded-xl"
+                {...imageProps}
+                alt={title}
+                layout="responsive"
+                objectFit="cover"
+                priority
+              />
+            </div>
+          )}
+          <RecipeCookTime
+            recipe={data.currentRecipe}
+            setIsOpen={setTimeOpen}
+            isOpen={timeOpen}
+          />
           <IngredientListWrapper
             ingredients={ingredients}
             serves={data.currentRecipe.serves}
             batches={batches}
+            setBatches={setBatches}
             isOpen={ingredientsOpen}
             setIsOpen={setIngredientsOpen}
           />
@@ -116,6 +109,12 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
             title="Instructions"
             blocks={instructions}
           />
+          <SectionHeader classNames="text-center">
+            <span>
+              Serves: {data.currentRecipe.serves}{" "}
+              {data.currentRecipe.serves === 1 ? "Person" : "People"}
+            </span>
+          </SectionHeader>
           <SectionWithPortableTextBlock title="Notes" blocks={notes} />
           <YouTubeAccordion
             youTubeUrls={youTubeUrls}
@@ -123,19 +122,9 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
             setIsOpen={setYouTubeOpen}
           />
           <div className="flex justify-center">
-            <SpeechAlert
-              handleAccept={() => setDictaphoneEnabled(true)}
-              handleCancel={() => setDictaphoneEnabled(false)}
-              enableSpeechRecognition={speechRecognitionSupported}
-            />
-            <SpeechTipsModal />
+            <RecipePrintButton slug={slug} />
+            <RecipeMakeButton slug={slug} batches={batches} />
           </div>
-          <Dictaphone
-            setSpeechRecognitionSupported={setSpeechRecognitionSupported}
-            isEnabled={dictaphoneEnabled}
-            handleYouTubeOpen={setYouTubeOpen}
-            handleIngredientsOpen={setIngredientsOpen}
-          />
         </main>
       </div>
     </>
@@ -166,6 +155,4 @@ export async function getStaticPaths() {
   };
 }
 
-MakeRecipePage.auth = true;
-
-export default MakeRecipePage;
+export default RecipePage;

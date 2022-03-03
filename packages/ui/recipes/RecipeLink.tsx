@@ -22,7 +22,7 @@ export const RecipeLink = ({
   return (
     <div className="my-4">
       <Link
-        href={{ pathname: "/[slug]", query: { slug: recipe.slug } }}
+        href={{ pathname: "/recipe/[slug]", query: { slug: recipe.slug } }}
         prefetch={false}
       >
         <a className="flex" onClick={() => handleClick()}>

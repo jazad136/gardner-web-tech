@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
-import { getClient, sanityClient } from "../lib/SanityServer";
+import { getClient, sanityClient } from "../../lib/SanityServer";
 import {
   IngredientListWrapper,
   PageTitle,

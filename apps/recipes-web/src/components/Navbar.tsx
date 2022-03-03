@@ -1,16 +1,15 @@
-import { useContext, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { NavbarWrapper, MenuToggle, Brand, RecipeSideNav } from "ui";
 import { motion } from "framer-motion";
 import ThemeToggle from "ui/ThemeToggle";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
 import { urlFor } from "src/lib/SanityUi";
-import { magic } from "src/lib/magic";
 import { useRouter } from "next/router";
-import { UserContext } from "src/lib/UserContext";
+import useSWR from "swr";
 
 const Navbar = () => {
-  const { setSession } = useContext(UserContext);
+  const { data: didToken } = useSWR<string>("/api/user");
   const recipesContext = useRecipeContext();
   const [expanded, setExpanded] = useState(false);
   const router = useRouter();
@@ -32,11 +31,13 @@ const Navbar = () => {
       },
       body: JSON.stringify({ callbackUrl: router.asPath }),
     });
-
-    await magic.user.logout();
-    setSession({ isLoading: false });
+    await fetch("/api/logout");
     router.push("/login");
   };
+
+  if (!didToken) {
+    return <></>;
+  }
 
   return (
     <>

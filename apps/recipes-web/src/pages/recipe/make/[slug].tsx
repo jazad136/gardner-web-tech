@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
-import { getClient, sanityClient } from "../../lib/SanityServer";
+import { getClient, sanityClient } from "../../../lib/SanityServer";
 import {
   IngredientListWrapper,
   PageTitle,
@@ -17,7 +17,7 @@ import {
 } from "ui";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
-import Dictaphone from "../../components/Dictaphone";
+import Dictaphone from "../../../components/Dictaphone";
 import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
 
 import * as Pino from "pino";
@@ -55,34 +55,6 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
     }
   }, [data?.allRecipes, handleSetRecipes]);
 
-  function isScreenLockSupported() {
-    return "wakeLock" in navigator;
-  }
-
-  useEffect(() => {
-    let customNavigator: any;
-    let screenLock: any;
-    customNavigator = navigator;
-
-    if (isScreenLockSupported()) {
-      try {
-        customNavigator.wakeLock
-          .request("screen")
-          .then((lock) => (screenLock = lock));
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    return () => {
-      if (!!screenLock) {
-        screenLock.release().then(() => {
-          screenLock = null;
-        });
-      }
-    };
-  });
-
   const batches: number = useMemo(() => {
     if (!query?.batches) {
       return 0;
@@ -114,11 +86,13 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
         </Head>
 
         <main className="py-8 block">
-          <div className="w-full flex justify-center">
-            <PageTitle>{title}</PageTitle>
+          <div className="w-full flex justify-between">
+            <PageTitle classNames="inline-block align-middle">
+              {title}
+            </PageTitle>
             <button
               type="button"
-              className="mt-2"
+              className="-mt-2"
               aria-label="Toggle Voice Commands"
               onClick={() => {
                 setDictaphoneEnabled(!dictaphoneEnabled);
@@ -191,5 +165,7 @@ export async function getStaticPaths() {
     fallback: true,
   };
 }
+
+MakeRecipePage.auth = true;
 
 export default MakeRecipePage;
