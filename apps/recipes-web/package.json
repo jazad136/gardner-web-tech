@@ -32,7 +32,6 @@
     "react-speech-recognition": "^3.9.0",
     "react-youtube": "^7.14.0",
     "regenerator-runtime": "^0.13.9",
-    "swr": "^1.2.2",
     "ui": "*",
     "yup": "^0.32.11"
   },
