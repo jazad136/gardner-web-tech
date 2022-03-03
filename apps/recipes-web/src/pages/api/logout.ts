@@ -11,7 +11,7 @@ export default async function logout(
 ) {
   const cookies = new Cookies(req, res);
   const didToken = cookies.get(cookieName);
-  magic.users.logoutByToken(didToken);
+  await magic.users.logoutByToken(didToken);
   cookies.set(cookieName);
   res.status(200).json({ authenticated: false });
 }
