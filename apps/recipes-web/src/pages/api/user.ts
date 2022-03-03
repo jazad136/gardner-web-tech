@@ -10,7 +10,11 @@ export default async function logout(
   try {
     const cookies = new Cookies(req, res);
     const didToken = cookies.get(cookieName);
-    res.status(200).json({ didToken });
+    if (didToken) {
+      res.status(200).json({ didToken });
+    } else {
+      res.status(404).json({ error: "token not found" });
+    }
   } catch {
     res.status(500);
   }

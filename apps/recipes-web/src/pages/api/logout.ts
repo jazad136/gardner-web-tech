@@ -12,7 +12,9 @@ export default async function logout(
   try {
     const cookies = new Cookies(req, res);
     const didToken = cookies.get(cookieName);
-    await magic.users.logoutByToken(didToken);
+    if (didToken) {
+      await magic.users.logoutByToken(didToken);
+    }
     cookies.set(cookieName);
     res.status(200).json({ authenticated: false });
   } catch {
