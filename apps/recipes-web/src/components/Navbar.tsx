@@ -6,10 +6,8 @@ import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
 import { urlFor } from "src/lib/SanityUi";
 import { useRouter } from "next/router";
-import useSWR from "swr";
 
 const Navbar = () => {
-  const { data: didToken } = useSWR<string>("/api/user");
   const recipesContext = useRecipeContext();
   const [expanded, setExpanded] = useState(false);
   const router = useRouter();
@@ -34,10 +32,6 @@ const Navbar = () => {
     await fetch("/api/logout");
     router.push("/login");
   };
-
-  if (!didToken) {
-    return <></>;
-  }
 
   return (
     <>
