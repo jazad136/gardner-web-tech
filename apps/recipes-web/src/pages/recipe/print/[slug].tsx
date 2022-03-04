@@ -93,7 +93,7 @@ export async function getStaticPaths() {
 
 RecipePDF.layoutProps = {
   useContainer: true,
-  includeNavbar: true,
+  includeNavAndFooter: true,
 };
 
 RecipePDF.auth = true;

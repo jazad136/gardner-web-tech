@@ -153,7 +153,7 @@ export async function getStaticPaths() {
 
 RecipePage.layoutProps = {
   useContainer: true,
-  includeNavbar: true,
+  includeNavAndFooter: true,
 };
 
 export default RecipePage;

@@ -26,7 +26,7 @@ export const NavbarWrapper = ({
           "lg:mb-6 mb-4": !removeMarginBottom,
         })}
       >
-        <div className="container flex items-center justify-between nav-container">
+        <div className="container flex items-center justify-between">
           {children}
         </div>
       </div>

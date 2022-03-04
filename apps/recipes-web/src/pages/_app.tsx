@@ -8,7 +8,7 @@ import "regenerator-runtime/runtime";
 
 export type LayoutProps = {
   useContainer?: boolean;
-  includeNavbar?: boolean;
+  includeNavAndFooter?: boolean;
 };
 
 type AppProps = {
@@ -26,7 +26,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <RecipeProvider>
           <Layout
             useContainer={Component.layoutProps?.useContainer}
-            includeNavbar={Component.layoutProps?.includeNavbar}
+            includeNavAndFooter={Component.layoutProps?.includeNavAndFooter}
           >
             <Component {...pageProps} />
           </Layout>

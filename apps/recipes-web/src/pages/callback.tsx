@@ -68,7 +68,7 @@ const Callback = () => {
 
 Callback.layoutProps = {
   useContainer: true,
-  includeNavbar: false,
+  includeNavAndFooter: false,
 };
 
 export default Callback;

@@ -2,6 +2,7 @@ import { ReactElement, useCallback, useEffect } from "react";
 import Meta from "src/components/meta";
 import Navbar from "./Navbar";
 import cn from "classnames";
+import Footer from "ui/Footer";
 
 interface LayoutProps {
   useContainer?: boolean;
@@ -16,7 +17,7 @@ const Layout = ({ children, useContainer = true }: LayoutProps) => (
       <main className={cn({ "container flex-grow": useContainer })}>
         {children}
       </main>
-      {/* <Footer /> */}
+      <Footer projectName="Recipes" />
     </div>
   </>
 );

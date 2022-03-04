@@ -85,7 +85,7 @@ export async function getStaticProps() {
 
 Home.layoutProps = {
   useContainer: false,
-  includeNavbar: true,
+  includeNavAndFooter: true,
 };
 
 Home.auth = true;

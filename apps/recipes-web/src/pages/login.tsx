@@ -73,7 +73,7 @@ const Login = () => {
 
 Login.layoutProps = {
   useContainer: true,
-  includeNavbar: false,
+  includeNavAndFooter: false,
 };
 
 export default Login;

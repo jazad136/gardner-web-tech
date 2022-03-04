@@ -1,6 +1,7 @@
 export * from "./Button";
 export * from "./DisplayTime";
 export * from "./DropdownOptions";
+export { default } from "./Footer";
 export * from "./getFraction";
 export * from "./PageSpinner";
 export * from "./PDFViewer";

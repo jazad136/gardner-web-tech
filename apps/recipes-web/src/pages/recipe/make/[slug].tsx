@@ -168,7 +168,7 @@ export async function getStaticPaths() {
 
 MakeRecipePage.layoutProps = {
   useContainer: true,
-  includeNavbar: true,
+  includeNavAndFooter: true,
 };
 
 export default MakeRecipePage;
