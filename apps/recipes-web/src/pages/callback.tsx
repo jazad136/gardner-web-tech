@@ -11,7 +11,10 @@ const Callback = () => {
 
   // The redirect contains a `provider` query param if the user is logging in with a social provider
   useEffect(() => {
-    router.query.provider ? finishSocialLogin() : finishEmailRedirectLogin();
+    // query not set yet
+    if (!!router.query.magic_credential) {
+      router.query.provider ? finishSocialLogin() : finishEmailRedirectLogin();
+    }
   }, [router.query]);
 
   // `getRedirectResult()` returns an object with user data from Magic and the social provider
@@ -34,8 +37,8 @@ const Callback = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + didToken,
       },
+      body: JSON.stringify({ didToken }),
     });
 
     if (res.status === 200) {

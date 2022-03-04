@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { magic } from "src/lib/magic";
 import EmailForm from "src/components/EmailForm";
@@ -10,7 +10,30 @@ const Login = () => {
   const [disabled, setDisabled] = useState(false);
   const router = useRouter();
 
-  async function handleLoginWithEmail(email) {
+  useEffect(() => {
+    fetch("/api/user").then((response) => {
+      // user not logged in
+      if (!response.ok) {
+        return;
+      }
+
+      fetch("/api/callback").then((callbackResponse) => {
+        if (!callbackResponse.ok) {
+          router.push("/");
+          return;
+        }
+
+        callbackResponse
+          .json()
+          .then(({ callbackUrl }) => {
+            router.push(callbackUrl);
+          })
+          .catch(() => router.push("/"));
+      });
+    });
+  }, [router]);
+
+  const handleLoginWithEmail = async (email: string) => {
     try {
       setDisabled(true);
 
@@ -23,7 +46,7 @@ const Login = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + didToken,
+          Authorization: `Bearer ${didToken}`,
         },
       });
 
@@ -33,14 +56,14 @@ const Login = () => {
     } catch (error) {
       setDisabled(false);
     }
-  }
+  };
 
-  async function handleLoginWithSocial(provider) {
+  const handleLoginWithSocial = async (provider) => {
     await magic.oauth.loginWithRedirect({
       provider,
       redirectURI: new URL("/callback", window.location.origin).href,
     });
-  }
+  };
 
   return (
     <>

@@ -1,23 +1,18 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Magic } from "@magic-sdk/admin";
 import Cookies from "cookies";
+import { tokens } from "src/lib/constants";
 
-const cookieName = "did-token";
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
-export default async function logout(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  try {
-    const cookies = new Cookies(req, res);
-    const didToken = cookies.get(cookieName);
-    if (didToken) {
-      await magic.users.logoutByToken(didToken);
-    }
-    cookies.set(cookieName);
-    res.status(200).json({ authenticated: false });
-  } catch {
-    res.status(500);
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const cookies = new Cookies(req, res);
+  const didToken = cookies.get(tokens.didToken);
+  if (didToken) {
+    await magic.users.logoutByToken(didToken);
   }
-}
+  cookies.set(tokens.didToken);
+  res.status(200).json({ authenticated: false });
+};
+
+export default handler;
