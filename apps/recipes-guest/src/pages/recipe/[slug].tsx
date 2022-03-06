@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+import { GetStaticPaths, GetStaticProps } from "next";
 import ErrorPage from "next/error";
+import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import { getClient, sanityClient } from "../../lib/SanityServer";
 import {
   IngredientListWrapper,
   PageTitle,
@@ -16,29 +17,33 @@ import {
   SectionHeader,
   YouTubeAccordion,
 } from "ui";
-import * as Pino from "pino";
-import { useRecipeContext } from "src/lib/RecipeContext";
-import { useNextSanityImage, ImageUrlBuilder } from "next-sanity-image";
-import { configuredSanityClient } from "src/lib/SanityUi";
 import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
-import Head from "next/head";
+import { CustomNextPage } from "src/lib/CustomNextPage";
+import { useRecipeContext } from "src/lib/RecipeContext";
+import { getClient, sanityClient } from "src/lib/SanityServer";
+import { configuredSanityClient } from "src/lib/SanityUi";
+import { useNextSanityImage, ImageUrlBuilder } from "next-sanity-image";
+import * as Pino from "pino";
 
 const logger = Pino.default({ name: "RecipePage" });
 
-const customImageBuilder = (imageUrlBuilder: ImageUrlBuilder) => {
+const customImageBuilder = (
+  imageUrlBuilder: ImageUrlBuilder
+): ImageUrlBuilder => {
   return imageUrlBuilder.width(1250).height(500).crop("focalpoint").fit("crop");
 };
 
-export interface RecipePageDataProps {
+type DataProps = {
   currentRecipe: Recipe;
   allRecipes: RecipeListItem[];
-}
+};
 
-export interface RecipePageProps {
-  data: RecipePageDataProps;
-}
+type Props = {
+  data: DataProps;
+};
 
-const RecipePage = ({ data }: RecipePageProps) => {
+const RecipePage: CustomNextPage<Props> = ({ data }) => {
+  const { asPath } = useRouter();
   const { handleSetRecipes } = useRecipeContext();
   const imageProps = useNextSanityImage(
     configuredSanityClient,
@@ -47,7 +52,7 @@ const RecipePage = ({ data }: RecipePageProps) => {
       imageBuilder: customImageBuilder,
     }
   );
-  const { asPath } = useRouter();
+
   const [batches, setBatches] = useState(1);
   const [ingredientsOpen, setIngredientsOpen] = useState(true);
   const [youTubeOpen, setYouTubeOpen] = useState(true);
@@ -131,7 +136,10 @@ const RecipePage = ({ data }: RecipePageProps) => {
   );
 };
 
-export async function getStaticProps({ params, preview = false }) {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const { currentRecipe, allRecipes } = await getClient(preview).fetch(
     recipeQuery,
     {
@@ -141,18 +149,22 @@ export async function getStaticProps({ params, preview = false }) {
 
   return {
     props: {
-      data: { currentRecipe, allRecipes },
+      data: { currentRecipe, allRecipes } as DataProps,
     },
     revalidate: 1,
   };
-}
+};
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const recipeSlugs = await sanityClient.fetch(recipeSlugsQuery);
   return {
-    paths: recipeSlugs.map((slug) => ({ params: { slug } })),
+    paths: recipeSlugs.map((slug: string) => ({ params: { slug } })),
     fallback: true,
   };
-}
+};
+
+RecipePage.layout = {
+  includeContainer: true,
+};
 
 export default RecipePage;

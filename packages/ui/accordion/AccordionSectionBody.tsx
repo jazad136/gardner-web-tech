@@ -1,6 +1,6 @@
 import React from "react";
-import { keyframes, styled } from "@stitches/react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { keyframes, styled } from "@stitches/react";
 
 const StyledContentText = styled("div", {
   padding: "py-4 px-5",
@@ -25,15 +25,12 @@ const StyledContent = styled(AccordionPrimitive.Content, {
   },
 });
 
-interface AccordionSectionBodyProps {
-  children: React.ReactNode;
+type Props = {
+  children: JSX.Element | JSX.Element[];
   props?: AccordionPrimitive.AccordionContentProps;
-}
+};
 
-const AccordionSectionBody = ({
-  children,
-  ...props
-}: AccordionSectionBodyProps) => (
+const AccordionSectionBody: React.FC<Props> = ({ children, ...props }) => (
   <StyledContent
     {...props}
     className="prose dark:prose-dark max-w-full overflow-hidden py-4"

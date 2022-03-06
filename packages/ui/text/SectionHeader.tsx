@@ -1,17 +1,17 @@
+import React from "react";
 import cn from "classnames";
-import { ReactElement } from "react";
 
-export interface SectionHeaderProps {
-  children: ReactElement | ReactElement[] | string;
+type Props = {
+  children: string | JSX.Element | JSX.Element[];
   classNames?: string;
   removeMarginBottom?: boolean;
-}
+};
 
-export const SectionHeader = ({
+const SectionHeader: React.FC<Props> = ({
   children,
   classNames,
   removeMarginBottom = false,
-}: SectionHeaderProps) => (
+}) => (
   <h2
     className={cn(
       "prose dark:prose-dark text-2xl max-w-full font-semibold",
@@ -24,3 +24,5 @@ export const SectionHeader = ({
     {children}
   </h2>
 );
+
+export default SectionHeader;

@@ -2,11 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "..";
 
-export interface RecipePrintButtonProps {
+type Props = {
   slug: string;
-}
+};
 
-export const RecipePrintButton = ({ slug }: RecipePrintButtonProps) => (
+const RecipePrintButton: React.FC<Props> = ({ slug }) => (
   <div className="hidden lg:flex">
     <Link href={{ pathname: "/recipe/print/[slug]", query: { slug } }}>
       <a>
@@ -17,3 +17,5 @@ export const RecipePrintButton = ({ slug }: RecipePrintButtonProps) => (
     </Link>
   </div>
 );
+
+export default RecipePrintButton;

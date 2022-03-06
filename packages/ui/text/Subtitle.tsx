@@ -1,12 +1,12 @@
+import React from "react";
 import cn from "classnames";
-import { ReactElement } from "react";
 
-export interface SubtitleProps {
-  children: ReactElement | ReactElement[] | string;
+type Props = {
+  children: string | JSX.Element | JSX.Element[];
   classNames?: string;
-}
+};
 
-const Subtitle = ({ children, classNames }: SubtitleProps) => (
+const Subtitle: React.FC<Props> = ({ children, classNames }) => (
   <p
     className={cn(
       "prose dark:prose-dark text-lg opacity-40 font-semibold mb-4",

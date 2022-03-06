@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Meta = () => {
+const Meta: React.FC = () => {
   return (
     <Head>
       <link

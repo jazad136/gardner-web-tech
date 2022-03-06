@@ -2,7 +2,12 @@ import { useFormik } from "formik";
 import { Button } from "ui";
 import * as Yup from "yup";
 
-const EmailForm = ({ onEmailSubmit, disabled }) => {
+type Props = {
+  onEmailSubmit: (email: string) => Promise<void>;
+  isDisabled: boolean;
+};
+
+const EmailForm: React.FC<Props> = ({ onEmailSubmit, isDisabled }) => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,6 +36,7 @@ const EmailForm = ({ onEmailSubmit, disabled }) => {
             name="email"
             id="email"
             className="w-full bg-white dark:bg-slate-50 rounded-md prose max-w-full p-2 prose border border-gray-300 focus-visible:outline-none text-center"
+            disabled={isDisabled}
           />
           {formik.touched.email && formik.errors.email && (
             <div className="prose prose-sm max-w-full text-red-600 mt-2">
@@ -44,7 +50,9 @@ const EmailForm = ({ onEmailSubmit, disabled }) => {
             color="success"
             ariaLabel="Send Magic Link"
             isPill
-            isDisabled={!!formik.errors.email || formik.values.email === ""}
+            isDisabled={
+              !!formik.errors.email || formik.values.email === "" || isDisabled
+            }
             type="submit"
             isBold={false}
           >

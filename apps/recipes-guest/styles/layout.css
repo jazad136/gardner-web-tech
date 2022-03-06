@@ -1,6 +1,7 @@
 @import "tailwind-imports.css";
 
-.nav {
+.nav,
+.footer {
   background-color: var(--background-accent);
 }
 

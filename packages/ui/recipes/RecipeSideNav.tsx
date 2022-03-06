@@ -1,15 +1,15 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
+import { RecipeListItem } from "./Recipe";
+import RecipeLink from "./RecipeLink";
+import RecipeSearchForm from "./RecipeSearchForm";
+import RecipeSideNavHeader from "./RecipeSideNavHeader";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-import { RecipeLink, RecipeListItem } from ".";
-import { RecipeSearchForm } from "./RecipeSearchForm";
-import { RecipeSideNavHeader } from "./RecipeSideNavHeader";
 
-export interface RecipeSideNavProps {
+type Props = {
   expanded: boolean;
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   recipes: RecipeListItem[];
-}
+};
 
 const slideOut = {
   closed: {
@@ -34,11 +34,11 @@ const slideOut = {
   },
 };
 
-export const RecipeSideNav = ({
+const RecipeSideNav: React.FC<Props> = ({
   expanded,
   setExpanded,
   recipes,
-}: RecipeSideNavProps) => {
+}: Props) => {
   const [search, setSearch] = useState("");
 
   const displayedRecipes = useMemo(() => {
@@ -89,3 +89,5 @@ export const RecipeSideNav = ({
     </div>
   );
 };
+
+export default RecipeSideNav;

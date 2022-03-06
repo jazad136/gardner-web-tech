@@ -1,14 +1,14 @@
-import * as Pino from "pino";
-import { useEffect, useMemo, useRef, useState } from "react";
+import React from "react";
 import YouTube, { Options } from "react-youtube";
+import * as Pino from "pino";
 
 const logger = Pino.default({ name: "YouTube" });
 
-export interface YouTubeListItemProps {
+type Props = {
   youTubeUrl: string;
-}
+};
 
-export const YouTubeListItem = ({ youTubeUrl }: YouTubeListItemProps) => {
+const YouTubeListItem: React.FC<Props> = ({ youTubeUrl }) => {
   const uri = new URL(youTubeUrl);
   const youTubeId = uri.searchParams.get("v")?.toString();
 
@@ -37,3 +37,5 @@ export const YouTubeListItem = ({ youTubeUrl }: YouTubeListItemProps) => {
     </li>
   );
 };
+
+export default YouTubeListItem;

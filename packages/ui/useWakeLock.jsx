@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 /**
  * Use wake lock screen
@@ -10,7 +16,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
  *   isEnabled: boolean;
  * }} Returns
  */
-export default function useWakeLock() {
+const useWakeLock = () => {
   /** Is wake lock enable */
   const [isEnabled, setIsEnabled] = useState(false);
 
@@ -84,4 +90,6 @@ export default function useWakeLock() {
     disableWakeLock,
     isEnabled,
   };
-}
+};
+
+export default useWakeLock;

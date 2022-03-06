@@ -1,7 +1,7 @@
 import React from "react";
-import { styled } from "@stitches/react";
-import { FiChevronDown } from "react-icons/fi";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { FiChevronDown } from "react-icons/fi";
+import { styled } from "@stitches/react";
 
 const StyledHeader = styled(AccordionPrimitive.Header, {
   '&[data-state="closed"]': { borderBottom: "none" },
@@ -15,17 +15,17 @@ const StyledChevron = styled(FiChevronDown, {
   "[data-state=open] &": { transform: "rotate(180deg)" },
 });
 
-interface AccordionSectionHeaderProps {
-  children: React.ReactNode;
+type Props = {
+  children: JSX.Element;
   handleOnClick: (input: any) => void;
   props?: React.HTMLProps<HTMLButtonElement>;
-}
+};
 
-const AccordionSectionHeader = ({
+const AccordionSectionHeader: React.FC<Props> = ({
   children,
   handleOnClick,
   ...props
-}: AccordionSectionHeaderProps) => (
+}) => (
   <StyledHeader className="flex overflow-hidden py-4 px-5 text-left rounded-none border-b-slate-200 focus:outline-none">
     <AccordionPrimitive.Trigger
       {...props}

@@ -2,7 +2,7 @@ import { createContext, ReactElement, useContext, useState } from "react";
 import { RecipeListItem } from "ui";
 
 export interface RecipeProviderProps {
-  children: string | ReactElement | ReactElement[];
+  children: JSX.Element;
 }
 
 export interface RecipeProviderInterface {

@@ -4,19 +4,19 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import "regenerator-runtime";
 
-interface DictaphoneProps {
+type Props = {
   setSpeechRecognitionSupported: React.Dispatch<React.SetStateAction<boolean>>;
   isEnabled: boolean;
   handleYouTubeOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleIngredientsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-const Dictaphone = ({
+const Dictaphone: React.FC<Props> = ({
   setSpeechRecognitionSupported,
   isEnabled,
   handleYouTubeOpen,
   handleIngredientsOpen,
-}: DictaphoneProps) => {
+}) => {
   const scrollHeight = useMemo(() => {
     if (typeof window !== "undefined") {
       return window.innerHeight / 2;

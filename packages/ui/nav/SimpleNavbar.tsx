@@ -1,35 +1,34 @@
-import React from "react";
-import { ReactElement, useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { MenuToggle } from "./MenuToggle";
-import { MiniNav } from "./MiniNav";
-import { NavAlert } from "./NavAlert";
+import React, { useEffect, useState } from "react";
+import Brand from "./Brand";
+import MenuToggle from "./MenuToggle";
+import MiniNav from "./MiniNav";
+import NavAlert from "./NavAlert";
 import { NavbarLinkProps } from "./NavbarLink";
-import { NavbarLinks } from "./NavbarLinks";
+import NavbarLinks from "./NavbarLinks";
+import NavbarWrapper from "./NavbarWrapper";
 import ThemeToggle from "../ThemeToggle";
-import { NavbarWrapper } from "./NavbarWrapper";
-import { Brand } from "./Brand";
+import { motion } from "framer-motion";
 import * as Pino from "pino";
 
 const logger = Pino.default({ name: "SimpleNavbar" });
 
-export interface SimpleNavbarProps {
+type SimpleNavbarProps = {
   brandText: string;
   navLinks: NavbarLinkProps[];
   expandedOnlyNavLinks?: NavbarLinkProps[];
-  alertText?: ReactElement | ReactElement[] | string;
+  alertText?: JSX.Element;
   displayAlert?: boolean;
   sticky?: boolean;
-}
+};
 
-export const SimpleNavbar = ({
+const SimpleNavbar: React.FC<SimpleNavbarProps> = ({
   brandText,
   expandedOnlyNavLinks,
   navLinks,
   alertText,
   displayAlert = false,
   sticky = false,
-}: SimpleNavbarProps) => {
+}) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   const allLinks = expandedOnlyNavLinks
@@ -65,3 +64,5 @@ export const SimpleNavbar = ({
     </motion.div>
   );
 };
+
+export default SimpleNavbar;

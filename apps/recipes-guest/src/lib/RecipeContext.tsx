@@ -1,25 +1,25 @@
-import { createContext, ReactElement, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { RecipeListItem } from "ui";
 
-export interface RecipeProviderProps {
-  children: string | ReactElement | ReactElement[];
-}
+type Props = {
+  children: JSX.Element;
+};
 
-export interface RecipeProviderInterface {
+interface IRecipeProvider {
   recipes: RecipeListItem[];
   handleSetRecipes: React.Dispatch<React.SetStateAction<RecipeListItem[]>>;
 }
 
-const RecipeContext = createContext<RecipeProviderInterface | null>(null);
+const RecipeContext = createContext<IRecipeProvider | null>(null);
 
-export const RecipeProvider = ({ children }: RecipeProviderProps) => {
+export const RecipeProvider: React.FC<Props> = ({ children }) => {
   const [recipes, setRecipes] = useState([]);
 
   const handleSetRecipes = (recipes: RecipeListItem[]): void => {
     setRecipes(recipes);
   };
 
-  const recipeState: RecipeProviderInterface = {
+  const recipeState: IRecipeProvider = {
     recipes,
     handleSetRecipes,
   };
@@ -31,6 +31,6 @@ export const RecipeProvider = ({ children }: RecipeProviderProps) => {
   );
 };
 
-export function useRecipeContext() {
+export function useRecipeContext(): IRecipeProvider {
   return useContext(RecipeContext);
 }

@@ -1,16 +1,16 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
+import cn from "classnames";
 import { useTheme } from "next-themes";
 import { BsMoon, BsSun } from "react-icons/bs";
 import Switch from "react-switch";
-import cn from "classnames";
 
-export interface ThemeToggleProps {
+type Props = {
   isLarge: boolean;
   id: string;
   center?: boolean;
-}
+};
 
-const ThemeToggle = ({ isLarge, id, center = true }: ThemeToggleProps) => {
+const ThemeToggle: React.FC<Props> = ({ isLarge, id, center = true }) => {
   const { theme, setTheme } = useTheme();
   const isDark = useMemo(() => theme === "dark", [theme]);
 

@@ -5,22 +5,18 @@ import {
   AccordionWrapper,
   SectionHeader,
 } from "..";
-import { CgBowl } from "react-icons/cg";
-import { IoMdStopwatch } from "react-icons/io";
-import { GiCookingPot, GiBubblingBowl } from "react-icons/gi";
 import { Recipe, RecipeCookTimeItem } from ".";
+import { CgBowl } from "react-icons/cg";
+import { GiCookingPot, GiBubblingBowl } from "react-icons/gi";
+import { IoMdStopwatch } from "react-icons/io";
 
-export interface RecipeCookTimeProps {
+type Props = {
   recipe: Recipe;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-export const RecipeCookTime = ({
-  recipe,
-  isOpen,
-  setIsOpen,
-}: RecipeCookTimeProps) => {
+const RecipeCookTime: React.FC<Props> = ({ recipe, isOpen, setIsOpen }) => {
   const { prepTime, cookTime, restTime } = recipe;
   const totalItems = !restTime ? 3 : 4;
   const iconStyle = { fontSize: "3em", marginBottom: "0.2em" };
@@ -69,3 +65,5 @@ export const RecipeCookTime = ({
     </AccordionWrapper>
   );
 };
+
+export default RecipeCookTime;

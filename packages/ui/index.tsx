@@ -1,17 +1,17 @@
-export * from "./Button";
-export * from "./DisplayTime";
-export * from "./DropdownOptions";
-export { default } from "./Footer";
-export * from "./getFraction";
-export * from "./PageSpinner";
-export * from "./PDFViewer";
+export { default as Button } from "./Button";
+export { default as DisplayTime } from "./DisplayTime";
+export { default as Footer } from "./Footer";
+export { default as PageSpinner } from "./PageSpinner";
+export { default as PDFViewer } from "./PDFViewer";
 export { default as SpeechAlert } from "./SpeechAlert";
 export { default as SpeechTipsModal } from "./SpeechTipsModal";
-export * from "./Sleep";
-export * from "./Spinner";
-export * from "./ThemeToggle";
-export * from "./ThemeSettings";
+export { default as Spinner } from "./Spinner";
+export { default as ThemeToggle } from "./ThemeToggle";
 export { default as useWakeLock } from "./useWakeLock";
+
+export * from "./DropdownOptions";
+export * from "./getFraction";
+export * from "./ThemeSettings";
 
 export * from "./accordion";
 export * from "./nav";

@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
+import ErrorPage from "next/error";
+import { useRouter } from "next/router";
 import {
   Recipe,
   RecipeDocumentInterface,
@@ -5,14 +9,11 @@ import {
   recipeQuery,
   recipeSlugsQuery,
 } from "ui";
-import { getClient, sanityClient, toPlainText } from "src/lib/SanityServer";
-import dynamic from "next/dynamic";
+import { CustomNextPage } from "src/lib/CustomNextPage";
 import { useRecipeContext } from "src/lib/RecipeContext";
-import { useEffect } from "react";
+import { getClient, sanityClient, toPlainText } from "src/lib/SanityServer";
 import { urlFor } from "src/lib/SanityUi";
-import ErrorPage from "next/error";
 import * as Pino from "pino";
-import { useRouter } from "next/router";
 
 const logger = Pino.default({ name: "RecipePDF" });
 
@@ -21,16 +22,16 @@ const RecipeDocument = dynamic(() => import("ui/recipes/RecipeDocument"), {
   ssr: false,
 });
 
-export interface RecipeDocumentDataProps {
+type DataProps = {
   currentRecipe: Recipe;
   allRecipes: RecipeListItem[];
-}
+};
 
-export interface RecipePdfProps {
-  data: RecipeDocumentDataProps;
-}
+type Props = {
+  data: DataProps;
+};
 
-const RecipePDF = ({ data }: RecipePdfProps) => {
+const RecipePDF: CustomNextPage<Props> = ({ data }) => {
   const { handleSetRecipes } = useRecipeContext();
   const { asPath } = useRouter();
 
@@ -77,7 +78,7 @@ export async function getStaticProps({ params, preview = false }) {
 
   return {
     props: {
-      data: { currentRecipe, allRecipes },
+      data: { currentRecipe, allRecipes } as DataProps,
     },
     revalidate: 1,
   };
@@ -86,16 +87,14 @@ export async function getStaticProps({ params, preview = false }) {
 export async function getStaticPaths() {
   const recipeSlugs = await sanityClient.fetch(recipeSlugsQuery);
   return {
-    paths: recipeSlugs.map((slug) => ({ params: { slug } })),
+    paths: recipeSlugs.map((slug: string) => ({ params: { slug } })),
     fallback: true,
   };
 }
 
-RecipePDF.layoutProps = {
-  useContainer: true,
+RecipePDF.layout = {
+  includeContainer: true,
   includeNavAndFooter: true,
 };
-
-RecipePDF.auth = true;
 
 export default RecipePDF;

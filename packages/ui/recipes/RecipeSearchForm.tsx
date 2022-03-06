@@ -1,10 +1,10 @@
 import React from "react";
 
-export interface RecipeSearchFormProps {
+type Props = {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-}
+};
 
-export const RecipeSearchForm = ({ setSearch }: RecipeSearchFormProps) => (
+const RecipeSearchForm: React.FC<Props> = ({ setSearch }) => (
   <form className="flex w-full px-4 py-2">
     <input
       type="search"
@@ -15,3 +15,5 @@ export const RecipeSearchForm = ({ setSearch }: RecipeSearchFormProps) => (
     />
   </form>
 );
+
+export default RecipeSearchForm;

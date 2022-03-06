@@ -2,12 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "..";
 
-export interface RecipeMakeButtonProps {
+type Props = {
   slug: string;
   batches: number;
-}
+};
 
-export const RecipeMakeButton = ({ slug, batches }: RecipeMakeButtonProps) => (
+const RecipeMakeButton: React.FC<Props> = ({ slug, batches }) => (
   <div className="flex">
     <Link href={{ pathname: "/recipe/make/[slug]", query: { slug, batches } }}>
       <a>
@@ -18,3 +18,5 @@ export const RecipeMakeButton = ({ slug, batches }: RecipeMakeButtonProps) => (
     </Link>
   </div>
 );
+
+export default RecipeMakeButton;

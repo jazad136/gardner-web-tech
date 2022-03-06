@@ -1,5 +1,4 @@
 import React from "react";
-import { YouTubeListItem } from ".";
 import {
   AccordionSection,
   AccordionSectionBody,
@@ -7,18 +6,19 @@ import {
   AccordionWrapper,
   SectionHeader,
 } from "..";
+import YouTubeListItem from "./YouTubeListItem";
 
-export interface YouTubeAccordionProps {
+type Props = {
   youTubeUrls: string[];
   isOpen?: boolean;
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-export const YouTubeAccordion = ({
+const YouTubeAccordion: React.FC<Props> = ({
   youTubeUrls,
   isOpen,
   setIsOpen,
-}: YouTubeAccordionProps) => {
+}) => {
   if (!youTubeUrls) {
     return <></>;
   }
@@ -42,3 +42,5 @@ export const YouTubeAccordion = ({
     </AccordionWrapper>
   );
 };
+
+export default YouTubeAccordion;

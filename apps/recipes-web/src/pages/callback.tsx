@@ -1,12 +1,13 @@
-import { useEffect, useContext } from "react";
-import { useRouter } from "next/router";
-import { magic } from "src/lib/magic";
-import { PageSpinner } from "ui";
+import { useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { PageSpinner } from "ui";
+import { CustomNextPage } from "src/lib/CustomNextPage";
+import { magic } from "src/lib/magic";
 
 const notAcceptedCallbackUrls = ["/login", "/callback"];
 
-const Callback = () => {
+const CallbackPage: CustomNextPage = () => {
   const router = useRouter();
 
   // The redirect contains a `provider` query param if the user is logging in with a social provider
@@ -69,9 +70,9 @@ const Callback = () => {
   );
 };
 
-Callback.layoutProps = {
-  useContainer: true,
+CallbackPage.layout = {
+  includeContainer: true,
   includeNavAndFooter: false,
 };
 
-export default Callback;
+export default CallbackPage;

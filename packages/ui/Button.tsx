@@ -1,9 +1,8 @@
 import React from "react";
-import { ReactElement } from "react";
 import cn from "classnames";
 
-export interface ButtonProps {
-  children: string | ReactElement | ReactElement[];
+type Props = {
+  children: string | JSX.Element | JSX.Element[];
   color:
     | "success"
     | "primary"
@@ -22,9 +21,9 @@ export interface ButtonProps {
   isOutline?: boolean;
   isDisabled?: boolean;
   type?: "button" | "submit" | "reset";
-}
+};
 
-export const Button = ({
+const Button: React.FC<Props> = ({
   children,
   color,
   size,
@@ -35,7 +34,7 @@ export const Button = ({
   isOutline = false,
   isDisabled = false,
   type = "button",
-}: ButtonProps) => {
+}) => {
   const sizeClasses = cn("py-1.5 px-4", {
     "text-xl": size === "xl",
     "text-lg": size === "lg",
@@ -64,3 +63,5 @@ export const Button = ({
     </button>
   );
 };
+
+export default Button;

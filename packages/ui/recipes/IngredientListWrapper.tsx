@@ -1,26 +1,26 @@
 import React, { useMemo } from "react";
-import { Ingredient } from ".";
 import { getFractionFromString } from "..";
-import { IngredientList } from "./IngredientList";
+import { Ingredient } from ".";
+import IngredientList from "./IngredientList";
 import { Fraction } from "fractional";
 
-export interface IngredientListProps {
+type Props = {
   ingredients: Ingredient[];
   serves: number;
   batches: number;
   setBatches?: React.Dispatch<React.SetStateAction<number>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-export const IngredientListWrapper = ({
+const IngredientListWrapper: React.FC<Props> = ({
   ingredients,
   serves,
   batches,
   setBatches,
   isOpen,
   setIsOpen,
-}: IngredientListProps) => {
+}) => {
   const getQuantityFromString = (quantity: string): string => {
     if (!quantity) {
       return "";
@@ -51,3 +51,5 @@ export const IngredientListWrapper = ({
     />
   );
 };
+
+export default IngredientListWrapper;

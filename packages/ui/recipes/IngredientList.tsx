@@ -1,5 +1,5 @@
 import React from "react";
-import { Ingredient, IngredientListItem } from ".";
+import { Ingredient } from ".";
 import {
   AccordionSection,
   AccordionSectionBody,
@@ -8,25 +8,26 @@ import {
   Paragraph,
   SectionHeader,
 } from "..";
-import { IngredientBatchesDropdown } from "./IngredientBatchesDropdown";
+import IngredientBatchesDropdown from "./IngredientBatchesDropdown";
+import IngredientListItem from "./IngredientListItem";
 
-export interface IngredientListProps {
+type Props = {
   ingredients: Ingredient[];
   batches: number;
   setBatches: React.Dispatch<React.SetStateAction<number>>;
   serves: number;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-export const IngredientList = ({
+const IngredientList: React.FC<Props> = ({
   ingredients,
   batches,
   setBatches,
   serves,
   isOpen,
   setIsOpen,
-}: IngredientListProps) => (
+}) => (
   <AccordionWrapper value={!!isOpen ? "ingredients" : ""}>
     <AccordionSection value="ingredients">
       <AccordionSectionHeader handleOnClick={() => setIsOpen(!isOpen)}>
@@ -58,3 +59,5 @@ export const IngredientList = ({
     </AccordionSection>
   </AccordionWrapper>
 );
+
+export default IngredientList;

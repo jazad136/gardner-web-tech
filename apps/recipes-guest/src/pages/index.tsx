@@ -1,18 +1,18 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import { BsChevronBarDown } from "react-icons/bs";
+import { Button, RecipeListItem, allRecipesQuery } from "ui";
+import { CustomNextPage } from "src/lib/CustomNextPage";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import { sanityClient } from "src/lib/SanityServer";
-import { Button, RecipeListItem } from "ui";
-import { allRecipesQuery } from "ui/recipes";
+import { BsChevronBarDown } from "react-icons/bs";
 
-export interface HomeProps {
+type Props = {
   allRecipes: RecipeListItem[];
-}
+};
 
-const Home = ({ allRecipes }: HomeProps) => {
+const HomePage: CustomNextPage<Props> = ({ allRecipes }) => {
   const { handleSetRecipes } = useRecipeContext();
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const Home = ({ allRecipes }: HomeProps) => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
   const allRecipes = (await sanityClient.fetch(
     allRecipesQuery
   )) as RecipeListItem[];
@@ -88,12 +88,13 @@ export async function getStaticProps() {
   return {
     props: {
       allRecipes,
-    },
+    } as Props,
     revalidate: 1,
   };
-}
-
-Home.layoutProps = {
-  useContainer: false,
 };
-export default Home;
+
+HomePage.layout = {
+  includeContainer: false,
+};
+
+export default HomePage;

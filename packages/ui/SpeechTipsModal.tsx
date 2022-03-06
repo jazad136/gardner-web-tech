@@ -1,7 +1,7 @@
 import React from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
-const SpeechTipsModal = () => (
+const SpeechTipsModal: React.FC = () => (
   <AlertDialog.Root>
     <AlertDialog.Trigger
       className="modal-btn btn-bg-success"

@@ -1,11 +1,12 @@
+import React from "react";
 import { Ingredient } from ".";
 import { Paragraph } from "..";
 
-export interface IngredientListItemProps {
+type Props = {
   ingredient: Ingredient;
-}
+};
 
-export const IngredientListItem = ({ ingredient }: IngredientListItemProps) => (
+const IngredientListItem: React.FC<Props> = ({ ingredient }) => (
   <li className="w-full md:w-1/2 lg:w-1/3">
     <Paragraph classNames="my-1.5" removeMarginBottom>
       <span className="block font-bold">{ingredient.title}</span>
@@ -16,3 +17,5 @@ export const IngredientListItem = ({ ingredient }: IngredientListItemProps) => (
     </Paragraph>
   </li>
 );
+
+export default IngredientListItem;

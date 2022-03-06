@@ -1,11 +1,11 @@
 import React from "react";
 import { PDFViewer } from "@react-pdf/renderer";
 
-export interface PDFViewerProps {
+type Props = {
   children: JSX.Element;
-}
+};
 
-const Viewer = ({ children }: PDFViewerProps) => (
+const Viewer: React.FC<Props> = ({ children }) => (
   <PDFViewer className="w-full h-[92vh] mt-6">{children}</PDFViewer>
 );
 

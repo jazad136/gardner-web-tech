@@ -9,11 +9,11 @@ import {
 } from "@react-pdf/renderer";
 import { DisplayTime, RecipeDocumentInterface } from "..";
 
-export interface RecipeDocumentProps {
+type Props = {
   recipe: RecipeDocumentInterface;
-}
+};
 
-const RecipeDocument = ({ recipe }: RecipeDocumentProps) => (
+const RecipeDocument: React.FC<Props> = ({ recipe }) => (
   <Document>
     <Page size="A4" style={styles.body}>
       <Text style={styles.title}>{recipe.title}</Text>

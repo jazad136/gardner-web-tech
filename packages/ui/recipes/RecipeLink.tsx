@@ -3,17 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { DisplayTime, RecipeListItem } from "ui";
 
-export interface RecipeLinkProps {
+type Props = {
   recipe: RecipeListItem;
   closeSidebar: () => void;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-}
+};
 
-export const RecipeLink = ({
-  recipe,
-  closeSidebar,
-  setSearch,
-}: RecipeLinkProps) => {
+const RecipeLink: React.FC<Props> = ({ recipe, closeSidebar, setSearch }) => {
   const handleClick = () => {
     setSearch("");
     closeSidebar();
@@ -54,3 +50,5 @@ export const RecipeLink = ({
     </div>
   );
 };
+
+export default RecipeLink;

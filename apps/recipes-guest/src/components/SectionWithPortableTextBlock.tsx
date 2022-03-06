@@ -1,15 +1,15 @@
 import { PortableText } from "src/lib/SanityUi";
 import { SectionHeader } from "ui";
 
-export interface SectionWithPortableTextBlockProps {
+type Props = {
   title: string;
   blocks: any;
-}
+};
 
-export const SectionWithPortableTextBlock = ({
+export const SectionWithPortableTextBlock: React.FC<Props> = ({
   title,
   blocks,
-}: SectionWithPortableTextBlockProps) => {
+}) => {
   if (!blocks) {
     return <></>;
   }

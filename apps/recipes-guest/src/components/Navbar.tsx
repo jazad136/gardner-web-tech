@@ -6,7 +6,7 @@ import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
 import { urlFor } from "src/lib/SanityUi";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const recipesContext = useRecipeContext();
 
   const [expanded, setExpanded] = useState(false);

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
-import { magic } from "src/lib/magic";
 import EmailForm from "src/components/EmailForm";
 import SocialLogins from "src/components/SocialLogins";
+import { CustomNextPage } from "src/lib/CustomNextPage";
+import { magic } from "src/lib/magic";
 import * as Dialog from "@radix-ui/react-dialog";
-import Head from "next/head";
 
-const Login = () => {
+const LoginPage: CustomNextPage = () => {
   const [disabled, setDisabled] = useState(false);
   const router = useRouter();
 
@@ -59,10 +60,12 @@ const Login = () => {
   };
 
   const handleLoginWithSocial = async (provider) => {
+    setDisabled(true);
     await magic.oauth.loginWithRedirect({
       provider,
       redirectURI: new URL("/callback", window.location.origin).href,
     });
+    setDisabled(false);
   };
 
   return (
@@ -81,8 +84,8 @@ const Login = () => {
               </Dialog.Title>
               <Dialog.Content>
                 <EmailForm
-                  disabled={disabled}
                   onEmailSubmit={handleLoginWithEmail}
+                  isDisabled={disabled}
                 />
                 <SocialLogins onSubmit={handleLoginWithSocial} />
               </Dialog.Content>
@@ -94,9 +97,9 @@ const Login = () => {
   );
 };
 
-Login.layoutProps = {
-  useContainer: true,
+LoginPage.layout = {
+  includeContainer: true,
   includeNavAndFooter: false,
 };
 
-export default Login;
+export default LoginPage;

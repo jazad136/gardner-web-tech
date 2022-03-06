@@ -1,16 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Duration } from "luxon";
 
-export interface DisplayTimeProps {
+type Props = {
   minutes: number;
-}
+};
 
 /**
  * @param {number} minutes Number of minutes to display
  * @returns string
  */
-export const DisplayTime = ({ minutes }: DisplayTimeProps) => {
+const DisplayTime: React.FC<Props> = ({ minutes }: Props) => {
   const duration = Duration.fromObject({ minutes });
   const correctedDuration = duration.shiftTo("hours", "minutes");
   let displayDuration = correctedDuration.toFormat("m 'minutes'");
@@ -22,6 +21,4 @@ export const DisplayTime = ({ minutes }: DisplayTimeProps) => {
   return <span className="prose dark:prose-dark">{displayDuration}</span>;
 };
 
-DisplayTime.propTypes = {
-  minutes: PropTypes.number,
-};
+export default DisplayTime;

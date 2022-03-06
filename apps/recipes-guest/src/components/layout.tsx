@@ -1,15 +1,17 @@
-import { ReactElement, useCallback, useEffect } from "react";
 import Meta from "src/components/meta";
 import Navbar from "./Navbar";
 import cn from "classnames";
 import Footer from "ui/Footer";
 
-interface LayoutProps {
-  useContainer?: boolean;
-  children: ReactElement | ReactElement[];
-}
+type Props = {
+  includeContainer?: boolean;
+  children: JSX.Element;
+};
 
-const Layout = ({ children, useContainer = true }: LayoutProps) => (
+const Layout: React.FC<Props> = ({
+  children,
+  includeContainer: useContainer = true,
+}) => (
   <>
     <Meta />
     <div className="flex flex-col min-h-screen">

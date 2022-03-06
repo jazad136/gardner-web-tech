@@ -2,19 +2,19 @@ import React from "react";
 import Link from "next/link";
 import cn from "classnames";
 
-export interface NavbarLinkProps {
+export type NavbarLinkProps = {
   href: string;
   text: string;
   removeRightMargin?: boolean;
   display?: boolean;
-}
+};
 
-export const NavbarLink = ({
+const NavbarLink: React.FC<NavbarLinkProps> = ({
   href,
   text,
   removeRightMargin: removeLeftMargin = false,
   display = true,
-}: NavbarLinkProps) => {
+}) => {
   if (!display) {
     return <></>;
   }
@@ -36,3 +36,5 @@ export const NavbarLink = ({
     </li>
   );
 };
+
+export default NavbarLink;

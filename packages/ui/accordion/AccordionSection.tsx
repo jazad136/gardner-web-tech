@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "@stitches/react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
-const StyledItem = styled(AccordionPrimitive.Item, {
+const AccordionSection = styled(AccordionPrimitive.Item, {
   overflow: "hidden",
   marginTop: 1,
 
@@ -23,7 +23,5 @@ const StyledItem = styled(AccordionPrimitive.Item, {
     boxShadow: `0 0 0 2px`,
   },
 });
-
-const AccordionSection = StyledItem;
 
 export default AccordionSection;

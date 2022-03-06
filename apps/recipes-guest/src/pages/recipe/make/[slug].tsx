@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import Head from "next/head";
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import ErrorPage from "next/error";
+import Head from "next/head";
 import { useRouter } from "next/router";
-import { getClient, sanityClient } from "../../../lib/SanityServer";
 import {
   IngredientListWrapper,
   PageTitle,
@@ -15,25 +15,26 @@ import {
   useWakeLock,
   YouTubeAccordion,
 } from "ui";
-import { useRecipeContext } from "src/lib/RecipeContext";
 import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
-import Dictaphone from "../../../components/Dictaphone";
+import { CustomNextPage } from "src/lib/CustomNextPage";
+import Dictaphone from "src/components/Dictaphone";
+import { useRecipeContext } from "src/lib/RecipeContext";
+import { getClient, sanityClient } from "src/lib/SanityServer";
 import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
-
 import * as Pino from "pino";
 
 const logger = Pino.default({ name: "MakeRecipePage" });
 
-export interface RecipePageDataProps {
+type DataProps = {
   currentRecipe: Recipe;
   allRecipes: RecipeListItem[];
-}
+};
 
-export interface RecipePageProps {
-  data: RecipePageDataProps;
-}
+type Props = {
+  data: DataProps;
+};
 
-const MakeRecipePage = ({ data }: RecipePageProps) => {
+const MakeRecipePage: CustomNextPage<Props> = ({ data }) => {
   const { handleSetRecipes } = useRecipeContext();
   const { asPath, query } = useRouter();
   const [ingredientsOpen, setIngredientsOpen] = useState(true);
@@ -168,7 +169,10 @@ const MakeRecipePage = ({ data }: RecipePageProps) => {
   );
 };
 
-export async function getStaticProps({ params, preview = false }) {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const { currentRecipe, allRecipes } = await getClient(preview).fetch(
     recipeQuery,
     {
@@ -178,18 +182,22 @@ export async function getStaticProps({ params, preview = false }) {
 
   return {
     props: {
-      data: { currentRecipe, allRecipes },
+      data: { currentRecipe, allRecipes } as DataProps,
     },
     revalidate: 1,
   };
-}
+};
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const recipeSlugs = await sanityClient.fetch(recipeSlugsQuery);
   return {
-    paths: recipeSlugs.map((slug) => ({ params: { slug } })),
+    paths: recipeSlugs.map((slug: string) => ({ params: { slug } })),
     fallback: true,
   };
-}
+};
+
+MakeRecipePage.layout = {
+  includeContainer: true,
+};
 
 export default MakeRecipePage;

@@ -1,17 +1,17 @@
 import React from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
-interface SpeechAlertProps {
+type Props = {
   handleAccept: () => void;
   handleCancel: () => void;
   enableSpeechRecognition: boolean;
-}
+};
 
-export default ({
+const SpeechAlert: React.FC<Props> = ({
   handleAccept,
   handleCancel,
   enableSpeechRecognition,
-}: SpeechAlertProps) => (
+}) => (
   <AlertDialog.Root defaultOpen={true}>
     <AlertDialog.Trigger
       className="modal-btn btn-bg-danger"
@@ -65,3 +65,5 @@ export default ({
     </AlertDialog.Portal>
   </AlertDialog.Root>
 );
+
+export default SpeechAlert;

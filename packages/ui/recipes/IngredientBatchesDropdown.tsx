@@ -1,14 +1,15 @@
 import React from "react";
-import { DropdownOptionsInterface, Paragraph } from "..";
+import { DropdownOptions } from "..";
+import { Paragraph } from "../text";
 import * as Label from "@radix-ui/react-label";
 
-export interface IngredientBatchesDropdownProps {
+type Props = {
   batches: number;
   setBatches: React.Dispatch<React.SetStateAction<number>>;
   serves: number;
-}
+};
 
-let options: DropdownOptionsInterface[] = [
+let options: DropdownOptions[] = [
   {
     value: 0.5,
     label: "1/2",
@@ -35,11 +36,11 @@ let options: DropdownOptionsInterface[] = [
   },
 ];
 
-export const IngredientBatchesDropdown = ({
+const IngredientBatchesDropdown: React.FC<Props> = ({
   batches,
   setBatches,
   serves,
-}: IngredientBatchesDropdownProps) => {
+}) => {
   if (serves <= 1) {
     options = options.filter((option) => option.value !== 0.5);
   }
@@ -75,3 +76,5 @@ export const IngredientBatchesDropdown = ({
     </div>
   );
 };
+
+export default IngredientBatchesDropdown;

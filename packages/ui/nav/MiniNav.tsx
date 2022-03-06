@@ -1,16 +1,16 @@
 import React from "react";
-import { motion, Variants } from "framer-motion";
-import cn from "classnames";
-import ThemeToggle from "../ThemeToggle";
 import { NavbarLinkProps } from "./NavbarLink";
-import { NavbarLinks } from "./NavbarLinks";
+import NavbarLinks from "./NavbarLinks";
+import ThemeToggle from "../ThemeToggle";
+import cn from "classnames";
+import { motion, Variants } from "framer-motion";
 
-export interface MiniNavProps {
+type Props = {
   isOpen: boolean;
   links: NavbarLinkProps[];
   sticky?: boolean;
   includeThemeToggle?: boolean;
-}
+};
 
 const subMenuAnimate: Variants = {
   open: {
@@ -27,12 +27,12 @@ const subMenuAnimate: Variants = {
   },
 };
 
-export const MiniNav = ({
+const MiniNav: React.FC<Props> = ({
   isOpen,
   links,
   sticky = false,
   includeThemeToggle = false,
-}: MiniNavProps) => (
+}) => (
   <motion.div
     initial={false}
     animate={isOpen ? "open" : "closed"}
@@ -64,3 +64,5 @@ export const MiniNav = ({
     </div>
   </motion.div>
 );
+
+export default MiniNav;

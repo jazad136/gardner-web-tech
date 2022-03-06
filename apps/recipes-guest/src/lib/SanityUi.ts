@@ -5,13 +5,14 @@ import {
   createImageUrlBuilder,
 } from "next-sanity";
 import { config } from "./SanityConfig";
-import sanityClient from "@sanity/client";
+import sanityClient, { SanityClient } from "@sanity/client";
+import { ImageUrlBuilder } from "next-sanity-image";
 
-export const configuredSanityClient = sanityClient({
+export const configuredSanityClient: SanityClient = sanityClient({
   ...config,
 });
 
-export const urlFor = (source: string) =>
+export const urlFor = (source: string): ImageUrlBuilder =>
   createImageUrlBuilder(config).image(source);
 
 // Set up the live preview subscription hook

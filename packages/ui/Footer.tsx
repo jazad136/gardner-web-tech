@@ -1,11 +1,11 @@
 import React from "react";
 import { DateTime } from "luxon";
 
-interface FooterProps {
+type Props = {
   projectName: string;
-}
+};
 
-const Footer = ({ projectName }: FooterProps) => (
+const Footer: React.FC<Props> = ({ projectName }: Props) => (
   <div className="relative block items-center">
     <div className="w-full px-2 py-3 footer flex flex-wrap">
       <div className="flex container prose dark:prose-dark prose-sm max-w-full justify-between">

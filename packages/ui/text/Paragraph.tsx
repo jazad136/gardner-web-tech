@@ -1,17 +1,17 @@
-import { ReactElement } from "react";
+import React from "react";
 import cn from "classnames";
 
-export interface ParagraphProps {
-  children: ReactElement | ReactElement[] | string;
+type Props = {
+  children: string | JSX.Element | JSX.Element[];
   removeMarginBottom?: boolean;
   classNames?: string;
-}
+};
 
-export const Paragraph = ({
+const Paragraph: React.FC<Props> = ({
   children,
   removeMarginBottom,
   classNames,
-}: ParagraphProps) => (
+}) => (
   <p
     className={cn("prose dark:prose-dark max-w-full", classNames, {
       "mb-4": !removeMarginBottom,
@@ -20,3 +20,5 @@ export const Paragraph = ({
     {children}
   </p>
 );
+
+export default Paragraph;

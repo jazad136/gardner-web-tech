@@ -1,17 +1,17 @@
 import React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
-interface AccordionWrapperProps {
-  children: React.ReactNode;
+type Props = {
+  children: JSX.Element;
   value: string;
   onValueChange?(value: string): void;
-}
+};
 
-const AccordionWrapper = ({
+const AccordionWrapper: React.FC<Props> = ({
   children,
   value,
   onValueChange,
-}: AccordionWrapperProps) => (
+}) => (
   <AccordionPrimitive.Root
     type="single"
     className="border border-slate-300 rounded-2xl my-6 focus-within:outline-none"
