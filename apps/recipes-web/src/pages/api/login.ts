@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     cookies.set(tokens.didToken, didToken, { httpOnly: true });
 
     res.status(200).json({ authenticated: true });
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: "Could not log in user" });
   }
 };
