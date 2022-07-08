@@ -10,9 +10,7 @@ const notAcceptedCallbackUrls = ["/login", "/callback"];
 const CallbackPage: CustomNextPage = () => {
   const router = useRouter();
 
-  // The redirect contains a `provider` query param if the user is logging in with a social provider
   useEffect(() => {
-    // query not set yet
     if (!!router.query.magic_credential) {
       router.query.provider ? finishSocialLogin() : finishEmailRedirectLogin();
     }
