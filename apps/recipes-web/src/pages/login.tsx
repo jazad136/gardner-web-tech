@@ -37,7 +37,7 @@ const LoginPage: CustomNextPage = () => {
 
   useEffect(() => {
     checkAuthStatus();
-  }, [router]);
+  });
 
   const handleLoginWithEmail = async (email: string) => {
     try {
