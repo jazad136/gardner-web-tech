@@ -1,19 +1,22 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { tokens } from "src/lib/constants";
+import { isAuthValid } from "./lib/auth";
 
 export const config = {
   matcher: ["/", "/recipe/:path*"],
+  runtime: "experimental-edge",
 };
 
-export function middleware(request: NextRequest) {
+export const middleware = async (request: NextRequest) => {
   const loginUrl = new URL("/login", request.url);
   try {
-    const pathname = request.nextUrl.pathname;
-    const didToken = request.cookies.get(tokens.didToken);
+    const token = request.cookies.get(tokens.didToken);
+    const isValid = await isAuthValid(request, token);
 
-    if (!didToken) {
-      logout(request, pathname);
+    if (!isValid) {
+      await setCallback(request, request.nextUrl.pathname);
+      await logout(request, token);
       return NextResponse.redirect(loginUrl);
     }
 
@@ -21,7 +24,7 @@ export function middleware(request: NextRequest) {
   } catch {
     return NextResponse.redirect(loginUrl);
   }
-}
+};
 
 const setCallback = async (request: NextRequest, pathname: string) => {
   await fetch(`${request.nextUrl.origin}/api/callback`, {
@@ -33,7 +36,10 @@ const setCallback = async (request: NextRequest, pathname: string) => {
   });
 };
 
-const logout = async (request: NextRequest, pathname: string) => {
-  setCallback(request, pathname);
-  await fetch(`${request.nextUrl.origin}/api/logout`);
+const logout = async (request: NextRequest, token: string) => {
+  await fetch(`${request.nextUrl.origin}/api/logout`, {
+    headers: {
+      authorization: token,
+    },
+  });
 };
