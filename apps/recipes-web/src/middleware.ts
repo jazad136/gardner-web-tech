@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { Magic } from "@magic-sdk/admin";
 import { tokens } from "src/lib/constants";
 
+const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 export const config = {
   matcher: ["/", "/recipe/:path*"],
 };
@@ -17,7 +19,13 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    return NextResponse.next();
+    try {
+      magic.token.validate(didToken);
+      return NextResponse.next();
+    } catch {
+      logout(request, pathname);
+      return NextResponse.redirect("/login");
+    }
   } catch {
     return NextResponse.redirect(loginUrl);
   }
