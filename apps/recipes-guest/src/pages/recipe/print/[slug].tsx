@@ -18,8 +18,8 @@ import * as Pino from "pino";
 
 const logger = Pino.default({ name: "RecipePDF" });
 
-const PDFViewer = dynamic(() => import("ui/PDFViewer"), { ssr: false });
-const RecipeDocument = dynamic(() => import("ui/recipes/RecipeDocument"), {
+const PDFViewer = dynamic(() => import("ui/src/PDFViewer"), { ssr: false });
+const RecipeDocument = dynamic(() => import("ui/src/recipes/RecipeDocument"), {
   ssr: false,
 });
 
