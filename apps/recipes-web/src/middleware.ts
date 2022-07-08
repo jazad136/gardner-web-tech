@@ -20,6 +20,7 @@ export const middleware = async (request: NextRequest) => {
       return NextResponse.redirect(loginUrl);
     }
 
+    request.cookies.delete(tokens.callbackUrl);
     return NextResponse.next();
   } catch {
     return NextResponse.redirect(loginUrl);
