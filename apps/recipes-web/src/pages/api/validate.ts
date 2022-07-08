@@ -7,7 +7,7 @@ const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = new Cookies(req, res);
-  const didToken = req.headers["authorization"] ?? cookies.get(tokens.didToken);
+  const didToken = cookies.get(tokens.didToken) ?? req.headers["authorization"];
 
   try {
     magic.token.validate(didToken);
