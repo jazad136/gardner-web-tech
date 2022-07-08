@@ -184,7 +184,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       data: { currentRecipe, allRecipes } as DataProps,
     },
-    revalidate: 1,
+    revalidate: 60 * 60 * 24,
   };
 };
 
