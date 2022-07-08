@@ -1,5 +1,5 @@
 import "../../styles/globals.css";
-import { NextComponentType, NextPage } from "next";
+import { NextComponentType } from "next";
 import { AppProps } from "next/app";
 import Layout from "src/components/layout";
 import { RecipeProvider } from "src/lib/RecipeContext";

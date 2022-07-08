@@ -11,27 +11,32 @@ const LoginPage: CustomNextPage = () => {
   const [disabled, setDisabled] = useState(false);
   const router = useRouter();
 
+  const checkAuthStatus = async () => {
+    const userResponse = await fetch("/api/user");
+
+    if (!userResponse.ok) {
+      return;
+    }
+
+    const validationStatus = await fetch("/api/validate");
+
+    if (!validationStatus.ok) {
+      await fetch("/api/logout");
+      return;
+    }
+
+    const callbackResponse = await fetch("/api/callback");
+    const callbackResponseData = await callbackResponse.json();
+
+    if (!callbackResponse.ok || !callbackResponseData?.callbackUrl) {
+      router.push("/");
+    }
+
+    router.push(callbackResponseData.callbackUrl);
+  };
+
   useEffect(() => {
-    fetch("/api/user").then((response) => {
-      // user not logged in
-      if (!response.ok) {
-        return;
-      }
-
-      fetch("/api/callback").then((callbackResponse) => {
-        if (!callbackResponse.ok) {
-          router.push("/");
-          return;
-        }
-
-        callbackResponse
-          .json()
-          .then(({ callbackUrl }) => {
-            router.push(callbackUrl);
-          })
-          .catch(() => router.push("/"));
-      });
-    });
+    checkAuthStatus();
   }, [router]);
 
   const handleLoginWithEmail = async (email: string) => {

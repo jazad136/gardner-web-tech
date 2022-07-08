@@ -5,7 +5,6 @@ import { isAuthValid } from "./lib/auth";
 
 export const config = {
   matcher: ["/", "/recipe/:path*"],
-  runtime: "experimental-edge",
 };
 
 export const middleware = async (request: NextRequest) => {
@@ -15,6 +14,7 @@ export const middleware = async (request: NextRequest) => {
     const isValid = await isAuthValid(request, token);
 
     if (!isValid) {
+      request.cookies.clear();
       await setCallback(request, request.nextUrl.pathname);
       await logout(request, token);
       return NextResponse.redirect(loginUrl);
