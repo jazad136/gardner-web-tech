@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { NavbarWrapper, MenuToggle, Brand, RecipeSideNav } from "ui";
 import { motion } from "framer-motion";
-import ThemeToggle from "ui/ThemeToggle";
+import ThemeToggle from "ui/src/ThemeToggle";
 import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
 import { urlFor } from "src/lib/SanityUi";

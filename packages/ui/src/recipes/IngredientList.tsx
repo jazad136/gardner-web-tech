@@ -7,7 +7,7 @@ import {
   AccordionWrapper,
   Paragraph,
   SectionHeader,
-} from "..";
+} from "../..";
 import IngredientBatchesDropdown from "./IngredientBatchesDropdown";
 import IngredientListItem from "./IngredientListItem";
 

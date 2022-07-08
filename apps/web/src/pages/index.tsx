@@ -2,8 +2,8 @@ import Layout from "@components/Layout";
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import Head from "next/head";
-import { PageTitle, Paragraph, SectionHeader } from "ui/text";
-import Subtitle from "ui/text/Subtitle";
+import { PageTitle, Paragraph, SectionHeader } from "ui";
+import Subtitle from "ui/src/text/Subtitle";
 
 interface HomeProperties {
   preview: boolean;

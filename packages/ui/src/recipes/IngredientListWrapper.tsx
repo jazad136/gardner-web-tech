@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { getFractionFromString } from "..";
+import { getFractionFromString } from "../..";
 import { Ingredient } from ".";
 import IngredientList from "./IngredientList";
 import { Fraction } from "fractional";

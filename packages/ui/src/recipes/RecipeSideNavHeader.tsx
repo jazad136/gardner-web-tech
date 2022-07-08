@@ -1,5 +1,5 @@
 import React from "react";
-import { Brand, MenuToggle } from "..";
+import { Brand, MenuToggle } from "../..";
 
 type Props = {
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;

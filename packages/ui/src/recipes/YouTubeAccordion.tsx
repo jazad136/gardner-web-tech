@@ -5,7 +5,7 @@ import {
   AccordionSectionHeader,
   AccordionWrapper,
   SectionHeader,
-} from "..";
+} from "../..";
 import YouTubeListItem from "./YouTubeListItem";
 
 type Props = {

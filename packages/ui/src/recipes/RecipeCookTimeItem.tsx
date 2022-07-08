@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayTime } from "..";
+import { DisplayTime } from "../..";
 import cn from "classnames";
 
 type Props = {

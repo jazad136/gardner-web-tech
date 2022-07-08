@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Button } from "..";
+import { Button } from "../..";
 
 type Props = {
   slug: string;

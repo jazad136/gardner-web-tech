@@ -4,7 +4,7 @@ import {
   AccordionSectionHeader,
   AccordionWrapper,
   SectionHeader,
-} from "..";
+} from "../..";
 import { Recipe, RecipeCookTimeItem } from ".";
 import { CgBowl } from "react-icons/cg";
 import { GiCookingPot, GiBubblingBowl } from "react-icons/gi";

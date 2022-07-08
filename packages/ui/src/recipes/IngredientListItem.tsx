@@ -1,6 +1,6 @@
 import React from "react";
 import { Ingredient } from ".";
-import { Paragraph } from "..";
+import { Paragraph } from "../..";
 
 type Props = {
   ingredient: Ingredient;

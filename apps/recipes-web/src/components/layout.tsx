@@ -1,7 +1,7 @@
 import Meta from "src/components/meta";
 import Navbar from "./Navbar";
 import cn from "classnames";
-import Footer from "ui/Footer";
+import Footer from "ui/src/Footer";
 
 type Props = {
   children: JSX.Element;

@@ -1,5 +1,5 @@
 import React from "react";
-import { DropdownOptions } from "..";
+import { DropdownOptions } from "../..";
 import { Paragraph } from "../text";
 import * as Label from "@radix-ui/react-label";
 

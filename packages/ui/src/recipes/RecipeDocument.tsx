@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { DisplayTime, RecipeDocumentInterface } from "..";
+import { DisplayTime, RecipeDocumentInterface } from "../..";
 
 type Props = {
   recipe: RecipeDocumentInterface;
