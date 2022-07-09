@@ -8,22 +8,23 @@ export const config = {
 };
 
 export const middleware = async (request: NextRequest) => {
-  const loginUrl = new URL("/login", request.url);
-  try {
-    const token = request.cookies.get(tokens.didToken);
-    const isValid = await isAuthValid(request, token);
+  return NextResponse.redirect(new URL("/maintenance", request.url));
+  // const loginUrl = new URL("/login", request.url);
+  // try {
+  //   const token = request.cookies.get(tokens.didToken);
+  //   const isValid = await isAuthValid(request, token);
 
-    if (!isValid) {
-      request.cookies.clear();
-      await setCallback(request, request.nextUrl.pathname);
-      await logout(request, token);
-      return NextResponse.redirect(loginUrl);
-    }
+  //   if (!isValid) {
+  //     request.cookies.clear();
+  //     await setCallback(request, request.nextUrl.pathname);
+  //     await logout(request, token);
+  //     return NextResponse.redirect(loginUrl);
+  //   }
 
-    return NextResponse.next();
-  } catch {
-    return NextResponse.redirect(loginUrl);
-  }
+  //   return NextResponse.next();
+  // } catch {
+  //   return NextResponse.redirect(loginUrl);
+  // }
 };
 
 const setCallback = async (request: NextRequest, pathname: string) => {
