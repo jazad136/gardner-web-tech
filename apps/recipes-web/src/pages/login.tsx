@@ -6,38 +6,13 @@ import SocialLogins from "src/components/SocialLogins";
 import { CustomNextPage } from "src/lib/CustomNextPage";
 import { magic } from "src/lib/magic";
 import * as Dialog from "@radix-ui/react-dialog";
+import { GetServerSideProps } from "next";
+import { tokens } from "../lib/constants";
+import { Magic } from "@magic-sdk/admin";
 
 const LoginPage: CustomNextPage = () => {
   const [disabled, setDisabled] = useState(false);
   const router = useRouter();
-
-  const checkAuthStatus = async () => {
-    const userResponse = await fetch("/api/user");
-
-    if (!userResponse.ok) {
-      return;
-    }
-
-    const validationStatus = await fetch("/api/validate");
-
-    if (!validationStatus.ok) {
-      await fetch("/api/logout");
-      return;
-    }
-
-    const callbackResponse = await fetch("/api/callback");
-    const callbackResponseData = await callbackResponse.json();
-
-    if (!callbackResponse.ok || !callbackResponseData?.callbackUrl) {
-      router.push("/");
-    }
-
-    router.push(callbackResponseData.callbackUrl);
-  };
-
-  useEffect(() => {
-    checkAuthStatus();
-  });
 
   const handleLoginWithEmail = async (email: string) => {
     try {
@@ -105,6 +80,25 @@ const LoginPage: CustomNextPage = () => {
 LoginPage.layout = {
   includeContainer: true,
   includeNavAndFooter: false,
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const serverMagic = new Magic(process.env.MAGIC_SECRET_KEY);
+  const didToken = req.cookies[tokens.didToken];
+
+  if (didToken) {
+    try {
+      serverMagic.token.validate(didToken);
+      const callbackUrl = req.cookies[tokens.callbackUrl] ?? "/";
+      res.statusCode = 302;
+      res.setHeader("Location", callbackUrl);
+    } catch {
+      serverMagic.users.logoutByIssuer(didToken);
+    }
+  }
+  return {
+    props: {},
+  };
 };
 
 export default LoginPage;
