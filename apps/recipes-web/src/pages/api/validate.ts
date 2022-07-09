@@ -1,13 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Magic } from "@magic-sdk/admin";
-import Cookies from "cookies";
-import { tokens } from "../../lib/constants";
 
 const magic = new Magic(process.env.MAGIC_SECRET_KEY);
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const cookies = new Cookies(req, res);
-  const didToken = cookies.get(tokens.didToken) ?? req.headers["authorization"];
+  const didToken = req.headers["authorization"]?.substring(7);
 
   try {
     magic.token.validate(didToken);

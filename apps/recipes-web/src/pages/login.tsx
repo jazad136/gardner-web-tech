@@ -6,13 +6,27 @@ import SocialLogins from "src/components/SocialLogins";
 import { CustomNextPage } from "src/lib/CustomNextPage";
 import { magic } from "src/lib/magic";
 import * as Dialog from "@radix-ui/react-dialog";
-import { GetServerSideProps } from "next";
-import { tokens } from "../lib/constants";
-import { Magic } from "@magic-sdk/admin";
 
 const LoginPage: CustomNextPage = () => {
   const [disabled, setDisabled] = useState(false);
   const router = useRouter();
+
+  const handleLoggedIn = async () => {
+    if (await magic.user.isLoggedIn()) {
+      const callbackResponse = await fetch("/api/callback");
+      const callbackData = await callbackResponse?.json();
+
+      if (!callbackResponse.ok || !callbackData?.callbackUrl) {
+        router.push("/");
+      }
+
+      router.push(callbackData.callbackUrl);
+    }
+  };
+
+  useEffect(() => {
+    handleLoggedIn();
+  });
 
   const handleLoginWithEmail = async (email: string) => {
     try {
@@ -80,25 +94,6 @@ const LoginPage: CustomNextPage = () => {
 LoginPage.layout = {
   includeContainer: true,
   includeNavAndFooter: false,
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const serverMagic = new Magic(process.env.MAGIC_SECRET_KEY);
-  const didToken = req.cookies[tokens.didToken];
-
-  if (didToken) {
-    try {
-      serverMagic.token.validate(didToken);
-      const callbackUrl = req.cookies[tokens.callbackUrl] ?? "/";
-      res.statusCode = 302;
-      res.setHeader("Location", callbackUrl);
-    } catch {
-      serverMagic.users.logoutByIssuer(didToken);
-    }
-  }
-  return {
-    props: {},
-  };
 };
 
 export default LoginPage;

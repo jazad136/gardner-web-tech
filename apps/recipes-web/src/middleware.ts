@@ -8,23 +8,21 @@ export const config = {
 };
 
 export const middleware = async (request: NextRequest) => {
-  return NextResponse.redirect(new URL("/maintenance", request.url));
-  // const loginUrl = new URL("/login", request.url);
-  // try {
-  //   const token = request.cookies.get(tokens.didToken);
-  //   const isValid = await isAuthValid(request, token);
+  // return NextResponse.redirect(new URL("/maintenance", request.url));
+  const logoutUrl = new URL("/logout", request.url);
+  try {
+    const token = request.cookies.get(tokens.didToken);
+    const isValid = await isAuthValid(request, token);
 
-  //   if (!isValid) {
-  //     request.cookies.clear();
-  //     await setCallback(request, request.nextUrl.pathname);
-  //     await logout(request, token);
-  //     return NextResponse.redirect(loginUrl);
-  //   }
+    if (!isValid) {
+      await setCallback(request, request.nextUrl.pathname);
+      return NextResponse.redirect(logoutUrl);
+    }
 
-  //   return NextResponse.next();
-  // } catch {
-  //   return NextResponse.redirect(loginUrl);
-  // }
+    return NextResponse.next();
+  } catch {
+    return NextResponse.redirect(logoutUrl);
+  }
 };
 
 const setCallback = async (request: NextRequest, pathname: string) => {
@@ -34,13 +32,5 @@ const setCallback = async (request: NextRequest, pathname: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ callbackUrl: pathname }),
-  });
-};
-
-const logout = async (request: NextRequest, token: string) => {
-  await fetch(`${request.nextUrl.origin}/api/logout`, {
-    headers: {
-      authorization: token,
-    },
   });
 };

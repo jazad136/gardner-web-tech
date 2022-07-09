@@ -5,9 +5,8 @@ export const isAuthValid = async (request: NextRequest, token: string) => {
     return false;
   }
   const response = await fetch(`${request.nextUrl.origin}/api/validate`, {
-    credentials: "same-origin",
     headers: {
-      authorization: token,
+      authorization: `Bearer ${token}`,
     },
   });
 
