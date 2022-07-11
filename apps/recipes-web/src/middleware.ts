@@ -4,7 +4,7 @@ import { tokens } from "src/lib/constants";
 import { isAuthValid } from "./lib/auth";
 
 export const config = {
-  matcher: ["/", "/recipe/:path*"],
+  matcher: ["/", "/recipe/:path*", "_next/data/:path*"],
 };
 
 export const middleware = async (request: NextRequest) => {
