@@ -9,9 +9,7 @@ type Props = {
     | "danger"
     | "light"
     | "white"
-    | "dark"
-    | "google"
-    | "facebook";
+    | "dark";
   size: "xl" | "lg" | "md" | "sm" | "xs";
   ariaLabel: string;
   onClick?: (value: any) => void;
