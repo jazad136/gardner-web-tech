@@ -1,4 +1,5 @@
 import "regenerator-runtime/runtime";
+import "react-toastify/dist/ReactToastify.css";
 import "src/styles/globals.css";
 
 import { NextComponentType } from "next";
@@ -6,6 +7,7 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { AppProps } from "next/app";
 import NextNProgress from "nextjs-progressbar";
+import { ToastContainer } from "react-toastify";
 import { Layout } from "src/components";
 import { RecipeProvider } from "src/context/RecipeContext";
 import { LayoutProps } from "src/types";
@@ -33,6 +35,17 @@ const MyApp: React.FC<CustomAppProps> = ({
           </RecipeProvider>
         </SessionProvider>
       </ThemeProvider>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={6000}
+        hideProgressBar={false}
+        draggable={false}
+        theme="colored"
+        closeOnClick
+        pauseOnHover
+        pauseOnFocusLoss
+      />
     </>
   );
 };

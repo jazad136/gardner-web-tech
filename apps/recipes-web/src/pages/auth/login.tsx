@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import AuthTextWrapper from "src/components/AuthTextWrapper";
 import EmailForm from "src/components/EmailForm";
 import SocialLogins from "src/components/SocialLogins";
@@ -17,14 +18,27 @@ const LoginPage: CustomNextPage = () => {
     const handleLoggedIn = async () => {
       if (status === "authenticated") {
         const callbackUrl = router.query["callbackUrl"] as string | null;
-        if (callbackUrl) {
+
+        if (!!callbackUrl) {
           router.push(callbackUrl);
         }
         router.push("/");
       }
     };
 
+    const handleAccountNotLinked = async () => {
+      const error = router.query["error"] as string | null;
+
+      if (!!error && error.startsWith("OAuthAccountNotLinked")) {
+        toast.error("Please select the login method you used previously.", {
+          toastId: "OAuthAccountNotLinked",
+          autoClose: 8000,
+        });
+      }
+    };
+
     handleLoggedIn();
+    handleAccountNotLinked();
   }, [status, router]);
 
   return (
