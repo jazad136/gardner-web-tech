@@ -15,7 +15,6 @@ const approvedEmails = (process.env.APPROVED_EMAILS as string).split(", ");
 // });
 
 export default NextAuth({
-  // adapter: UpstashRedisAdapter(redis),
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,
