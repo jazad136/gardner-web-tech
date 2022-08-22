@@ -7,14 +7,18 @@ import GoogleProvider from "next-auth/providers/google";
 import { createTransport } from "nodemailer";
 import { html, text } from "src/lib/email";
 
+import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
+import { Redis } from "@upstash/redis";
+
 const approvedEmails = (process.env.APPROVED_EMAILS as string).split(", ");
 
-// const redis = new Redis({
-//   url: process.env.UPSTASH_REDIS_REST_URL as string,
-//   token: process.env.UPSTASH_REDIS_REST_TOKEN as string,
-// });
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL as string,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN as string,
+});
 
 export default NextAuth({
+  adapter: UpstashRedisAdapter(redis),
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,
