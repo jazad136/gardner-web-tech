@@ -15,9 +15,7 @@ export const text = ({ url, host }: TextProps): string => {
   return `Sign in to ${host}\n${url}\n\n`;
 };
 
-export const html = ({ url, host, timeString, email }: HtmlProps): string => {
-  const escapedHost = host.replace(/\./g, "&#8203;.");
-
+export const html = ({ url, timeString, email }: HtmlProps): string => {
   return `
 <body>
   <table width="100%" cellpadding="12" cellspacing="0" border="0">
@@ -253,7 +251,7 @@ export const html = ({ url, host, timeString, email }: HtmlProps): string => {
                                       "
                                     >
                                       <a
-                                        href="${escapedHost}${url}"
+                                        href="${url}"
                                         style="
                                           text-decoration: none;
                                           display: inline-block;
@@ -316,7 +314,7 @@ export const html = ({ url, host, timeString, email }: HtmlProps): string => {
                                                 color: #00599e;
                                                 text-decoration: none;
                                               "
-                                              href="${escapedHost}${url}"
+                                              href="${url}"
                                               target="_blank"
                                             >
                                               Click here</a
