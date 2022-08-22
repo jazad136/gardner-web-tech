@@ -1,28 +1,14 @@
-import {
-  createPortableTextComponent,
-  createPreviewSubscriptionHook,
-  createCurrentUserHook,
-  createImageUrlBuilder,
-} from "next-sanity";
-import { config } from "./SanityConfig";
-import sanityClient, { SanityClient } from "@sanity/client";
-import { ImageUrlBuilder } from "next-sanity-image";
+import sanityClient from "@sanity/client";
+import imageUrlBuilder from "@sanity/image-url";
 
-export const configuredSanityClient: SanityClient = sanityClient({
-  ...config,
+import { clientConfig } from "./SanityConfig";
+
+export const client = sanityClient({
+  ...clientConfig,
 });
 
-export const urlFor = (source: string): ImageUrlBuilder =>
-  createImageUrlBuilder(config).image(source);
+const builder = imageUrlBuilder(client);
 
-// Set up the live preview subscription hook
-export const usePreviewSubscription: any =
-  createPreviewSubscriptionHook(config);
-
-export const PortableText = createPortableTextComponent({
-  ...config,
-  serializers: {},
-});
-
-// Helper function for using the current logged in user account
-export const useCurrentUser = createCurrentUserHook(config);
+export const urlFor = (source: string) => {
+  return builder.image(source);
+};

@@ -1,67 +1,66 @@
-import { useFormik } from "formik";
+import cn from "classnames";
+import { Field, Form, Formik } from "formik";
+import { signIn } from "next-auth/react";
 import { Button } from "ui";
 import * as Yup from "yup";
 
 type Props = {
-  onEmailSubmit: (email: string) => Promise<void>;
   isDisabled: boolean;
+  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EmailForm: React.FC<Props> = ({ onEmailSubmit, isDisabled }) => {
-  const formik = useFormik({
-    initialValues: {
+const EmailForm: React.FC<Props> = ({ isDisabled, setIsDisabled }) => (
+  <Formik
+    initialValues={{
       email: "",
-    },
-    onSubmit: (values) => {
-      onEmailSubmit(values.email);
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address"),
-    }),
-  });
-
-  return (
-    <>
-      <form
-        onSubmit={formik.handleSubmit}
-        className="flex flex-col text-center"
-      >
-        <div className="w-full mt-0 mx-auto mb-5">
-          <input
+    }}
+    onSubmit={(values) => {
+      setIsDisabled(true);
+      signIn("email", { email: values.email });
+    }}
+    validationSchema={Yup.object({
+      email: Yup.string().email("Invalid email address").required(),
+    })}
+  >
+    {({ touched, errors }) => (
+      <Form className="flex flex-col text-center">
+        <div className="mx-auto mt-0 mb-5 w-full">
+          <Field
             placeholder="Enter your email"
             type="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             name="email"
-            id="email"
-            className="w-full bg-white dark:bg-slate-50 rounded-md prose max-w-full p-2 prose border border-gray-300 focus-visible:outline-none text-center"
+            className={cn(
+              "prose w-full rounded-md bg-white p-2 text-center focus-visible:outline-none dark:bg-slate-50 2xl:w-4/5",
+              {
+                "border-2 border-red-600 dark:border-red-500":
+                  touched.email && errors.email,
+                "border border-gray-300": !touched.email || !errors.email,
+              }
+            )}
             disabled={isDisabled}
           />
-          {formik.touched.email && formik.errors.email && (
-            <div className="prose prose-sm max-w-full text-red-600 mt-2">
-              {formik.errors.email}
+          {touched.email && errors.email && (
+            <div className="prose prose-sm mt-2 max-w-full text-red-600 dark:text-red-500">
+              {errors.email}
             </div>
           )}
         </div>
         <div>
           <Button
             size="md"
-            color="success"
+            color="secondary"
             ariaLabel="Send Magic Link"
             isPill
-            isDisabled={
-              !!formik.errors.email || formik.values.email === "" || isDisabled
-            }
+            isDisabled={!!errors.email || isDisabled}
             type="submit"
             isBold={false}
           >
             Send Magic Link
           </Button>
         </div>
-      </form>
-    </>
-  );
-};
+      </Form>
+    )}
+  </Formik>
+);
 
 export default EmailForm;

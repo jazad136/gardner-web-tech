@@ -1,11 +1,11 @@
-import Meta from "src/components/meta";
-import Navbar from "./Navbar";
 import cn from "classnames";
-import Footer from "ui/src/Footer";
+import Meta from "src/components/meta";
+import { Footer } from "ui";
+
+import Navbar from "./Navbar";
 
 type Props = {
   includeContainer?: boolean;
-  children: JSX.Element;
 };
 
 const Layout: React.FC<Props> = ({
@@ -14,7 +14,7 @@ const Layout: React.FC<Props> = ({
 }) => (
   <>
     <Meta />
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className={cn({ "container flex-grow": useContainer })}>
         {children}

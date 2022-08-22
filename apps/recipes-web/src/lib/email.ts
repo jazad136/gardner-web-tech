@@ -1,0 +1,470 @@
+type TextProps = {
+  url: string;
+  host: string;
+};
+
+type HtmlProps = {
+  url: string;
+  host: string;
+  timeString: string;
+  email: string;
+};
+
+/** Email Text body (fallback for email clients that don't render HTML, e.g. feature phones) */
+export const text = ({ url, host }: TextProps): string => {
+  return `Sign in to ${host}\n${url}\n\n`;
+};
+
+export const html = ({ url, host, timeString, email }: HtmlProps): string => {
+  const escapedHost = host.replace(/\./g, "&#8203;.");
+
+  return `
+<body>
+  <table width="100%" cellpadding="12" cellspacing="0" border="0">
+    <tbody>
+      <tr>
+        <td>
+          <div style="overflow: hidden">
+            <font size="-1"
+              ><u></u>
+              <div>
+                <table
+                  bgcolor="#ffffff"
+                  cellpadding="0"
+                  cellspacing="0"
+                  width="100%"
+                  style="
+                    table-layout: fixed;
+                    vertical-align: top;
+                    min-width: 320px;
+                    margin: 0 auto;
+                    border-spacing: 0;
+                    border-collapse: collapse;
+                    width: 100%;
+                  "
+                >
+                  <tbody>
+                    <tr valign="top" style="vertical-align: top">
+                      <td
+                        valign="top"
+                        style="word-break: break-word; vertical-align: top"
+                      >
+                        <div>
+                          <div
+                            style="
+                              margin: 0 auto;
+                              min-width: 320px;
+                              max-width: 500px;
+                              word-wrap: break-word;
+                              word-break: break-word;
+                            "
+                          >
+                            <div
+                              style="
+                                border-collapse: collapse;
+                                display: table;
+                                width: 100%;
+                              "
+                            >
+                              <div
+                                style="
+                                  min-width: 320px;
+                                  max-width: 500px;
+                                  display: table-cell;
+                                  vertical-align: top;
+                                  width: 500px;
+                                "
+                              >
+                                <div style="width: 100% !important">
+                                  <div
+                                    style="
+                                      border-top: 0px solid transparent;
+                                      border-left: 0px solid transparent;
+                                      border-bottom: 20px solid transparent;
+                                      border-right: 0px solid transparent;
+                                      padding-top: 0px;
+                                      padding-bottom: 0px;
+                                      padding-right: 0px;
+                                      padding-left: 0px;
+                                    "
+                                  >
+                                    <div></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            style="
+                              margin: 0 auto;
+                              min-width: 320px;
+                              max-width: 500px;
+                              word-wrap: break-word;
+                              word-break: break-word;
+                            "
+                          >
+                            <div
+                              style="
+                                border-collapse: collapse;
+                                display: table;
+                                width: 100%;
+                              "
+                            >
+                              <div
+                                style="
+                                  min-width: 320px;
+                                  max-width: 500px;
+                                  display: table-cell;
+                                  vertical-align: top;
+                                  width: 500px;
+                                "
+                              >
+                                <div style="width: 100% !important">
+                                  <div
+                                    style="
+                                      border-top: 0px solid transparent;
+                                      border-left: 0px solid transparent;
+                                      border-bottom: 0px solid transparent;
+                                      border-right: 0px solid transparent;
+                                      padding-top: 0px;
+                                      padding-bottom: 15px;
+                                      padding-right: 50px;
+                                      padding-left: 50px;
+                                    "
+                                  >
+                                    <div
+                                      align="left"
+                                      style="
+                                        padding-right: 0px;
+                                        padding-left: 0px;
+                                      "
+                                    >
+                                      <div
+                                        style="
+                                          font-size: 1px;
+                                          line-height: 10px;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </div>
+                                    </div>
+                                    <div
+                                      style="
+                                        font-family: 'Helvetica Neue', Helvetica,
+                                          Arial, sans-serif;
+                                        line-height: 1.8;
+                                        padding-top: 5px;
+                                        padding-right: 0px;
+                                        padding-bottom: 0px;
+                                        padding-left: 0px;
+                                      "
+                                    >
+                                      <div
+                                        style="
+                                          line-height: 1.8;
+                                          font-family: 'Helvetica Neue',
+                                            Helvetica, Arial, sans-serif;
+                                          font-size: 12px;
+                                        "
+                                      >
+                                        <p
+                                          style="
+                                            line-height: 1.8;
+                                            font-size: 12px;
+                                            margin: 0;
+                                          "
+                                        >
+                                          <span style="font-size: 34px">
+                                            <strong>
+                                              <a
+                                                href="#m_2422820886896271538_"
+                                                style="
+                                                  color: #000000 !important;
+                                                  text-decoration: none !important;
+                                                "
+                                                >Recipes</a
+                                              >
+                                            </strong>
+                                          </span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div
+                                      style="
+                                        font-family: 'Helvetica Neue', Helvetica,
+                                          Arial, sans-serif;
+                                        line-height: 1.8;
+                                        padding-top: 15px;
+                                        padding-right: 0px;
+                                        padding-bottom: 15px;
+                                        padding-left: 0px;
+                                      "
+                                    >
+                                      <div
+                                        style="
+                                          font-size: 12px;
+                                          line-height: 1.8;
+                                          font-family: 'Helvetica Neue',
+                                            Helvetica, Arial, sans-serif;
+                                        "
+                                      >
+                                        <p
+                                          style="
+                                            font-size: 14px;
+                                            line-height: 1.8;
+                                            margin: 0;
+                                          "
+                                        >
+                                          <span style="font-size: 14px">
+                                            <a
+                                              href="#m_2422820886896271538_"
+                                              style="
+                                                color: #000000 !important;
+                                                text-decoration: none !important;
+                                              "
+                                              >Click the button below to log in
+                                              to <strong>Recipes</strong>.</a
+                                            >
+                                          </span>
+                                        </p>
+                                        <p
+                                          style="
+                                            font-size: 14px;
+                                            line-height: 1.8;
+                                            margin: 0;
+                                          "
+                                        >
+                                          <span style="font-size: 14px">
+                                            This button will expire in 20
+                                            minutes.
+                                          </span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div
+                                      align="left"
+                                      style="
+                                        padding-top: 10px;
+                                        padding-right: 10px;
+                                        padding-bottom: 10px;
+                                        padding-left: 0px;
+                                      "
+                                    >
+                                      <a
+                                        href="${escapedHost}${url}"
+                                        style="
+                                          text-decoration: none;
+                                          display: inline-block;
+                                          background: #00599e;
+                                          background-color: #00599e;
+                                          border-radius: 7px;
+                                          width: auto;
+                                          width: auto;
+                                          border-top: 1px solid #00599e;
+                                          border-right: 1px solid #00599e;
+                                          border-bottom: 1px solid #00599e;
+                                          border-left: 1px solid #00599e;
+                                          padding-top: 15px;
+                                          padding-bottom: 15px;
+                                          font-family: 'Helvetica Neue',
+                                            Helvetica, Arial, sans-serif;
+                                          text-align: center;
+                                          word-break: keep-all;
+                                          font-size: 18px;
+                                          line-height: 1.5;
+                                          padding-left: 30px;
+                                          padding-right: 30px;
+                                          font-size: 18px;
+                                          color: #fff;
+                                        "
+                                        target="_blank"
+                                      >
+                                        <strong>Log in to Recipes</strong></a
+                                      >
+                                    </div>
+                                    <div
+                                      style="
+                                        font-family: 'Helvetica Neue', Helvetica,
+                                          Arial, sans-serif;
+                                        line-height: 1.8;
+                                        padding-top: 20px;
+                                        padding-right: 0px;
+                                        padding-bottom: 10px;
+                                        padding-left: 0px;
+                                      "
+                                    >
+                                      <div
+                                        style="
+                                          font-size: 12px;
+                                          line-height: 1.8;
+                                          font-family: 'Helvetica Neue',
+                                            Helvetica, Arial, sans-serif;
+                                        "
+                                      >
+                                        <p
+                                          style="
+                                            font-size: 14px;
+                                            line-height: 1.8;
+                                            margin: 0;
+                                          "
+                                        >
+                                          Button not showing?<strong>
+                                            <a
+                                              style="
+                                                color: #00599e;
+                                                text-decoration: none;
+                                              "
+                                              href="${escapedHost}${url}"
+                                              target="_blank"
+                                            >
+                                              Click here</a
+                                            ></strong
+                                          >
+                                        </p>
+                                        <br />
+                                        <p
+                                          style="
+                                            font-size: 14px;
+                                            line-height: 1.8;
+                                            margin: 0;
+                                          "
+                                        >
+                                          <span style="font-size: 14px"
+                                            >Confirming this request will
+                                            securely log you in using
+                                            <strong><a>${email}</a></strong
+                                            >.</span
+                                          >
+                                        </p>
+                                        <p
+                                          style="
+                                            font-size: 14px;
+                                            line-height: 1.8;
+                                            margin: 0;
+                                          "
+                                        >
+                                          &nbsp;
+                                        </p>
+                                        <p
+                                          style="
+                                            font-size: 14px;
+                                            line-height: 1.8;
+                                            margin: 0;
+                                          "
+                                        >
+                                          <span style="font-size: 14px"
+                                            >This login was requested at
+                                            <strong>${timeString}</strong
+                                            >.</span
+                                          >
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            style="
+                              margin: 0 auto;
+                              min-width: 320px;
+                              max-width: 500px;
+                              word-wrap: break-word;
+                              word-break: break-word;
+                            "
+                          >
+                            <div
+                              style="
+                                border-collapse: collapse;
+                                display: table;
+                                width: 100%;
+                              "
+                            >
+                              <div
+                                style="
+                                  min-width: 320px;
+                                  max-width: 500px;
+                                  display: table-cell;
+                                  vertical-align: top;
+                                  width: 500px;
+                                "
+                              >
+                                <div style="width: 100% !important">
+                                  <div
+                                    style="
+                                      border-top: 0px solid transparent;
+                                      border-left: 0px solid transparent;
+                                      border-bottom: 0px solid transparent;
+                                      border-right: 0px solid transparent;
+                                      padding-top: 10px;
+                                      padding-bottom: 40px;
+                                      padding-right: 50px;
+                                      padding-left: 50px;
+                                    "
+                                  >
+                                    <div
+                                      style="
+                                        font-family: 'Helvetica Neue', Helvetica,
+                                          Arial, sans-serif;
+                                        line-height: 1.8;
+                                        padding-top: 0px;
+                                        padding-right: 0px;
+                                        padding-bottom: 0px;
+                                        padding-left: 0px;
+                                      "
+                                    >
+                                      <div
+                                        style="
+                                          font-size: 12px;
+                                          line-height: 1.8;
+                                          font-family: 'Helvetica Neue',
+                                            Helvetica, Arial, sans-serif;
+                                        "
+                                      >
+                                        <p
+                                          style="
+                                            font-size: 14px;
+                                            line-height: 1.8;
+                                            margin: 0;
+                                          "
+                                        >
+                                          <span style="font-size: 14px">
+                                            <strong>
+                                              <a
+                                                href="#m_2422820886896271538_"
+                                                style="
+                                                  color: #000000 !important;
+                                                  text-decoration: none !important;
+                                                "
+                                                >- Adam and Janette</a
+                                              >
+                                            </strong>
+                                          </span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </font>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+`;
+};

@@ -1,19 +1,19 @@
+import { Footer } from "ui";
+
 import Meta from "@components/meta";
-import { ReactElement } from "react";
 
 interface LayoutProps {
   preview: boolean;
-  children: ReactElement | ReactElement[];
 }
 
-const Layout = ({ preview, children }: LayoutProps) => {
+const Layout: React.FC<LayoutProps> = ({ preview, children }) => {
   // const [navbarOpen, setNavbarOpen] = useState(false);
   return (
     <>
       <Meta />
-      <div className="flex flex-col min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <main className="container flex-grow">{children}</main>
-        {/* <Footer /> */}
+        <Footer projectName="Gardner Web and Tech" />
       </div>
     </>
   );

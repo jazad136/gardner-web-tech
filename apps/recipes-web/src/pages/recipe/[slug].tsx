@@ -1,35 +1,28 @@
-import { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import ErrorPage from "next/error";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import * as Pino from "pino";
+import { useEffect, useState } from "react";
+import { useRecipeContext } from "src/context/RecipeContext";
+import { getClient, sanityClient, urlFor } from "src/lib";
+import { CustomNextPage } from "src/types";
 import {
   IngredientListWrapper,
   PageTitle,
   Recipe,
+  RecipeBlockTextAccordion,
   RecipeCookTime,
   RecipeListItem,
   RecipeMakeButton,
   RecipePrintButton,
   recipeQuery,
   recipeSlugsQuery,
-  SectionHeader,
-  YouTubeAccordion,
+  YouTubeAccordion
 } from "ui";
-import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
-import { CustomNextPage } from "src/lib/CustomNextPage";
-import { useRecipeContext } from "src/lib/RecipeContext";
-import { getClient, sanityClient } from "src/lib/SanityServer";
-import { configuredSanityClient } from "src/lib/SanityUi";
-import { useNextSanityImage, ImageUrlBuilder } from "next-sanity-image";
-import * as Pino from "pino";
 
 const logger = Pino.default({ name: "RecipePage" });
-
-const customImageBuilder = (imageUrlBuilder: ImageUrlBuilder) => {
-  return imageUrlBuilder.width(1250).height(500).crop("focalpoint").fit("crop");
-};
 
 type DataProps = {
   currentRecipe: Recipe;
@@ -43,16 +36,11 @@ type Props = {
 const RecipePage: CustomNextPage<Props> = ({ data }) => {
   const { asPath } = useRouter();
   const { handleSetRecipes } = useRecipeContext();
-  const imageProps = useNextSanityImage(
-    configuredSanityClient,
-    data?.currentRecipe?.image,
-    {
-      imageBuilder: customImageBuilder,
-    }
-  );
 
   const [batches, setBatches] = useState(1);
   const [ingredientsOpen, setIngredientsOpen] = useState(true);
+  const [instructionsOpen, setInstructionsOpen] = useState(true);
+  const [notesOpen, setNotesOpen] = useState(true);
   const [youTubeOpen, setYouTubeOpen] = useState(true);
   const [timeOpen, setTimeOpen] = useState(true);
 
@@ -74,21 +62,28 @@ const RecipePage: CustomNextPage<Props> = ({ data }) => {
     <>
       <div>
         <Head>
-          <title>{title}</title>
+          <title>Recipes: {title}</title>
           <meta name="description" content={title} />
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
         <main className="py-8">
-          <div className="w-full flex justify-center">
+          <div className="flex w-full justify-center">
             <PageTitle>{title}</PageTitle>
           </div>
           {image && (
             <div className="block w-full">
               <Image
-                className="w-16 md:w-32 lg:w-48 max-w-full rounded-xl"
-                {...imageProps}
+                className="w-16 max-w-full rounded-xl md:w-32 lg:w-48"
+                src={urlFor(image)
+                  .width(1250)
+                  .height(500)
+                  .crop("focalpoint")
+                  .fit("crop")
+                  .url()}
                 alt={title}
+                width={1250}
+                height={500}
                 layout="responsive"
                 objectFit="cover"
                 priority
@@ -108,17 +103,18 @@ const RecipePage: CustomNextPage<Props> = ({ data }) => {
             isOpen={ingredientsOpen}
             setIsOpen={setIngredientsOpen}
           />
-          <SectionWithPortableTextBlock
-            title="Instructions"
+          <RecipeBlockTextAccordion
+            title="instructions"
             blocks={instructions}
+            isOpen={instructionsOpen}
+            setIsOpen={setInstructionsOpen}
           />
-          <SectionHeader classNames="text-center">
-            <span>
-              Serves: {data.currentRecipe.serves}{" "}
-              {data.currentRecipe.serves === 1 ? "Person" : "People"}
-            </span>
-          </SectionHeader>
-          <SectionWithPortableTextBlock title="Notes" blocks={notes} />
+          <RecipeBlockTextAccordion
+            title="notes"
+            blocks={notes}
+            isOpen={notesOpen}
+            setIsOpen={setNotesOpen}
+          />
           <YouTubeAccordion
             youTubeUrls={youTubeUrls}
             isOpen={youTubeOpen}

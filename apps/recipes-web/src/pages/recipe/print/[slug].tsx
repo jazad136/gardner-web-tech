@@ -1,26 +1,33 @@
-import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import ErrorPage from "next/error";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import * as Pino from "pino";
+import { useEffect } from "react";
+import { useRecipeContext } from "src/context/RecipeContext";
+import { getClient, sanityClient, toPlainText, urlFor } from "src/lib";
+import { CustomNextPage } from "src/types";
 import {
+  Button,
+  PageSpinner,
   Recipe,
   RecipeDocumentInterface,
   RecipeListItem,
   recipeQuery,
-  recipeSlugsQuery,
+  recipeSlugsQuery
 } from "ui";
-import { CustomNextPage } from "src/lib/CustomNextPage";
-import { useRecipeContext } from "src/lib/RecipeContext";
-import { getClient, sanityClient, toPlainText } from "src/lib/SanityServer";
-import { urlFor } from "src/lib/SanityUi";
-import * as Pino from "pino";
 
 const logger = Pino.default({ name: "RecipePDF" });
 
-const PDFViewer = dynamic(() => import("ui/src/PDFViewer"), { ssr: false });
-const RecipeDocument = dynamic(() => import("ui/src/recipes/RecipeDocument"), {
+const PDFViewer = dynamic(() => import("ui/src/components/PDFViewer"), {
   ssr: false,
 });
+const RecipeDocument = dynamic(
+  () => import("ui/src/components/recipes/RecipeDocument"),
+  {
+    ssr: false,
+  }
+);
 
 type DataProps = {
   currentRecipe: Recipe;
@@ -33,7 +40,7 @@ type Props = {
 
 const RecipePDF: CustomNextPage<Props> = ({ data }) => {
   const { handleSetRecipes } = useRecipeContext();
-  const { asPath } = useRouter();
+  const { asPath, back } = useRouter();
 
   useEffect(() => {
     if (data?.allRecipes) {
@@ -62,9 +69,27 @@ const RecipePDF: CustomNextPage<Props> = ({ data }) => {
   };
 
   return (
-    <PDFViewer>
-      <RecipeDocument recipe={recipe} />
-    </PDFViewer>
+    <>
+      <Head>
+        <title>Recipes: {recipe.title}</title>
+        <meta name="description" content={recipe.title} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      {!RecipeDocument || !PDFViewer || !recipe ? (
+        <PageSpinner />
+      ) : (
+        <div className="my-8">
+          <PDFViewer>
+            <RecipeDocument recipe={recipe} />
+          </PDFViewer>
+          <div className="mt-4 flex justify-center">
+            <Button color="secondary" size="md" ariaLabel="back" onClick={back}>
+              Back
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

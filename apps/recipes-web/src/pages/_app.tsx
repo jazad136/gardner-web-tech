@@ -1,30 +1,37 @@
-import "../../styles/globals.css";
-import { NextComponentType } from "next";
-import { AppProps } from "next/app";
-import Layout from "src/components/layout";
-import { RecipeProvider } from "src/lib/RecipeContext";
-import { LayoutProps } from "src/lib/LayoutProps";
-import { ThemeProvider } from "next-themes";
-import NextNProgress from "nextjs-progressbar";
 import "regenerator-runtime/runtime";
+import "src/styles/globals.css";
+
+import { NextComponentType } from "next";
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "next-themes";
+import { AppProps } from "next/app";
+import NextNProgress from "nextjs-progressbar";
+import { Layout } from "src/components";
+import { RecipeProvider } from "src/context/RecipeContext";
+import { LayoutProps } from "src/types";
 
 type CustomAppProps = AppProps & {
   Component: NextComponentType & { layout?: LayoutProps };
 };
 
-const MyApp: React.FC<CustomAppProps> = ({ Component, pageProps }) => {
+const MyApp: React.FC<CustomAppProps> = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}) => {
   return (
     <>
       <NextNProgress />
       <ThemeProvider attribute="class">
-        <RecipeProvider>
-          <Layout
-            includeContainer={Component.layout?.includeContainer}
-            includeNavAndFooter={Component.layout?.includeNavAndFooter}
-          >
-            <Component {...pageProps} />
-          </Layout>
-        </RecipeProvider>
+        <SessionProvider session={session}>
+          <RecipeProvider>
+            <Layout
+              includeContainer={Component.layout?.includeContainer}
+              includeNavAndFooter={Component.layout?.includeNavAndFooter}
+            >
+              <Component {...pageProps} />
+            </Layout>
+          </RecipeProvider>
+        </SessionProvider>
       </ThemeProvider>
     </>
   );

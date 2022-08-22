@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
 import "regenerator-runtime";
+
+import React, { useEffect, useMemo, useRef } from "react";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 type Props = {
   setSpeechRecognitionSupported: React.Dispatch<React.SetStateAction<boolean>>;

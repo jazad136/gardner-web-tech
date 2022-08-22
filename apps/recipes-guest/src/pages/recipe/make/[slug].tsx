@@ -1,9 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import ErrorPage from "next/error";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import * as Pino from "pino";
+import { useEffect, useMemo, useState } from "react";
+import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
+import { Dictaphone, SectionWithPortableTextBlock } from "src/components";
+import { useRecipeContext } from "src/context/RecipeContext";
+import { getClient, sanityClient } from "src/lib";
+import { CustomNextPage } from "src/types";
 import {
+  Button,
   IngredientListWrapper,
   PageTitle,
   Recipe,
@@ -13,15 +20,8 @@ import {
   SpeechAlert,
   SpeechTipsModal,
   useWakeLock,
-  YouTubeAccordion,
+  YouTubeAccordion
 } from "ui";
-import { SectionWithPortableTextBlock } from "src/components/SectionWithPortableTextBlock";
-import { CustomNextPage } from "src/lib/CustomNextPage";
-import Dictaphone from "src/components/Dictaphone";
-import { useRecipeContext } from "src/lib/RecipeContext";
-import { getClient, sanityClient } from "src/lib/SanityServer";
-import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
-import * as Pino from "pino";
 
 const logger = Pino.default({ name: "MakeRecipePage" });
 
@@ -36,7 +36,7 @@ type Props = {
 
 const MakeRecipePage: CustomNextPage<Props> = ({ data }) => {
   const { handleSetRecipes } = useRecipeContext();
-  const { asPath, query } = useRouter();
+  const { asPath, query, back } = useRouter();
   const [ingredientsOpen, setIngredientsOpen] = useState(true);
   const [youTubeOpen, setYouTubeOpen] = useState(true);
   const [dictaphoneEnabled, setDictaphoneEnabled] = useState(false);
@@ -56,34 +56,6 @@ const MakeRecipePage: CustomNextPage<Props> = ({ data }) => {
     }
   }, [data?.allRecipes, handleSetRecipes]);
 
-  function isScreenLockSupported() {
-    return "wakeLock" in navigator;
-  }
-
-  useEffect(() => {
-    let customNavigator: any;
-    let screenLock: any;
-    customNavigator = navigator;
-
-    if (isScreenLockSupported()) {
-      try {
-        customNavigator.wakeLock
-          .request("screen")
-          .then((lock) => (screenLock = lock));
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    return () => {
-      if (!!screenLock) {
-        screenLock.release().then(() => {
-          screenLock = null;
-        });
-      }
-    };
-  });
-
   const batches: number = useMemo(() => {
     if (!query?.batches) {
       return 0;
@@ -102,69 +74,70 @@ const MakeRecipePage: CustomNextPage<Props> = ({ data }) => {
     return <ErrorPage statusCode={404} />;
   }
 
-  const { title, notes, youTubeUrls, ingredients, instructions, slug } =
+  const { title, notes, youTubeUrls, ingredients, instructions } =
     data.currentRecipe;
 
   return (
     <>
-      <div>
-        <Head>
-          <title>{title}</title>
-          <meta name="description" content={title} />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+      <Head>
+        <title>Recipes: {title}</title>
+        <meta name="description" content={title} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-        <main className="py-8 block">
-          <div className="w-full flex justify-center">
-            <PageTitle>{title}</PageTitle>
-            <button
-              type="button"
-              className="mt-2"
-              aria-label="Toggle Voice Commands"
-              onClick={() => {
-                setDictaphoneEnabled(!dictaphoneEnabled);
-              }}
-            >
-              {dictaphoneEnabled ? (
-                <BiMicrophone size="2em" />
-              ) : (
-                <BiMicrophoneOff size="2em" />
-              )}
-            </button>
-          </div>
-          <IngredientListWrapper
-            ingredients={ingredients}
-            serves={data.currentRecipe.serves}
-            batches={batches}
-            isOpen={ingredientsOpen}
-            setIsOpen={setIngredientsOpen}
+      <main className="block py-8">
+        <div className="flex w-full justify-between">
+          <PageTitle className="inline-block align-middle">{title}</PageTitle>
+          <button
+            type="button"
+            className="-mt-2"
+            aria-label="Toggle Voice Commands"
+            onClick={() => {
+              setDictaphoneEnabled(!dictaphoneEnabled);
+            }}
+          >
+            {dictaphoneEnabled ? (
+              <BiMicrophone size="2em" />
+            ) : (
+              <BiMicrophoneOff size="2em" />
+            )}
+          </button>
+        </div>
+        <IngredientListWrapper
+          ingredients={ingredients}
+          serves={data.currentRecipe.serves}
+          batches={batches}
+          isOpen={ingredientsOpen}
+          setIsOpen={setIngredientsOpen}
+        />
+        <SectionWithPortableTextBlock
+          title="Instructions"
+          blocks={instructions}
+        />
+        <SectionWithPortableTextBlock title="Notes" blocks={notes} />
+        <YouTubeAccordion
+          youTubeUrls={youTubeUrls}
+          isOpen={youTubeOpen}
+          setIsOpen={setYouTubeOpen}
+        />
+        <div className="flex justify-center">
+          <Button color="secondary" size="md" ariaLabel="back" onClick={back}>
+            Back
+          </Button>
+          <SpeechAlert
+            handleAccept={() => setDictaphoneEnabled(true)}
+            handleCancel={() => setDictaphoneEnabled(false)}
+            enableSpeechRecognition={speechRecognitionSupported}
           />
-          <SectionWithPortableTextBlock
-            title="Instructions"
-            blocks={instructions}
-          />
-          <SectionWithPortableTextBlock title="Notes" blocks={notes} />
-          <YouTubeAccordion
-            youTubeUrls={youTubeUrls}
-            isOpen={youTubeOpen}
-            setIsOpen={setYouTubeOpen}
-          />
-          <div className="flex justify-center">
-            <SpeechAlert
-              handleAccept={() => setDictaphoneEnabled(true)}
-              handleCancel={() => setDictaphoneEnabled(false)}
-              enableSpeechRecognition={speechRecognitionSupported}
-            />
-            <SpeechTipsModal />
-          </div>
-          <Dictaphone
-            setSpeechRecognitionSupported={setSpeechRecognitionSupported}
-            isEnabled={dictaphoneEnabled}
-            handleYouTubeOpen={setYouTubeOpen}
-            handleIngredientsOpen={setIngredientsOpen}
-          />
-        </main>
-      </div>
+          <SpeechTipsModal />
+        </div>
+        <Dictaphone
+          setSpeechRecognitionSupported={setSpeechRecognitionSupported}
+          isEnabled={dictaphoneEnabled}
+          handleYouTubeOpen={setYouTubeOpen}
+          handleIngredientsOpen={setIngredientsOpen}
+        />
+      </main>
     </>
   );
 };

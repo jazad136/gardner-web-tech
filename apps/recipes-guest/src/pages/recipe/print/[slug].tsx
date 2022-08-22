@@ -1,27 +1,33 @@
-import { useEffect } from "react";
-import { GetStaticPaths, GetStaticProps } from "next";
 import dynamic from "next/dynamic";
 import ErrorPage from "next/error";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import * as Pino from "pino";
+import { useEffect } from "react";
+import { useRecipeContext } from "src/context/RecipeContext";
+import { getClient, sanityClient, toPlainText, urlFor } from "src/lib";
+import { CustomNextPage } from "src/types";
 import {
+  Button,
+  PageSpinner,
   Recipe,
   RecipeDocumentInterface,
   RecipeListItem,
   recipeQuery,
-  recipeSlugsQuery,
+  recipeSlugsQuery
 } from "ui";
-import { CustomNextPage } from "src/lib/CustomNextPage";
-import { useRecipeContext } from "src/lib/RecipeContext";
-import { getClient, sanityClient, toPlainText } from "src/lib/SanityServer";
-import { urlFor } from "src/lib/SanityUi";
-import * as Pino from "pino";
 
 const logger = Pino.default({ name: "RecipePDF" });
 
-const PDFViewer = dynamic(() => import("ui/src/PDFViewer"), { ssr: false });
-const RecipeDocument = dynamic(() => import("ui/src/recipes/RecipeDocument"), {
+const PDFViewer = dynamic(() => import("ui/src/components/PDFViewer"), {
   ssr: false,
 });
+const RecipeDocument = dynamic(
+  () => import("ui/src/components/recipes/RecipeDocument"),
+  {
+    ssr: false,
+  }
+);
 
 type DataProps = {
   currentRecipe: Recipe;
@@ -32,9 +38,9 @@ type Props = {
   data: DataProps;
 };
 
-const RecipePdfPage: CustomNextPage<Props> = ({ data }) => {
+const RecipePDF: CustomNextPage<Props> = ({ data }) => {
   const { handleSetRecipes } = useRecipeContext();
-  const { asPath } = useRouter();
+  const { asPath, back } = useRouter();
 
   useEffect(() => {
     if (data?.allRecipes) {
@@ -63,16 +69,31 @@ const RecipePdfPage: CustomNextPage<Props> = ({ data }) => {
   };
 
   return (
-    <PDFViewer>
-      <RecipeDocument recipe={recipe} />
-    </PDFViewer>
+    <>
+      <Head>
+        <title>Recipes: {recipe.title}</title>
+        <meta name="description" content={recipe.title} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      {!RecipeDocument || !PDFViewer || !recipe ? (
+        <PageSpinner />
+      ) : (
+        <div className="my-8">
+          <PDFViewer>
+            <RecipeDocument recipe={recipe} />
+          </PDFViewer>
+          <div className="mt-4 flex justify-center">
+            <Button color="secondary" size="md" ariaLabel="back" onClick={back}>
+              Back
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({
-  params,
-  preview = false,
-}) => {
+export async function getStaticProps({ params, preview = false }) {
   const { currentRecipe, allRecipes } = await getClient(preview).fetch(
     recipeQuery,
     {
@@ -86,18 +107,18 @@ export const getStaticProps: GetStaticProps = async ({
     },
     revalidate: 60 * 60 * 24,
   };
-};
+}
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export async function getStaticPaths() {
   const recipeSlugs = await sanityClient.fetch(recipeSlugsQuery);
   return {
     paths: recipeSlugs.map((slug: string) => ({ params: { slug } })),
     fallback: true,
   };
-};
+}
 
-RecipePdfPage.layout = {
+RecipePDF.layout = {
   includeContainer: true,
 };
 
-export default RecipePdfPage;
+export default RecipePDF;

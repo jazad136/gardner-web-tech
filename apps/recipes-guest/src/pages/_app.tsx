@@ -1,12 +1,13 @@
-import "../../styles/globals.css";
-import { NextComponentType } from "next";
-import { AppProps } from "next/app";
-import Layout from "src/components/layout";
-import { RecipeProvider } from "src/lib/RecipeContext";
-import { LayoutProps } from "src/lib/LayoutProps";
-import { ThemeProvider } from "next-themes";
-import NextNProgress from "nextjs-progressbar";
+import "src/styles/globals.css";
 import "regenerator-runtime/runtime";
+
+import { NextComponentType } from "next";
+import { ThemeProvider } from "next-themes";
+import { AppProps } from "next/app";
+import NextNProgress from "nextjs-progressbar";
+import Layout from "src/components/layout";
+import { RecipeProvider } from "src/context/RecipeContext";
+import { LayoutProps } from "src/types/LayoutProps";
 
 type CustomAppProps = AppProps & {
   Component: NextComponentType & { layout: LayoutProps };

@@ -1,6 +1,6 @@
 {
   "name": "turborepo-basic-shared",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -11,11 +11,17 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "sanity:start": "turbo run start --scope=*recipes-cms*",
-    "sanity:deploy": "turbo run sanity:deploy --scope=*recipes-cms*"
+    "sanity:start": "turbo run start --filter=recipes-cms",
+    "sanity:deploy": "turbo run sanity:deploy --filter=recipes-cms"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.4",
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.16",
+    "postcss-import": "^14.1.0",
     "prettier": "^2.5.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "tailwindcss": "^3.1.8",
     "turbo": "latest"
   },
   "engines": {

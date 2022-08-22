@@ -1,16 +1,17 @@
-import { createClient } from "next-sanity";
-import { config } from "./SanityConfig";
+import createClient from "@sanity/client";
 
-export const sanityClient = createClient(config);
+import { clientConfig } from "./SanityConfig";
+
+export const sanityClient = createClient(clientConfig);
 
 // Set up a preview client with serverless authentication for drafts
 export const previewClient = createClient({
-  ...config,
+  ...clientConfig,
   useCdn: false,
 });
 
 // Helper function for easily switching between normal client and preview client
-export const getClient = (usePreview) =>
+export const getClient = (usePreview = false) =>
   usePreview ? previewClient : sanityClient;
 
 export const toPlainText = (blocks): string => {

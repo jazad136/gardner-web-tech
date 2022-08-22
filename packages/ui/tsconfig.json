@@ -1,10 +1,9 @@
 {
   "extends": "tsconfig/nextjs.json",
-  "include": [
-    ".",
-    "../../apps/web/src/pages/Layout.tsx",
-    "../../apps/recipes-guest/src/components/SectionWithPortableTextBlock.tsx",
-    "recipes/RecipeDocument.tsx"
-  ],
-  "exclude": ["dist", "build", "node_modules"]
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "build", "node_modules", "postcss.config.js"]
 }

@@ -1,6 +1,6 @@
-import { ClientConfig } from "next-sanity";
+import { ClientConfig } from "@sanity/client";
 
-export const config: ClientConfig = {
+export const clientConfig: ClientConfig = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   apiVersion: "2022-01-27",

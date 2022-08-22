@@ -1,12 +1,12 @@
-import { useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, RecipeListItem, allRecipesQuery } from "ui";
-import { CustomNextPage } from "src/lib/CustomNextPage";
-import { useRecipeContext } from "src/lib/RecipeContext";
-import { sanityClient } from "src/lib/SanityServer";
+import { useEffect } from "react";
 import { BsChevronBarDown } from "react-icons/bs";
+import { useRecipeContext } from "src/context/RecipeContext";
+import { sanityClient } from "src/lib/SanityServer";
+import { CustomNextPage } from "src/types";
+import { allRecipesQuery, Button, Paragraph, RecipeListItem } from "ui";
 
 type Props = {
   allRecipes: RecipeListItem[];
@@ -37,8 +37,8 @@ const HomePage: CustomNextPage<Props> = ({ allRecipes }) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className="p-0 flex-1 flex flex-col justify-center items-center w-full overflow-hidden text-center z-10">
-          <div className="relative text-center text-white z-0 h-[95vh] w-full md:overflow-hidden overflow-auto">
+        <main className="z-10 flex w-full flex-1 flex-col items-center justify-center overflow-hidden p-0 text-center">
+          <div className="relative z-0 h-[95vh] w-full overflow-auto text-center text-white md:overflow-hidden">
             <Image
               layout="fill"
               className="object-cover"
@@ -46,10 +46,10 @@ const HomePage: CustomNextPage<Props> = ({ allRecipes }) => {
               alt="recipes landing page image"
               priority
             />
-            <h1 className="m-0 mb-0.5 text-6xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <h1 className="absolute top-1/2 left-1/2 m-0 mb-0.5 -translate-x-1/2 -translate-y-1/2 transform text-6xl">
               Welcome to our guest recipes website!
             </h1>
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
               <Button
                 color="white"
                 size="xl"
@@ -61,7 +61,7 @@ const HomePage: CustomNextPage<Props> = ({ allRecipes }) => {
               </Button>
             </div>
           </div>
-          <div id="footer" className="my-3 text-2xl w-1/2">
+          <Paragraph id="footer" className="prose-2xl my-8 w-1/2">
             To view our recipes, please open the side nav by clicking on the
             menu button in the top left corner. Please note that none of the
             recipes in this application with the some exceptions are actual
@@ -73,7 +73,7 @@ const HomePage: CustomNextPage<Props> = ({ allRecipes }) => {
               </a>
             </Link>
             .
-          </div>
+          </Paragraph>
         </main>
       </div>
     </>
@@ -89,7 +89,7 @@ export const getStaticProps = async () => {
     props: {
       allRecipes,
     } as Props,
-    revalidate: 60 * 60 * 24,
+    revalidate: 60 * 60 * 24, // refresh data every day
   };
 };
 

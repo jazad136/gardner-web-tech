@@ -1,4 +1,4 @@
-import { type NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 
 export const isAuthValid = async (request: NextRequest, token: string) => {
   if ((token ?? "").length === 0) {

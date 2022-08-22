@@ -7,9 +7,9 @@ This is a project to keep and maintain all of the projects to be at [gardnerwebt
 The projects are:
 
 - [recipes-cms](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/recipes-cms)
-- [recipes-guest](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/recipes-guest) (port 3002)
+- [recipes-guest](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/recipes-guest) (port 3001)
 - [recipes-web](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/recipes-web) (port 3000)
-- [web](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/web) (port 3001)
+- [web](https://github.com/AJax2012/gardner-web-tech/tree/main/apps/web) (port 3002)
 
 ## Turborepo Notes
 
@@ -21,13 +21,13 @@ This turborepo uses [Yarn](https://classic.yarnpkg.com/lang/en/) as a package ma
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
+- `recipes-cms`: a [Sanity](https://sanity.io) app
+- `recipes-guest`: a [Next.js](https://nextjs.org) app without authentication
+- `recipes-web`: another [Next.js](https://nextjs.org) app _with_ authentication
+- `web`: yet another [Next.js](https://nextjs.org) stubbed out for my future personal application.
 - `ui`: a stub React component library shared by both `web` and `docs` applications
-- `config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `config`: `eslint` configurations (includes `eslint-next`, `postcss.config`, and `tailwind.config`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 
@@ -37,28 +37,6 @@ This turborepo has some additional tools already setup for you:
 - [ESLint](https://eslint.org/) for code linting
 - [Jest](https://jestjs.io) test runner for all things JavaScript
 - [Prettier](https://prettier.io) for code formatting
-
-## Setup
-
-This repository is used in the `npx create-turbo` command, and selected when choosing which package manager you wish to use with your monorepo (Yarn).
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run dev
-```
 
 ### Remote Caching
 
