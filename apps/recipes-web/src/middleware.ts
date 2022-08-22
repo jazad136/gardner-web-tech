@@ -1,5 +1,9 @@
-export { default } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
 
-export const config = {
-  matcher: ["/", "/recipe/:path*", "/_next/data/:path*"],
-};
+export default withAuth({
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+    verifyRequest: "/auth/verify-request",
+  },
+});
