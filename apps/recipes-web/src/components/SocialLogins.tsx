@@ -43,23 +43,6 @@ const SocialLogins: React.FC<Props> = ({ isDisabled, setIsDisabled }) => {
               Sign in with {provider.replace(/^\w/, (c) => c.toUpperCase())}
             </span>
           </button>
-          {/* <Button
-              type="button"
-              size="md"
-              onClick={() => {
-                setIsDisabled(true);
-                setIsRedirecting(true);
-                signIn(provider);
-              }}
-              key={provider}
-              color={provider as "google" | "facebook"}
-              ariaLabel={`${provider} login`}
-              isBold={false}
-              isDisabled={isDisabled || isRedirecting}
-              isPill
-            >
-              {provider.replace(/^\w/, (c) => c.toUpperCase())}
-            </Button> */}
         </div>
       ))}
       {isRedirecting && (
