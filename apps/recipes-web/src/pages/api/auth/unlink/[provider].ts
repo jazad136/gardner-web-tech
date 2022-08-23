@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
-import { AuthOptions } from "src/lib";
 
 import { PrismaClient } from "@prisma/client";
+
+import { authOptions } from "../[...nextauth]";
 
 const prisma = new PrismaClient();
 
@@ -17,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const session = await unstable_getServerSession(req, res, AuthOptions);
+    const session = await unstable_getServerSession(req, res, authOptions);
     const email = session?.user?.email;
 
     if (!email) {

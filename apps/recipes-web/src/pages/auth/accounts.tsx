@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthTextWrapper, SocialLoginButton } from "src/components";
 import { useRecipeContext } from "src/context/RecipeContext";
-import { AuthOptions, sanityClient } from "src/lib";
+import { sanityClient } from "src/lib";
 import { CustomNextPage } from "src/types";
 import { allRecipesQuery, PageSpinner, Paragraph, RecipeListItem } from "ui";
 
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { authOptions } from "../api/auth/[...nextauth]";
 
 type ExpandedClientSafeProvider = ClientSafeProvider & { linked: boolean };
 
@@ -27,6 +27,7 @@ const AccountsPage: CustomNextPage<Props> = ({ providers, allRecipes }) => {
   const { asPath } = useRouter();
   const { handleSetRecipes } = useRecipeContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     handleSetRecipes(allRecipes);
@@ -54,13 +55,14 @@ const AccountsPage: CustomNextPage<Props> = ({ providers, allRecipes }) => {
         toastId: "deleteAccountSuccess",
       }
     );
+    setIsLoading(true);
 
     await new Promise((r) => setTimeout(r, 5000));
     await signOut({ callbackUrl: "/" });
   };
 
   const handleSubmit = async (providerName: string) => {
-    setIsLoading(true);
+    setIsDisabled(true);
     const provider = providers.find((provider) => provider.id === providerName);
 
     if (provider.linked) {
@@ -70,6 +72,7 @@ const AccountsPage: CustomNextPage<Props> = ({ providers, allRecipes }) => {
     }
 
     setIsLoading(false);
+    setIsDisabled(false);
   };
 
   return (
@@ -81,7 +84,7 @@ const AccountsPage: CustomNextPage<Props> = ({ providers, allRecipes }) => {
       </Head>
 
       <main>
-        {status === "loading" || status === "unauthenticated" ? (
+        {status === "loading" || status === "unauthenticated" || isLoading ? (
           <PageSpinner />
         ) : (
           <AuthTextWrapper title="Link Account" titleSize="prose-2xl">
@@ -94,7 +97,7 @@ const AccountsPage: CustomNextPage<Props> = ({ providers, allRecipes }) => {
               {(providers ?? []).map((provider) => (
                 <div key={provider.id} className="flex justify-center">
                   <SocialLoginButton
-                    isDisabled={isLoading}
+                    isDisabled={isDisabled}
                     provider={provider.id}
                     handleSubmit={handleSubmit}
                     prefixText={provider.linked ? "Unlink" : "Link"}
@@ -110,7 +113,7 @@ const AccountsPage: CustomNextPage<Props> = ({ providers, allRecipes }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await unstable_getServerSession(req, res, AuthOptions);
+  const session = await unstable_getServerSession(req, res, authOptions);
 
   if (!session?.user) {
     return {
@@ -122,6 +125,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const filteredProviders = Object.values(providers).filter(
     (provider) => provider.type === "oauth"
   );
+
+  const prisma = new PrismaClient();
 
   const userProviders = await prisma.account.findMany({
     where: { type: "oauth", AND: [{ user: { email: session.user.email } }] },
