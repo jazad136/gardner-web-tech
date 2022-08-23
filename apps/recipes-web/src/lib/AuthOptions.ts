@@ -10,7 +10,7 @@ import { html, text } from "src/lib/email";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 
-const approvedEmails = (process.env.APPROVED_EMAILS as string).split(", ");
+const approvedEmails = process.env.APPROVED_EMAILS?.split(", ");
 const prisma = new PrismaClient();
 
 const AuthOptions: NextAuthOptions = {
@@ -54,9 +54,13 @@ const AuthOptions: NextAuthOptions = {
   ],
   callbacks: {
     signIn({ user }) {
-      return approvedEmails
-        .map((email) => email.toLowerCase())
-        .includes(user.email.toLowerCase());
+      if (!!approvedEmails && approvedEmails.length > 0) {
+        return approvedEmails
+          .map((email) => email.toLowerCase())
+          .includes(user.email.toLowerCase());
+      }
+
+      return false;
     },
   },
   session: {
