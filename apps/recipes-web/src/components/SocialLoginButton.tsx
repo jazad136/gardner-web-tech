@@ -19,11 +19,11 @@ const SocialLoginButton: React.FC<Props> = ({
       await handleSubmit(provider);
     }}
     className={cn(
-      "prose prose-dark mr-2 mb-2 flex items-center rounded-lg px-5 py-2.5 text-center text-sm font-medium focus:outline-none focus:ring-4",
+      "prose prose-dark mr-2 mb-2 flex items-center rounded-lg px-5 py-2.5 text-center text-sm font-medium focus:outline-none focus:ring-4 disabled:opacity-50",
       {
-        "dark:focus:ring-[#4285F4]/55 dark:focus:ring-[#3b5998]/55 bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-[#4285F4]/50":
+        "dark:focus:ring-[#4285F4]/55 dark:focus:ring-[#3b5998]/55 bg-[#4285F4] focus:ring-[#4285F4]/50 enabled:hover:bg-[#4285F4]/90":
           provider === "google",
-        "bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-[#3b5998]/50":
+        "bg-[#3b5998] focus:ring-[#3b5998]/50 enabled:hover:bg-[#3b5998]/90":
           provider === "facebook",
       }
     )}
