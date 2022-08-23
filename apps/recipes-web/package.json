@@ -51,5 +51,14 @@
     "prisma": "^4.2.1",
     "tsconfig": "*",
     "typescript": "4.5.4"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false,
+    "dns": false,
+    "net": false,
+    "tls": false,
+    "child_process": false
   }
 }
