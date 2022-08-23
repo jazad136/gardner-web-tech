@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev | pino-pretty -c -f -a",
-    "build": "rimraf ./data/auth.db && npx prisma migrate dev && next build",
+    "build": "next build",
     "start": "next start | pino-pretty -c -f -a",
     "test": "echo \"Web-app test\"",
     "lint": "eslint src --fix"
