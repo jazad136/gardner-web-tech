@@ -1,6 +1,7 @@
 import cn from "classnames";
 import { motion } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRecipeContext } from "src/context/RecipeContext";
 import { urlFor } from "src/lib/SanityUi";
@@ -43,12 +44,19 @@ const Navbar = () => {
               </div>
             )}
             {status === "authenticated" && (
-              <div
-                onClick={() => signOut()}
-                className="prose dark:prose-dark lg:prose-sm my-2 ml-4 flex uppercase hover:cursor-pointer hover:opacity-75 lg:leading-loose"
-              >
-                Logout
-              </div>
+              <>
+                <Link href="/auth/accounts">
+                  <div className="prose dark:prose-dark lg:prose-sm my-2 ml-4 flex uppercase hover:cursor-pointer hover:opacity-75 lg:leading-loose">
+                    Link Account
+                  </div>
+                </Link>
+                <div
+                  onClick={() => signOut()}
+                  className="prose dark:prose-dark lg:prose-sm my-2 ml-4 flex uppercase hover:cursor-pointer hover:opacity-75 lg:leading-loose"
+                >
+                  Logout
+                </div>
+              </>
             )}
           </div>
         </NavbarWrapper>

@@ -1,22 +1,20 @@
 import cn from "classnames";
 import { Field, Form, Formik } from "formik";
-import { signIn } from "next-auth/react";
 import { Button } from "ui";
 import * as Yup from "yup";
 
 type Props = {
   isDisabled: boolean;
-  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSubmit: (email: string) => Promise<void>;
 };
 
-const EmailForm: React.FC<Props> = ({ isDisabled, setIsDisabled }) => (
+const EmailForm: React.FC<Props> = ({ isDisabled, handleSubmit }) => (
   <Formik
     initialValues={{
       email: "",
     }}
     onSubmit={(values) => {
-      setIsDisabled(true);
-      signIn("email", { email: values.email });
+      handleSubmit(values.email);
     }}
     validationSchema={Yup.object({
       email: Yup.string().email("Invalid email address").required(),

@@ -6,4 +6,5 @@ export default withAuth({
     error: "/auth/error",
     verifyRequest: "/auth/verify-request",
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });

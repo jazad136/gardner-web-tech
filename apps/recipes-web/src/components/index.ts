@@ -5,4 +5,5 @@ export { default as Layout } from "./layout";
 export { default as Meta } from "./meta";
 export { default as Navbar } from "./Navbar";
 export { default as SectionWithPortableTextBlock } from "./SectionWithPortableTextBlock";
-export { default as SocialLogins } from "./SocialLogins";
+export { default as SocialLogin } from "./SocialLogin";
+export { default as SocialLoginButton } from "./SocialLoginButton";
