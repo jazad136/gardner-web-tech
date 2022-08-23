@@ -3,12 +3,13 @@ import { unstable_getServerSession } from "next-auth";
 import { ClientSafeProvider, getProviders, signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthTextWrapper, SocialLoginButton } from "src/components";
-import { AuthOptions } from "src/lib";
+import { useRecipeContext } from "src/context/RecipeContext";
+import { AuthOptions, sanityClient } from "src/lib";
 import { CustomNextPage } from "src/types";
-import { PageSpinner, Paragraph } from "ui";
+import { allRecipesQuery, PageSpinner, Paragraph, RecipeListItem } from "ui";
 
 import { PrismaClient } from "@prisma/client";
 
@@ -18,12 +19,18 @@ type ExpandedClientSafeProvider = ClientSafeProvider & { linked: boolean };
 
 type Props = {
   providers: ExpandedClientSafeProvider[];
+  allRecipes: RecipeListItem[];
 };
 
-const AccountsPage: CustomNextPage<Props> = ({ providers }) => {
+const AccountsPage: CustomNextPage<Props> = ({ providers, allRecipes }) => {
   const { status } = useSession();
   const { asPath } = useRouter();
+  const { handleSetRecipes } = useRecipeContext();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    handleSetRecipes(allRecipes);
+  }, [allRecipes, handleSetRecipes]);
 
   const deleteAccount = async (provider: ExpandedClientSafeProvider) => {
     const res = await fetch(`/api/auth/unlink/${provider.id}`, {
@@ -132,10 +139,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     });
   }
 
+  const allRecipes = (await sanityClient.fetch(
+    allRecipesQuery
+  )) as RecipeListItem[];
+
   return {
     props: {
       providers: data,
-    },
+      allRecipes,
+    } as Props,
   };
 };
 
