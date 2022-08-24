@@ -1,4 +1,5 @@
-import { signIn } from "next-auth/react";
+import { BuiltInProviderType } from "next-auth/providers";
+import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
 import React, { useState } from "react";
 
 import SocialLoginButton from "./SocialLoginButton";
@@ -7,12 +8,17 @@ type Props = {
   isDisabled: boolean;
   setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   callbackUrl?: string;
+  providers: Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  >;
 };
 
 const SocialLogin: React.FC<Props> = ({
   isDisabled,
   setIsDisabled,
   callbackUrl,
+  providers,
 }) => {
   const [isRedirecting, setIsRedirecting] = useState(false);
 
@@ -27,11 +33,11 @@ const SocialLogin: React.FC<Props> = ({
   return (
     <>
       <div className="block">
-        {["google", "facebook"].map((provider) => (
-          <div key={provider} className="flex justify-center">
+        {Object.values(providers).map((provider) => (
+          <div key={provider.id} className="flex justify-center">
             <SocialLoginButton
               isDisabled={isDisabled}
-              provider={provider}
+              provider={provider.id}
               handleSubmit={handleSocialMediaLogin}
               prefixText="Sign in with"
             />

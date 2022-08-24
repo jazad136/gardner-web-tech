@@ -1,4 +1,12 @@
-import { signIn, useSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
+import { BuiltInProviderType } from "next-auth/providers";
+import {
+  ClientSafeProvider,
+  getProviders,
+  LiteralUnion,
+  signIn,
+  useSession,
+} from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -10,7 +18,14 @@ import { PageSpinner } from "ui";
 
 import EmailVerification from "../../components/EmailVerification";
 
-const LoginPage: CustomNextPage = () => {
+type Props = {
+  providers: Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  >;
+};
+
+const LoginPage: CustomNextPage = ({ providers }) => {
   const router = useRouter();
   const { status } = useSession();
   const [disabled, setDisabled] = useState(false);
@@ -72,6 +87,7 @@ const LoginPage: CustomNextPage = () => {
             </div>
 
             <SocialLogin
+              providers={providers}
               isDisabled={disabled}
               setIsDisabled={setDisabled}
               callbackUrl={callbackUrl as string | null}
@@ -82,6 +98,15 @@ const LoginPage: CustomNextPage = () => {
       </main>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const providers = await getProviders();
+  return {
+    props: {
+      providers,
+    } as Props,
+  };
 };
 
 LoginPage.layout = {
