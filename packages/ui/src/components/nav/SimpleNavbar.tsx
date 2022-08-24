@@ -47,17 +47,17 @@ const SimpleNavbar: React.FC<SimpleNavbarProps> = ({
       <NavbarWrapper sticky={sticky} removeMarginBottom={navbarOpen}>
         <Brand href="/">{brandText}</Brand>
         <div>
-          <div className="lg:flex hidden items-center">
+          <div className="hidden items-center lg:flex">
             <NavbarLinks links={allLinks} />
-            <ThemeToggle isLarge={true} id="MainThemeToggle" />
+            <ThemeToggle id="MainThemeToggle" />
           </div>
-          <div className="lg:hidden block justify-end">
+          <div className="block justify-end lg:hidden">
             <MenuToggle toggle={() => setNavbarOpen(!navbarOpen)} />
           </div>
         </div>
       </NavbarWrapper>
       {navbarOpen && (
-        <div className="block border-t mb-2">
+        <div className="mb-2 block border-t">
           <MiniNav isOpen={navbarOpen} links={navLinks} includeThemeToggle />
         </div>
       )}
