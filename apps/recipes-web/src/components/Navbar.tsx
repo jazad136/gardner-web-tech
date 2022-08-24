@@ -5,7 +5,13 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRecipeContext } from "src/context/RecipeContext";
 import { urlFor } from "src/lib/SanityUi";
-import { Brand, MenuToggle, NavbarWrapper, RecipeSideNav, ThemeToggle } from "ui";
+import {
+  Brand,
+  MenuToggle,
+  NavbarWrapper,
+  RecipeSideNav,
+  ThemeToggle,
+} from "ui";
 
 const Navbar = () => {
   const { status } = useSession();
@@ -33,7 +39,7 @@ const Navbar = () => {
           <Brand href="/">Recipes</Brand>
           <div className="flex ">
             <div className="flex items-center">
-              <ThemeToggle isLarge id="themeToggle" />
+              <ThemeToggle id="themeToggle" />
             </div>
             {status === "unauthenticated" && (
               <div

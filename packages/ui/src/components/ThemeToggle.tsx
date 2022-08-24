@@ -1,38 +1,31 @@
-import cn from "classnames";
 import { useTheme } from "next-themes";
-import React, { useMemo } from "react";
+import React from "react";
 import { BsMoon, BsSun } from "react-icons/bs";
-import Switch from "react-switch";
 
 type Props = {
-  isLarge: boolean;
   id: string;
-  center?: boolean;
 };
 
-const ThemeToggle: React.FC<Props> = ({ isLarge, id, center = true }) => {
+const ThemeToggle: React.FC<Props> = ({ id }) => {
   const { theme, setTheme } = useTheme();
-  const isDark = useMemo(() => theme === "dark", [theme]);
 
   return (
     <div className="flex">
-      <Switch
-        id={id}
-        checked={isDark}
-        onChange={() => setTheme(isDark ? "light" : "dark")}
-        aria-label="Theme toggle"
-        value="dark"
-        boxShadow="none"
-        activeBoxShadow="none"
-        onColor="#2563EB"
-        className={cn({ "mx-auto": center })}
-        height={isLarge ? 28 : 22}
-        width={isLarge ? 56 : 50}
-        uncheckedIcon={
-          <BsSun color="white" className="h-full w-full p-1 lg:p-1.5" />
-        }
-        checkedIcon={<BsMoon className="h-full w-full p-1 lg:p-1.5" />}
-      />
+      {theme === "dark" ? (
+        <BsMoon
+          id={id}
+          color="white"
+          onClick={() => setTheme("light")}
+          className="mr-2 hover:cursor-pointer"
+        />
+      ) : (
+        <BsSun
+          id={id}
+          color="black"
+          onClick={() => setTheme("dark")}
+          className="mr-2 hover:cursor-pointer"
+        />
+      )}
     </div>
   );
 };
