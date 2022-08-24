@@ -53,7 +53,7 @@ const MiniNav: React.FC<Props> = ({
               Theme:
             </div>{" "}
             <div className="my-auto">
-              <ThemeToggle isLarge={false} id="miniNavThemeToggle" />
+              <ThemeToggle id="miniNavThemeToggle" />
             </div>
           </div>
         )}
