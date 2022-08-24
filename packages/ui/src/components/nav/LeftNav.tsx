@@ -33,7 +33,7 @@ const LeftNav: React.FC<Props> = ({
       </div>
       <div className="mx-5">
         <div className="pt-4">
-          <ThemeToggle isLarge={false} id="MainThemeToggle" center={false} />
+          <ThemeToggle id="MainThemeToggle" />
         </div>
         {links && (
           <div
