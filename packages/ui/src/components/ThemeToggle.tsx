@@ -7,24 +7,26 @@ type Props = {
 };
 
 const ThemeToggle: React.FC<Props> = ({ id }) => {
-  const { theme, setTheme } = useTheme();
+  const { theme, themes, setTheme } = useTheme();
 
   return (
     <div className="flex">
-      {theme === "dark" ? (
-        <BsMoon
-          id={id}
-          color="white"
-          onClick={() => setTheme("light")}
-          className="mr-2 hover:cursor-pointer"
-        />
-      ) : (
-        <BsSun
-          id={id}
-          color="black"
-          onClick={() => setTheme("dark")}
-          className="mr-2 hover:cursor-pointer"
-        />
+      {themes.includes(theme) && (
+        <>
+          {theme === "dark" ? (
+            <BsMoon
+              id={id}
+              onClick={() => setTheme("light")}
+              className="mr-2 hover:cursor-pointer"
+            />
+          ) : (
+            <BsSun
+              id={id}
+              onClick={() => setTheme("dark")}
+              className="mr-2 hover:cursor-pointer"
+            />
+          )}
+        </>
       )}
     </div>
   );
