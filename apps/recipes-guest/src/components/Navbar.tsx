@@ -3,13 +3,7 @@ import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { useRecipeContext } from "src/context/RecipeContext";
 import { urlFor } from "src/lib/SanityUi";
-import {
-  Brand,
-  MenuToggle,
-  NavbarWrapper,
-  RecipeSideNav,
-  ThemeToggle,
-} from "ui";
+import { Brand, MenuToggle, NavbarWrapper, RecipeSideNav, ThemeToggle } from "ui";
 
 const Navbar: React.FC = () => {
   const recipesContext = useRecipeContext();
