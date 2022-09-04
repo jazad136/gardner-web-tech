@@ -44,6 +44,9 @@ const HomePage: CustomNextPage<Props> = ({ allRecipes }) => {
               className="object-cover"
               src="/Cooking-Home-Collection.jpg"
               alt="recipes landing page image"
+              key="index-main"
+              blurDataURL="/Cooking-Home-Collection.jpg"
+              placeholder="blur"
               priority
             />
             <h1 className="absolute top-1/2 left-1/2 m-0 mb-0.5 -translate-x-1/2 -translate-y-1/2 transform text-6xl">
