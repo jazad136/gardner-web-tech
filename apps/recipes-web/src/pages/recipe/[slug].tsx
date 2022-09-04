@@ -19,7 +19,7 @@ import {
   RecipePrintButton,
   recipeQuery,
   recipeSlugsQuery,
-  YouTubeAccordion
+  YouTubeAccordion,
 } from "ui";
 
 const logger = Pino.default({ name: "RecipePage" });
@@ -58,6 +58,13 @@ const RecipePage: CustomNextPage<Props> = ({ data }) => {
   const { title, image, notes, youTubeUrls, ingredients, instructions, slug } =
     data.currentRecipe;
 
+  const imgUrl = urlFor(image)
+    .width(1250)
+    .height(500)
+    .crop("focalpoint")
+    .fit("crop")
+    .url();
+
   return (
     <>
       <div>
@@ -75,17 +82,15 @@ const RecipePage: CustomNextPage<Props> = ({ data }) => {
             <div className="block w-full">
               <Image
                 className="w-16 max-w-full rounded-xl md:w-32 lg:w-48"
-                src={urlFor(image)
-                  .width(1250)
-                  .height(500)
-                  .crop("focalpoint")
-                  .fit("crop")
-                  .url()}
+                src={imgUrl}
                 alt={title}
                 width={1250}
                 height={500}
                 layout="responsive"
                 objectFit="cover"
+                blurDataURL={imgUrl}
+                key={imgUrl}
+                placeholder="blur"
                 priority
               />
             </div>
