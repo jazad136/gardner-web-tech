@@ -26,7 +26,10 @@ const AccordionSectionHeader: React.FC<Props> = ({
   handleOnClick,
   ...props
 }) => (
-  <StyledHeader className="flex overflow-hidden rounded-none border-b-slate-200 py-4 px-5 text-left focus:outline-none">
+  <StyledHeader
+    className="flex overflow-hidden rounded-none border-b-slate-200 py-4 px-5 text-left focus:outline-none"
+    asChild
+  >
     <AccordionPrimitive.Trigger
       {...props}
       className="relative flex w-full items-center justify-between "
