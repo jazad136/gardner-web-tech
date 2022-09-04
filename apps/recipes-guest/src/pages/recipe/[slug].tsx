@@ -67,70 +67,68 @@ const RecipePage: CustomNextPage<Props> = ({ data }) => {
 
   return (
     <>
-      <div>
-        <Head>
-          <title>Recipes: {title}</title>
-          <meta name="description" content={title} />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+      <Head>
+        <title>Recipes: {title}</title>
+        <meta name="description" content={title} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-        <main className="py-8">
-          <div className="flex w-full justify-center">
-            <PageTitle>{title}</PageTitle>
+      <main className="py-8">
+        <div className="flex w-full justify-center">
+          <PageTitle>{title}</PageTitle>
+        </div>
+        {image && (
+          <div className="block w-full">
+            <Image
+              className="w-16 max-w-full rounded-xl md:w-32 lg:w-48"
+              src={imgUrl}
+              alt={title}
+              width={1250}
+              height={500}
+              layout="responsive"
+              objectFit="cover"
+              blurDataURL={imgUrl}
+              key={imgUrl}
+              placeholder="blur"
+              priority
+            />
           </div>
-          {image && (
-            <div className="block w-full">
-              <Image
-                className="w-16 max-w-full rounded-xl md:w-32 lg:w-48"
-                src={imgUrl}
-                alt={title}
-                width={1250}
-                height={500}
-                layout="responsive"
-                objectFit="cover"
-                blurDataURL={imgUrl}
-                key={imgUrl}
-                placeholder="blur"
-                priority
-              />
-            </div>
-          )}
-          <RecipeCookTime
-            recipe={data.currentRecipe}
-            setIsOpen={setTimeOpen}
-            isOpen={timeOpen}
-          />
-          <IngredientListWrapper
-            ingredients={ingredients}
-            serves={data.currentRecipe.serves}
-            batches={batches}
-            setBatches={setBatches}
-            isOpen={ingredientsOpen}
-            setIsOpen={setIngredientsOpen}
-          />
-          <RecipeBlockTextAccordion
-            title="instructions"
-            blocks={instructions}
-            isOpen={instructionsOpen}
-            setIsOpen={setInstructionsOpen}
-          />
-          <RecipeBlockTextAccordion
-            title="notes"
-            blocks={notes}
-            isOpen={notesOpen}
-            setIsOpen={setNotesOpen}
-          />
-          <YouTubeAccordion
-            youTubeUrls={youTubeUrls}
-            isOpen={youTubeOpen}
-            setIsOpen={setYouTubeOpen}
-          />
-          <div className="flex justify-center">
-            <RecipePrintButton slug={slug} />
-            <RecipeMakeButton slug={slug} batches={batches} />
-          </div>
-        </main>
-      </div>
+        )}
+        <RecipeCookTime
+          recipe={data.currentRecipe}
+          setIsOpen={setTimeOpen}
+          isOpen={timeOpen}
+        />
+        <IngredientListWrapper
+          ingredients={ingredients}
+          serves={data.currentRecipe.serves}
+          batches={batches}
+          setBatches={setBatches}
+          isOpen={ingredientsOpen}
+          setIsOpen={setIngredientsOpen}
+        />
+        <RecipeBlockTextAccordion
+          title="instructions"
+          blocks={instructions}
+          isOpen={instructionsOpen}
+          setIsOpen={setInstructionsOpen}
+        />
+        <RecipeBlockTextAccordion
+          title="notes"
+          blocks={notes}
+          isOpen={notesOpen}
+          setIsOpen={setNotesOpen}
+        />
+        <YouTubeAccordion
+          youTubeUrls={youTubeUrls}
+          isOpen={youTubeOpen}
+          setIsOpen={setYouTubeOpen}
+        />
+        <div className="flex justify-center">
+          <RecipePrintButton slug={slug} />
+          <RecipeMakeButton slug={slug} batches={batches} />
+        </div>
+      </main>
     </>
   );
 };
