@@ -8,15 +8,16 @@ const MaintenancePage: CustomNextPage = () => (
       <title>Recipes: Maintenance</title>
       <meta name="description" content="Recipes is down for maintenance" />
       <link rel="icon" href="/favicon.ico" />
-    </Head>{" "}
-    <div className="grid h-screen place-items-center">
+    </Head>
+
+    <main className="grid h-screen place-items-center">
       <div>
         <MdConstruction className="mx-auto mb-2" size="3em" />
         <p className="text-xl">
           The website is under maintenance. Please come back soon
         </p>
       </div>
-    </div>
+    </main>
   </>
 );
 
