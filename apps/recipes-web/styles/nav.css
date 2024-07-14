@@ -1,9 +1,0 @@
-@import "tailwind-imports.css";
-
-.nav {
-  background-color: var(--background-accent);
-}
-
-.nav .custom-border-color {
-  border-color: var(--background-secondary);
-}

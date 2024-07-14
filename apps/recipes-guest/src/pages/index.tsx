@@ -3,16 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { BsChevronBarDown } from "react-icons/bs";
-import { useRecipeContext } from "src/lib/RecipeContext";
+import { useRecipeContext } from "src/context/RecipeContext";
 import { sanityClient } from "src/lib/SanityServer";
-import { Button, RecipeListItem } from "ui";
-import { allRecipesQuery } from "ui/recipes";
+import { CustomNextPage } from "src/types";
+import { allRecipesQuery, Button, Paragraph, RecipeListItem } from "ui";
 
-export interface HomeProps {
+type Props = {
   allRecipes: RecipeListItem[];
-}
+};
 
-const Home = ({ allRecipes }: HomeProps) => {
+const HomePage: CustomNextPage<Props> = ({ allRecipes }) => {
   const { handleSetRecipes } = useRecipeContext();
 
   useEffect(() => {
@@ -30,57 +30,56 @@ const Home = ({ allRecipes }: HomeProps) => {
 
   return (
     <>
-      <div>
-        <Head>
-          <title>Recipes</title>
-          <meta name="description" content="View our recipes" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+      <Head>
+        <title>Recipes</title>
+        <meta name="description" content="View our recipes" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-        <main className="p-0 flex-1 flex flex-col justify-center items-center w-full overflow-hidden text-center z-10">
-          <div className="relative text-center text-white z-0 h-[95vh] w-full md:overflow-hidden overflow-auto">
-            <Image
-              layout="fill"
-              className="object-cover"
-              src="/Cooking-Home-Collection.jpg"
-              alt="recipes landing page image"
-              priority
-            />
-            <h1 className="m-0 mb-0.5 text-6xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              Welcome to our guest recipes website!
-            </h1>
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <Button
-                color="white"
-                size="xl"
-                onClick={scrollToBottom}
-                isOutline
-                ariaLabel="Scroll to Bottom"
-              >
-                <BsChevronBarDown size="1.5rem" className="text-white" />
-              </Button>
-            </div>
+      <main className="z-10 flex w-full flex-1 flex-col items-center justify-center overflow-hidden p-0 text-center">
+        <div className="relative z-0 h-[95vh] w-full overflow-auto text-center text-white md:overflow-hidden">
+          <Image
+            layout="fill"
+            className="object-cover"
+            src="/Cooking-Home-Collection.jpg"
+            alt="recipes landing page image"
+            key="index-main"
+            blurDataURL="/Cooking-Home-Collection.jpg"
+            placeholder="blur"
+            priority
+          />
+          <h1 className="absolute top-1/2 left-1/2 m-0 mb-0.5 -translate-x-1/2 -translate-y-1/2 transform text-6xl">
+            Welcome to our guest recipes website!
+          </h1>
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+            <Button
+              color="white"
+              size="xl"
+              onClick={scrollToBottom}
+              isOutline
+              ariaLabel="Scroll to Bottom"
+            >
+              <BsChevronBarDown size="1.5rem" className="text-white" />
+            </Button>
           </div>
-          <div id="footer" className="my-3 text-2xl w-1/2">
-            To view our recipes, please open the side nav by clicking on the
-            menu button in the top left corner. Please note that none of the
-            recipes in this application with the some exceptions are actual
-            recipes! This is the demo page only. Most of this uses generated
-            Bacon Ipsum. The one exception is the{" "}
-            <Link href="/buffalo-chicken-quesadilla">
-              <a className="text-sky-500 underline">
-                Buffalo Chicken Quesadilla
-              </a>
-            </Link>
-            .
-          </div>
-        </main>
-      </div>
+        </div>
+        <Paragraph id="footer" className="prose-2xl my-8 w-1/2">
+          To view our recipes, please open the side nav by clicking on the menu
+          button in the top left corner. Please note that none of the recipes in
+          this application with the some exceptions are actual recipes! This is
+          the demo page only. Most of this uses generated Bacon Ipsum. The one
+          exception is the{" "}
+          <Link href="/buffalo-chicken-quesadilla">
+            <a className="text-sky-500 underline">Buffalo Chicken Quesadilla</a>
+          </Link>
+          .
+        </Paragraph>
+      </main>
     </>
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
   const allRecipes = (await sanityClient.fetch(
     allRecipesQuery
   )) as RecipeListItem[];
@@ -88,12 +87,13 @@ export async function getStaticProps() {
   return {
     props: {
       allRecipes,
-    },
-    revalidate: 1,
+    } as Props,
+    revalidate: 60 * 60 * 24, // refresh data every day
   };
-}
-
-Home.layoutProps = {
-  useContainer: false,
 };
-export default Home;
+
+HomePage.layout = {
+  includeContainer: false,
+};
+
+export default HomePage;

@@ -1,24 +1,31 @@
-import { ReactElement, useCallback, useEffect, useMemo } from "react";
-import Meta from "@components/meta";
-import Navbar from "./Navbar";
 import cn from "classnames";
+import Meta from "src/components/meta";
+import { Footer } from "ui";
 
-interface LayoutProps {
-  useContainer?: boolean;
-  children: ReactElement | ReactElement[];
-}
+import Navbar from "./Navbar";
 
-const Layout = ({ children, useContainer = true }: LayoutProps) => (
-  <>
-    <Meta />
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className={cn({ "container flex-grow": useContainer })}>
-        {children}
-      </main>
-      {/* <Footer /> */}
-    </div>
-  </>
-);
+type Props = {
+  includeContainer?: boolean;
+  includeNavAndFooter?: boolean;
+};
+
+const Layout: React.FC<Props> = ({
+  children,
+  includeNavAndFooter = true,
+  includeContainer = true,
+}) => {
+  return (
+    <>
+      <Meta />
+      <div className="flex min-h-screen flex-col">
+        {includeNavAndFooter && <Navbar />}
+        <main className={cn({ "container flex-grow": includeContainer })}>
+          {children}
+        </main>
+        {includeNavAndFooter && <Footer projectName="Recipes" />}
+      </div>
+    </>
+  );
+};
 
 export default Layout;

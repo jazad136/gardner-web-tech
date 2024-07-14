@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["focalpoint"]
+  "cSpell.words": ["focalpoint"],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

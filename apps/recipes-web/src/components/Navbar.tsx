@@ -1,18 +1,22 @@
-import { useMemo, useState } from "react";
-import { NavbarWrapper, MenuToggle, Brand, RecipeSideNav } from "ui";
-import { motion } from "framer-motion";
-import ThemeToggle from "ui/ThemeToggle";
-import { useRecipeContext } from "src/lib/RecipeContext";
 import cn from "classnames";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { motion } from "framer-motion";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { useRecipeContext } from "src/context/RecipeContext";
 import { urlFor } from "src/lib/SanityUi";
+import {
+  Brand,
+  MenuToggle,
+  NavbarWrapper,
+  RecipeSideNav,
+  ThemeToggle,
+} from "ui";
 
 const Navbar = () => {
+  const { status } = useSession();
   const recipesContext = useRecipeContext();
   const [expanded, setExpanded] = useState(false);
-  const { data: session } = useSession();
-
-  const isUser: boolean = useMemo(() => !!session?.user, [session]);
 
   const mappedRecipes = useMemo(() => {
     return (recipesContext?.recipes ?? []).map((recipe) => {
@@ -23,33 +27,46 @@ const Navbar = () => {
     });
   }, [recipesContext]);
 
-  if (!isUser) {
-    return <></>;
-  }
-
   return (
     <>
       <motion.div initial={false} animate={expanded ? "open" : "closed"}>
         <NavbarWrapper removeMarginBottom={true}>
-          <div className={cn({ "opacity-0": expanded })}>
-            <MenuToggle toggle={() => setExpanded(!expanded)} />
-          </div>
-          <div className="text-xl">
-            <Brand href="/">Recipes</Brand>
-          </div>
+          {status === "authenticated" && (
+            <div className={cn({ "opacity-0": expanded })}>
+              <MenuToggle toggle={() => setExpanded(!expanded)} />
+            </div>
+          )}
+          <Brand href="/">Recipes</Brand>
           <div className="flex ">
             <div className="flex items-center">
-              <ThemeToggle isLarge id="themeToggle" />
+              <ThemeToggle id="themeToggle" />
             </div>
-            <div
-              onClick={() => signOut()}
-              className="flex prose dark:prose-dark text-primary lg:text-sm lg:leading-loose uppercase hover:opacity-75 my-2 ml-4 hover:cursor-pointer"
-            >
-              Logout
-            </div>
+            {status === "unauthenticated" && (
+              <div
+                onClick={() => signIn()}
+                className="prose dark:prose-dark lg:prose-sm my-2 ml-4 flex uppercase hover:cursor-pointer hover:opacity-75 lg:leading-loose"
+              >
+                Login
+              </div>
+            )}
+            {status === "authenticated" && (
+              <>
+                <Link href="/auth/accounts">
+                  <div className="prose dark:prose-dark lg:prose-sm my-2 ml-4 flex uppercase hover:cursor-pointer hover:opacity-75 lg:leading-loose">
+                    Link Account
+                  </div>
+                </Link>
+                <div
+                  onClick={() => signOut()}
+                  className="prose dark:prose-dark lg:prose-sm my-2 ml-4 flex uppercase hover:cursor-pointer hover:opacity-75 lg:leading-loose"
+                >
+                  Logout
+                </div>
+              </>
+            )}
           </div>
         </NavbarWrapper>
-        {!!mappedRecipes && (
+        {status === "authenticated" && !!mappedRecipes && (
           <RecipeSideNav
             expanded={expanded}
             setExpanded={setExpanded}

@@ -1,25 +1,28 @@
-import { PortableText } from "src/lib/SanityUi";
 import { SectionHeader } from "ui";
 
-export interface SectionWithPortableTextBlockProps {
+import { PortableText } from "@portabletext/react";
+
+type Props = {
   title: string;
   blocks: any;
-}
+};
 
-export const SectionWithPortableTextBlock = ({
+export const SectionWithPortableTextBlock: React.FC<Props> = ({
   title,
   blocks,
-}: SectionWithPortableTextBlockProps) => {
+}) => {
   if (!blocks) {
     return <></>;
   }
 
   return (
     <div className="py-6">
-      <SectionHeader classNames="text-center">{title}</SectionHeader>
+      <SectionHeader className="text-center">{title}</SectionHeader>
       <div className="prose dark:prose-dark max-w-full">
-        <PortableText blocks={blocks} />
+        <PortableText value={blocks} />
       </div>
     </div>
   );
 };
+
+export default SectionWithPortableTextBlock;

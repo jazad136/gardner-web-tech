@@ -1,0 +1,10 @@
+@import "tailwind-imports.css";
+
+.nav,
+.footer {
+  background-color: var(--background-accent);
+}
+
+.nav .custom-border-color {
+  border-color: var(--background-secondary);
+}

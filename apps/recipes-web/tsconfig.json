@@ -2,18 +2,8 @@
   "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "noEmit": true,
-    "paths": {
-      "@components/*": ["src/components/*"],
-      "@styles/*": ["styles/*"]
-    }
+    "noEmit": true
   },
-  "include": [
-    "src/**/*",
-    "next-env.d.ts",
-    "styles/global.scss",
-    "../../packages/ui/recipes/RecipeLink.tsx",
-    "../../packages/ui/recipes/RecipeState.tsx"
-  ],
+  "include": ["src/**/*", "next-env.d.ts", "styles/global.scss"],
   "exclude": ["node_modules", "postcss.config.js", ".next", ".turbo"]
 }

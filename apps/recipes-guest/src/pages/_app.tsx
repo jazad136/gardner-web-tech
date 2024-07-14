@@ -1,28 +1,25 @@
-import "../../styles/globals.css";
-import { NextComponentType, NextPageContext } from "next";
+import "src/styles/globals.css";
+import "regenerator-runtime/runtime";
+
+import { NextComponentType } from "next";
 import { ThemeProvider } from "next-themes";
-import { RecipeProvider } from "src/lib/RecipeContext";
-import Layout from "@components/layout";
+import { AppProps } from "next/app";
 import NextNProgress from "nextjs-progressbar";
+import Layout from "src/components/layout";
+import { RecipeProvider } from "src/context/RecipeContext";
+import { LayoutProps } from "src/types/LayoutProps";
 
-export type LayoutProps = {
-  useContainer?: boolean;
+type CustomAppProps = AppProps & {
+  Component: NextComponentType & { layout: LayoutProps };
 };
 
-type AppProps = {
-  pageProps: any;
-  Component: NextComponentType<NextPageContext, any, {}> & {
-    layoutProps?: LayoutProps;
-  };
-};
-
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp: React.FC<CustomAppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <NextNProgress />
       <RecipeProvider>
         <ThemeProvider attribute="class">
-          <Layout useContainer={Component.layoutProps?.useContainer}>
+          <Layout includeContainer={Component.layout?.includeContainer}>
             <Component {...pageProps} />
           </Layout>
         </ThemeProvider>

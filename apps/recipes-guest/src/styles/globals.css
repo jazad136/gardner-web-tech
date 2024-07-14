@@ -1,0 +1,23 @@
+@import "tailwind-imports.css";
+
+@import "accordion.css";
+@import "button.css";
+@import "layout.css";
+@import "modal.css";
+@import "scrollbar.css";
+@import "theme-toggle.css";
+
+:root {
+  --background-primary: theme("colors.white");
+  --background-accent: theme("colors.gray.200");
+  --background-secondary: theme("colors.gray.500");
+}
+
+.dark {
+  --background-primary: theme("colors.gray.900");
+  --background-accent: theme("colors.gray.700");
+}
+
+body {
+  background-color: var(--background-primary);
+}

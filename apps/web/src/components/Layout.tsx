@@ -1,35 +1,19 @@
+import { Footer } from "ui";
+
 import Meta from "@components/meta";
-import { NavbarLinkProps, SimpleNavbar } from "ui/nav";
-import { ReactElement } from "react";
 
 interface LayoutProps {
   preview: boolean;
-  children: ReactElement | ReactElement[];
 }
 
-const Layout = ({ preview, children }: LayoutProps) => {
+const Layout: React.FC<LayoutProps> = ({ preview, children }) => {
   // const [navbarOpen, setNavbarOpen] = useState(false);
-
-  const links: NavbarLinkProps[] = [
-    {
-      href: "/",
-      text: "Link",
-      display: true,
-    },
-    {
-      href: "/",
-      text: "Link2",
-      display: true,
-    },
-  ];
-
   return (
     <>
       <Meta />
-      <div className="flex flex-col min-h-screen">
-        <SimpleNavbar brandText="Gardner Web and Tech" navLinks={links} />
+      <div className="flex min-h-screen flex-col">
         <main className="container flex-grow">{children}</main>
-        {/* <Footer /> */}
+        <Footer projectName="Gardner Web and Tech" />
       </div>
     </>
   );

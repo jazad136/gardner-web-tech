@@ -1,72 +1,53 @@
-import "../../styles/globals.css";
-import { NextComponentType, NextPageContext } from "next";
+import "regenerator-runtime/runtime";
+import "react-toastify/dist/ReactToastify.css";
+import "src/styles/globals.css";
+
+import { NextComponentType } from "next";
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
-import { RecipeProvider } from "src/lib/RecipeContext";
-import Layout from "@components/layout";
-import { ReactElement, useEffect } from "react";
-import { SessionProvider, signIn, useSession } from "next-auth/react";
-import { PageSpinner } from "ui";
+import { AppProps } from "next/app";
 import NextNProgress from "nextjs-progressbar";
+import { ToastContainer } from "react-toastify";
+import { Layout } from "src/components";
+import { RecipeProvider } from "src/context/RecipeContext";
+import { LayoutProps } from "src/types";
 
-export type LayoutProps = {
-  useContainer?: boolean;
+type CustomAppProps = AppProps & {
+  Component: NextComponentType & { layout?: LayoutProps };
 };
 
-type AppProps = {
-  pageProps: any;
-  Component: NextComponentType<NextPageContext, any, {}> & {
-    layoutProps?: LayoutProps;
-    auth: boolean;
-  };
-};
-
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp: React.FC<CustomAppProps> = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}) => {
   return (
     <>
       <NextNProgress />
       <ThemeProvider attribute="class">
-        <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
-          {Component.auth ? (
-            <Auth>
-              <RecipeProvider>
-                <Layout useContainer={Component.layoutProps?.useContainer}>
-                  <Component {...pageProps} />
-                </Layout>
-              </RecipeProvider>
-            </Auth>
-          ) : (
-            <Layout useContainer={Component.layoutProps?.useContainer}>
+        <SessionProvider session={session}>
+          <RecipeProvider>
+            <Layout
+              includeContainer={Component.layout?.includeContainer}
+              includeNavAndFooter={Component.layout?.includeNavAndFooter}
+            >
               <Component {...pageProps} />
             </Layout>
-          )}
+          </RecipeProvider>
         </SessionProvider>
       </ThemeProvider>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={6000}
+        hideProgressBar={false}
+        draggable={false}
+        theme="colored"
+        closeOnClick
+        pauseOnHover
+        pauseOnFocusLoss
+      />
     </>
   );
-};
-
-interface AuthProps {
-  children: ReactElement | ReactElement[];
-}
-
-const Auth = ({ children }: AuthProps) => {
-  const { data: session, status } = useSession();
-  const isUser = !!session?.user;
-
-  useEffect(() => {
-    if (status === "loading") {
-      return;
-    }
-    if (!isUser) {
-      signIn();
-    }
-  }, [isUser, status]);
-
-  if (isUser) {
-    return <>{children}</>;
-  }
-
-  return <PageSpinner />;
 };
 
 export default MyApp;
